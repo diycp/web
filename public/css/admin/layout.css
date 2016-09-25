@@ -1,0 +1,203 @@
+/*div高度自适应浏览器高度*/
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 260px;
+    display: block;
+    z-index: 1;
+    color: #fff;
+    font-weight: 200;
+    background-size: cover;
+    background-position: center center;
+    background: #BA9CE4;
+}
+
+.sidebar,
+.main-panel {
+    overflow: auto;
+    max-height: 100%;
+    height: 100%;
+    -webkit-transition-property: top, bottom;
+    transition-property: top, bottom;
+    -webkit-transition-duration: .2s, .2s;
+    transition-duration: .2s, .2s;
+    -webkit-transition-timing-function: linear, linear;
+    transition-timing-function: linear, linear;
+    -webkit-overflow-scrolling: touch;
+}
+
+.sidebar .sidebar-wrapper {
+    position: relative;
+    max-height: none;
+    min-height: 100%;
+    overflow: hidden;
+    width: 260px;
+    z-index: 4;
+}
+
+.sidebar .logo {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.simple-text {
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: block;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.hover-under-no:hover {
+    text-decoration: none;
+}
+
+.main-panel {
+    background: rgba(203, 203, 210, 0.15);
+    position: relative;
+    z-index: 2;
+    float: right;
+    width: calc(100% - 260px);
+    min-height: 100%;
+}
+
+.main-panel .main-panel-top {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    padding: 0 15px;
+    min-height: 60px;
+    border: none;
+}
+
+.navbar-top {
+    margin-bottom: 0;
+}
+
+.navbar-top,
+.navbar-right {
+    margin-right: 0;
+}
+
+.navbar-top .nav >li>a {
+    padding: 20px 25px;
+    position: relative;
+}
+
+li > .dropdown-menu,
+.dropdown .dropdown-menu {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -o-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 370ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    -moz-transition: all 370ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    -o-transition: all 370ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    -ms-transition: all 370ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    transition: all 370ms cubic-bezier(0.34, 1.61, 0.7, 1);
+}
+
+.dropdown-menu,
+.dropdown.open .dropdown-menu {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 29px -50px;
+    -moz-transform-origin: 29px -50px;
+    -o-transform-origin: 29px -50px;
+    -ms-transform-origin: 29px -50px;
+    transform-origin: 29px -50px;
+}
+
+.dropdown-menu {
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    display: block;
+    z-index: 9000;
+    position: absolute;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.125);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.125);
+}
+
+.open .dropdown-menu {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    visibility: visible;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    padding: 8px 16px;
+    color: #333333;
+    white-space: nowrap;
+}
+
+li > .dropdown-menu {
+    border-radius: 10px;
+    margin-top: -5px;
+}
+
+li > .dropdown-menu:before {
+    border-bottom: 11px solid rgba(0, 0, 0, 0.2);
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 12px;
+    top: -11px;
+}
+
+.navbar-right > li > .dropdown-menu:before {
+    left: auto;
+    right: 12px;
+}
+
+.main-panel-breadcrumb {}
+
+.breadcrumbs {
+    padding: 0 10px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #F7F7F8;
+    /*后台主页背景色*/
+    height: 39px;
+    line-height: 39px;
+    display: block;
+    overflow: hidden;
+}
+
+.main-panel-content {
+    padding: 30px 15px;
+    min-height: calc(100% - 123px);
+}
