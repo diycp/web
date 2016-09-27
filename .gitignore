@@ -1,3 +1,14 @@
+#files Folder
+*.zip
+*.rar
+*.via
+*.tmp
+*.err
+
+/runtime/
+
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

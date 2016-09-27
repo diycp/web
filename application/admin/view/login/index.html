@@ -1,0 +1,83 @@
+{__NOLAYOUT__}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{$Think.config.WEBSITE_NAME} | 登录</title>
+
+	{css href="/bootstrap3/css/bootstrap.css" /}
+	<!-- {css href="/bootstrap3/css/bootstrap.min.css" /} -->
+	{css href="/font-awesome-4.6/css/font-awesome.min.css" /}
+	{css href="/css/admin/login.css" /}
+	{js href="/plugins/jquery-3.1.0.min.js" /}
+</head>
+
+
+账号：
+<input type="text" name="username" id="username" >
+<br>
+密码：
+<input type="password" name="password" id="password">
+<div class="msgerr"></div>
+
+<button>登录</button>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		if($("#username") == ''){
+			$("#username").focus();
+		}else{
+			$("#password").focus();
+		}
+
+		var data = {};
+		var msgerr = $(".msgerr")
+		$('button').click(function () {
+			data.username = $("#username").val()
+			data.password = $("#password").val()
+			if(data.username == ''){
+				msgerr.html("请输入账号！")
+			}else if(data.password == ''){
+				msgerr.html("请输入密码！")
+			}else{
+				$.ajax({
+					url: '/admin/login/doLogin/',
+					type: 'post',
+					data: data,
+					dataType: 'json',
+					success:function (data) {
+						if(data.code == 1){
+							msgerr.html(data.msg);
+
+							window.location.href = data.url;
+			  
+						}else if(data.code == 0){
+							msgerr.html(data.msg);
+						}
+					},
+					error:function () {
+						msgerr.html("网络错误，请稍后再试！");
+					}
+				})
+			}
+		})
+
+	})
+
+
+	function interval() {
+
+		// body...
+	}
+
+
+</script>
+
+
+	

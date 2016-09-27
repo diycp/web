@@ -7,7 +7,7 @@ use think\Session;
 /**
 * 
 */
-class Index extends AdminBase
+class User extends AdminBase
 {
     
     function __construct()
@@ -17,17 +17,9 @@ class Index extends AdminBase
 
     public function index()
     {
-        $key = $this->key();
-        
+    	// var_dump(Session::delete('user'));
         return view('index');
+       // return "你好";
     }
 
-    public function test()
-    {
-        var_dump( $this->getTest('Aierui') );
-
-
-        // Session::clear();
-        var_dump(Session::get('user'));
-    }
 }
