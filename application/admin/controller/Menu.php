@@ -12,10 +12,12 @@ use think\Cache;
 class Menu extends AdminBase
 {
     private $menu;    
+    private $node;    
     function __construct()
     {
         parent::__construct();
         $this->menu = Config::get('AUTH_TABLE_MENU');
+        $this->node = Config::get('AUTH_TABLE_NODE');
     }
 
     public function index()
@@ -39,12 +41,11 @@ class Menu extends AdminBase
         Cache::set('menu',$menuList,0);
 
         //获取节点
+        $nodeList = $this->nodeList();
+        //生成缓存文件
+        Cache::set('node',$nodeList,0);
         
-
-        
-        // if(!IS_AJAX){
-            $this->success('缓存已更新！', 'javascript:window.history.back();');
-        // }
+        $this->success('缓存已更新！', 'javascript:window.history.back();');
     }
 
     /****************************缓存菜单****************************/
@@ -88,6 +89,22 @@ class Menu extends AdminBase
             unset($list);
         }
         return $menuList;
+    }
+
+    public function nodeList()
+    {
+        $list = Db::table($this->menu)
+                    ->alias('menu')
+                    ->join("$this->node node",'node.pid=menu.id')
+                    ->field('menu.module, menu.controller, node.*')
+                    ->where('menu.status<>0 AND node.access<>-1')
+                    ->order('node.`group`,node.sort DESC, node.id')
+                    ->select();
+        $nodeList = array();
+        foreach($list as $index=>$item){
+            $nodeList[strtolower($item['module'])][strtolower($item['controller'])][strtolower($item['name'])] = $item;
+        }
+        return $nodeList;
     }
 
 

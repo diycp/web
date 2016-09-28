@@ -16,7 +16,7 @@ return [
         // 驱动方式
         'type'   => 'File',
         // 缓存保存目录
-        'path'   => RUNTIME_PATH.'data/',
+        'path'   => RUNTIME_PATH.'system/adminData/',
         // 缓存前缀
         'prefix' => '',
         // 缓存有效期 0表示永久缓存
@@ -32,4 +32,5 @@ return [
     'AUTH_TABLE_MENU'       =>  'bs_menu',    // 菜单表名称
     'AUTH_TABLE_NODE'       =>  'bs_node',    // 权限节点表名称
     'AUTH_TABLE_ROLE'       =>  'bs_role',    // 角色表名称
+    'AUTH_TABLE_ROLE_USER'  =>  'bs_role_user',    // 角色表名称
 ];

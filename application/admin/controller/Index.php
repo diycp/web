@@ -17,7 +17,8 @@ class Index extends AdminBase
 
     public function index()
     {
-        $key = $this->key();
+        // $key = $this->key();
+        
         
         return view('index');
     }
