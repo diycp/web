@@ -39,9 +39,9 @@ class AdminBase extends Controller
 	public function checkAccess()
 	{
 		$uid = $this->key();
-		$test = new Permission();
-
-		// $test::test();
+		$test = new Permission();//实例化后多了一个换行//
+		// var_dump($test);
+  
 
 		if(is_null($uid)){
 			$this->goLogin();

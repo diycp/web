@@ -45,7 +45,7 @@ class Menu extends AdminBase
         //生成缓存文件
         Cache::set('node',$nodeList,0);
         
-        $this->success('缓存已更新！', 'javascript:window.history.back();');
+        $this->success('缓存已更新！', '/admin/menu/');
     }
 
     /****************************缓存菜单****************************/

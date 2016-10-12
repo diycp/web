@@ -22,4 +22,9 @@ class User extends AdminBase
        // return "你好";
     }
 
+    public function test()
+    {
+        $this->success('test');
+    }
+
 }

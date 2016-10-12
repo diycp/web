@@ -13,40 +13,71 @@ use think\Db;
 
 class Permission
 {
-	
 	private static $menuData;
+	private static $table_menu;
+	private static $table_node;
+	private static $table_role;
+	private static $table_role_user;
+	private static $auth_key;
 
-	private static $table_menu = Config::get('AUTH_TABLE_MENU');
-	private static $table_node = Config::get('AUTH_TABLE_NODE');
-	private static $table_role = Config::get('AUTH_TABLE_ROLE');
-	private static $table_role_user = Config::get('AUTH_TABLE_ROLE_USER');
-	private static $auth_key   = Config::get('USER_AUTH_KEY');
+	/**
+	 * 构造方法
+	 */
+	public function __construct() 
+	{
+		self::$table_menu = Config::get('AUTH_TABLE_MENU');
+		self::$table_node = Config::get('AUTH_TABLE_NODE');
+		self::$table_role = Config::get('AUTH_TABLE_ROLE');
+		self::$table_role_user = Config::get('AUTH_TABLE_ROLE_USER');
+		self::$auth_key = Config::get('USER_AUTH_KEY');
+	}
 
+ 
 	public static function getAllMenu()
 	{
 	
 		if(is_null(self::$menuData)){
-			self::$menuData =	Cache::get('menu');
+			self::$menuData = Cache::get('menu');
 		}
 		return self::$menuData;
 	}
-
+ 	
+ 
 	public static function authId()
 	{
-		$authId = Session::get(self::$auth_key.'.id');
+		$authId = Session::get(self::$auth_key.'.id');//
+		echo "<pre>";
 
-		 // self::getAllMenu();4
-		$roles = Db::table(self::$table_role_user)
+		$role_id = Db::table(self::$table_role_user)
 		 			->where('user_id',$authId)
-		 			->select();
+		 			->column('role_id');
 
- 		
+
+		foreach ($role_id as $id) {
+			$node[] = Db::table(self::$table_role)
+					->where('id',$id)
+					->column('node_id');
+
+		}
+		 	var_dump($node);die;
+ 		return $data;
 	}
+
+
+	/**
+	 * 析构方法
+	 */
+	public function __destruct()
+	{
+		self::$table_menu = null;
+	}
+
 
 
 
 
 
 }
+?>
 
 
