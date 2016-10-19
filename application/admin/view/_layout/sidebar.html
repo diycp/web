@@ -1,9 +1,10 @@
 <?php
 
 
+echo "<pre>";
 
-
-$menu = \app\common\controller\Permission::authId();
+$menu = \app\common\controller\Permission::getMenuByNodes();
+var_dump($menu);
  
 
 

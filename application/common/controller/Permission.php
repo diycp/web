@@ -45,22 +45,41 @@ class Permission
  
 	public static function authId()
 	{
-		$authId = Session::get(self::$auth_key.'.id');//
-		echo "<pre>";
+		$authId = Session::get(self::$auth_key.'.id');//获取用户id
+		return $authId;
+	}	
 
+
+	public static function getNodes()
+	{
+		$authId = self::authId();
 		$role_id = Db::table(self::$table_role_user)
 		 			->where('user_id',$authId)
 		 			->column('role_id');
-
-
 		foreach ($role_id as $id) {
-			$node[] = Db::table(self::$table_role)
+			$node = Db::table(self::$table_role)
 					->where('id',$id)
 					->column('node_id');
-
+			$nodes[] = $node[0];
 		}
-		 	var_dump($node);die;
+		//将多个身份的node_id合并 一维数组
+		$nodes = implode(",", $nodes);
+		$tmp = explode(",", $nodes);
+		unset($nodes);
+		$data = array_unique($tmp);//节点id 取出pid
+
+
  		return $data;
+	}
+
+	public static function getMenuByNodes()
+	{
+		$nodes = self::getNodes();
+
+		$pid = Db::table(self::$table_node)
+				->where('id','in',$nodes)
+				->select();
+		return $pid;
 	}
 
 
