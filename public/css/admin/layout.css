@@ -1,10 +1,31 @@
 /*div高度自适应浏览器高度*/
 
+
+/*基本样式*/
 html,
 body {
     height: 100%;
     overflow: hidden;
+    /*font-size: 62.5%;*/
 }
+
+::selection{
+    background-color: #4395ff;
+    text-shadow: none;
+    color: #fff;
+}
+
+
+ul,li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
 
 .sidebar {
     position: absolute;
@@ -200,4 +221,30 @@ li > .dropdown-menu:before {
 .main-panel-content {
     padding: 30px 15px;
     min-height: calc(100% - 123px);
+}
+
+
+/*左侧菜单*/
+
+.admin-menu-parent{
+    /*margin-top: 30px;*/
+    /*text-align: center;*/
+    /*border-bottom: 1px dotted;*/
+    text-indent: 60px;
+
+}
+
+.admin-menu-parent > a span{
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    margin-left: -20px;
+    margin-right: 30px;
+}
+
+.admin-menu-parent a{
+    color: #F7F7F8;
+}
+
+.admin-menu-child{
+    /*display: none;*/
 }
