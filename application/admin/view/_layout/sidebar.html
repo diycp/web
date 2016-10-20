@@ -5,11 +5,15 @@ function get_menu_child_html($list){
 	$html = '';
 	foreach ($list as $k => $v) {
 		$html .= '<li class="admin-menu-parent">';
-		$html .= '<a href="javascript:;" class="dropdown-toggle"><span>'. $v['button'] .'</span><i class="fa fa-angle-right" aria-hidden="true"></i></a>';
+		$html .= '<a href="javascript:;" class="dropdown-toggle"><i class="fa '.($v['icon'] ? $v['icon'] : 'fa-desktop' ).' icon" aria-hidden="true"></i><span>'. $v['button'] .'</span><i id="toggle-angle" class="fa fa-angle-right" aria-hidden="true"></i></a>';
 		$html .= '<ul class="admin-menu-child " style="display:none;">';
 
 		foreach ($list[$k]['sub_button'] as $key => $value) {
-			$html .= '<li><a href="'.$value['url'].'">'. $value['title'] .'</a></li>';
+			$html .= '<li class="sub_button">';
+
+			$html .= '<a href="'.$value['url'].'"><i class="fa '.($value['icon'] ? $value['icon'] : 'fa-smile-o' ).' aria-hidden="true"></i>&nbsp;&nbsp;'. $value['title'] .'</a>';
+
+			$html .= '</li>';
 		}	
 
 		$html .= '</ul>';
@@ -22,6 +26,6 @@ $_menuList = \app\common\controller\Permission::menuList();
 
 echo '<div>
          
-        <ul>'.get_menu_child_html($_menuList).'</ul>
+        <ul class="menu-list">'.get_menu_child_html($_menuList).'</ul>
       </div>';
 ?>

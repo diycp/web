@@ -96,10 +96,11 @@ class Permission
         //一级菜单id
         $data = self::getParentId();
         $parent = $data['parentId'];
-        
+
         $list = array();
         foreach ($parent as $key => $id) {
             $list['button'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('title');
+            $list['icon'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('icon');
             $sub = Db::table(self::$table_menu)->where("status<>0 and pid = $id")->where('id','in',$data['pid'])->order('sort desc,id')->select();
             foreach ($sub as $k => $item) {
                 //title

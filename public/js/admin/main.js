@@ -2,12 +2,18 @@
 
 $(document).ready(function(){
 
-var extend = 	
 
-$(".admin-menu-parent").click(function(){
+
+$('.admin-menu-parent').click(function(){
 	var $this = $(this);
-	$this.find('a i').toggleClass('fa-angle-down')
-	$this.find('ul').slideToggle("slow");
+	$this.find('a').find('#toggle-angle').toggleClass('fa-angle-down')
+
+	// var extend = $('.admin-menu-child').attr('style');
+	// if (extend != 'display:none;') {
+	// 	extend.slideUp('fast')
+	// }
+
+	$this.find('ul').slideToggle('slow');
   
 
   });
