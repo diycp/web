@@ -67,20 +67,68 @@ class Permission
 		$tmp = explode(",", $nodes);
 		unset($nodes);
 		$data = array_unique($tmp);//节点id 取出pid
-
-
  		return $data;
 	}
 
-	public static function getMenuByNodes()
+	public static function getParentId()
 	{
 		$nodes = self::getNodes();
-
 		$pid = Db::table(self::$table_node)
 				->where('id','in',$nodes)
-				->select();
-		return $pid;
+				->column('pid');
+		$pid = array_unique($pid);//pid 就是menu表的id   2 3 4 7 
+		$menuId = Db::table(self::$table_menu)
+					->where('id','in',$pid)
+					->column('pid');
+		$parentId = array_unique($menuId);//一级菜单id
+
+		for($i=0;$i<count($parentId);$i++){
+			$keys[$i] = $i;
+		}
+		$parentId = array_combine($keys, $parentId);
+		$data = array('parentId' => $parentId,'pid' => $pid);
+		return $data;
 	}
+
+
+    public static function menuList()
+    {
+        //一级菜单id
+        $data = self::getParentId();
+        $parent = $data['parentId'];
+        
+        $list = array();
+        foreach ($parent as $key => $id) {
+            $list['button'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('title');
+            $sub = Db::table(self::$table_menu)->where("status<>0 and pid = $id")->where('id','in',$data['pid'])->order('sort desc,id')->select();
+            foreach ($sub as $k => $item) {
+                //title
+                $sub_button[$k]['title'] = $item['title'];
+                // 组合URL
+                if(!empty($item['module']) && !empty($item['controller']) && !empty($item['action'])){
+
+                    $sub_button[$k]['url'] = '/'.$item['module'].'/'.$item['controller'];
+                    if($item['action'] != 'index'){
+                        $sub_button[$k]['url'] .= '/'.$item['action'];
+                    }
+                    if(!empty($item['params'])){
+                        $sub_button[$k]['url'] .= $item['params'];
+                    }
+                }else{
+                    $sub_button[$k]['url'] = '';
+                }
+                //icon
+                $sub_button[$k]['icon'] = $item['icon'];
+                //target
+                $sub_button[$k]['target'] = $item['target'];
+            }
+            $list['sub_button']  = $sub_button;
+            unset($sub_button);
+            $menuList[$key] = $list;
+            unset($list);
+        }
+        return $menuList;
+    }
 
 
 	/**
@@ -88,7 +136,7 @@ class Permission
 	 */
 	public function __destruct()
 	{
-		self::$table_menu = null;
+		// self::$table_menu = null;
 	}
 
 

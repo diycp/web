@@ -1,15 +1,28 @@
 <?php
 
 
-echo "<pre>";
+function get_menu_child_html($list){
+	$html = '';
+	foreach ($list as $k => $v) {
+		$html .= '<li>';
+		$html .= '<a>'. $v['button'] .'</a>';
+		$html .= '<ul>';
 
-$menu = \app\common\controller\Permission::getMenuByNodes();
-var_dump($menu);
- 
+		foreach ($list[$k]['sub_button'] as $key => $value) {
+					$html .= '<li><a href="'.$value['url'].'">'. $value['title'] .'</a></li>';
+				}	
 
+		$html .= '</ul>';
 
+		$html .= '</li>';
+	}
+    return $html; 
+}
 
+$_menuList = \app\common\controller\Permission::menuList();
 
-
-
+echo '<div>
+         
+        <ul>'.get_menu_child_html($_menuList).'</ul>
+      </div>';
 ?>
