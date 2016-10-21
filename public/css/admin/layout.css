@@ -230,45 +230,90 @@ li > .dropdown-menu:before {
 }
 .admin-menu-parent{
     border-bottom: 1px dotted #cdb0f5;
-    text-indent: 40px;
 }
 
-.admin-menu-parent > a span{
-    text-indent: 35px;
+.admin-menu-parent .admin-menu-dropdown-toggle{
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    height: 100%;
+    display: inline-block;
+    border-left: 4px solid transparent; 
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle:hover{
+    border-left: 4px solid #1DC7EA;
+    cursor: pointer;
+    background-color: rgba(103,58,183,.6);
+}
+
+.admin-menu-parent  .admin-menu-botton{
+    cursor: pointer;
+    background-color: rgba(103,58,183,.6);
+    /*js不支持*/
+    border-left: 4px solid #1DC7EA; 
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle .icon{
+    display: inline-block;
+    line-height: 40px;
+    margin-right: 20px;
+    margin-left: 30px;
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle .title{
     letter-spacing: 3px;
     line-height: 40px;
-    display: inline;
+    display: inline-block;
     font-size: 1.6rem;
-    font-weight: 500;
+    font-weight: 700;
     font-family: inherit;
-
+    margin-right: 60px;
 }
-
+ 
 .admin-menu-parent a{
     color: #F7F7F8;
 }
+
+.admin-menu-parent  .admin-menu-botton .active{
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+
+
+
 .admin-menu-child  li{
     line-height: 40px;
     width: 164px;
-    height: 40px;
-    margin: 0 auto;
+    height: 38px;
+    margin: 4px auto;
     text-align: center;
 }
 .admin-menu-child  li a {
     display: block;
     line-height: 40px;
-    text-indent: 0px;
     width: 164px;
-    height: 40px;
+    height: 38px;
     margin: 0 auto;
 }
-.admin-menu-child li:hover a{
+.admin-menu-child li:hover a, .menu-active{
     box-shadow: 0 0 2px #ac89dd; 
     background-color: #ac89dd;
+    border-radius: 4px;
+
 }
 
-.admin-menu-parent .icon{
-    display: inline;
+
+
+.hello-user{
+    width: 100%;
+    height: 39px;
+    border-bottom: 1px dotted #cdb0f5;
     line-height: 40px;
-    margin-right: 15px;
+    text-align: center;
+    letter-spacing: 5px;
+    font-size: 1.8rem;
 }

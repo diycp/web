@@ -4,12 +4,22 @@
 function get_menu_child_html($list){
 	$html = '';
 	foreach ($list as $k => $v) {
-		$html .= '<li class="admin-menu-parent">';
-		$html .= '<a href="javascript:;" class="dropdown-toggle"><i class="fa '.($v['icon'] ? $v['icon'] : 'fa-desktop' ).' icon" aria-hidden="true"></i><span>'. $v['button'] .'</span><i id="toggle-angle" class="fa fa-angle-right" aria-hidden="true"></i></a>';
-		$html .= '<ul class="admin-menu-child " style="display:none;">';
+		$html .= '<li class="admin-menu-parent ">';
+		$html .= '<botton class="admin-menu-dropdown-toggle">
+
+			<span class="parent-active"></span>
+
+			<i class="fa '.($v['icon'] ? $v['icon'] : 'fa-desktop' ).' icon" aria-hidden="true"></i>
+
+			<span class="title">'. $v['button'] .'</span>
+
+			<i id="toggle-angle" class="fa fa-angle-down" aria-hidden="true"></i>
+
+		</botton>';
+		$html .= '<ul class="admin-menu-child " style="display:;">';
 
 		foreach ($list[$k]['sub_button'] as $key => $value) {
-			$html .= '<li class="sub_button">';
+			$html .= '<li class="sub_button ">';
 
 			$html .= '<a href="'.$value['url'].'"><i class="fa '.($value['icon'] ? $value['icon'] : 'fa-smile-o' ).' aria-hidden="true"></i>&nbsp;&nbsp;'. $value['title'] .'</a>';
 
@@ -25,7 +35,7 @@ function get_menu_child_html($list){
 $_menuList = \app\common\controller\Permission::menuList();
 
 echo '<div>
-         
+        <div class="hello-user">欢迎使用  </div>
         <ul class="menu-list">'.get_menu_child_html($_menuList).'</ul>
       </div>';
 ?>
