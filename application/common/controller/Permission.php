@@ -67,6 +67,7 @@ class Permission
 		$tmp = explode(",", $nodes);
 		unset($nodes);
 		$data = array_unique($tmp);//节点id 取出pid
+		// var_dump($data);die;
  		return $data;
 	}
 
@@ -81,7 +82,6 @@ class Permission
 					->where('id','in',$pid)
 					->column('pid');
 		$parentId = array_unique($menuId);//一级菜单id
-
 		for($i=0;$i<count($parentId);$i++){
 			$keys[$i] = $i;
 		}
@@ -96,7 +96,6 @@ class Permission
         //一级菜单id
         $data = self::getParentId();
         $parent = $data['parentId'];
-
         $list = array();
         foreach ($parent as $key => $id) {
             $list['button'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('title');
@@ -107,7 +106,6 @@ class Permission
                 $sub_button[$k]['title'] = $item['title'];
                 // 组合URL
                 if(!empty($item['module']) && !empty($item['controller']) && !empty($item['action'])){
-
                     $sub_button[$k]['url'] = '/'.$item['module'].'/'.$item['controller'];
                     if($item['action'] != 'index'){
                         $sub_button[$k]['url'] .= '/'.$item['action'];

@@ -282,9 +282,6 @@ li > .dropdown-menu:before {
   transform: rotate(-90deg);
 }
 
-
-
-
 .admin-menu-child  li{
     line-height: 40px;
     width: 164px;
@@ -305,8 +302,6 @@ li > .dropdown-menu:before {
     border-radius: 4px;
 
 }
-
-
 
 .hello-user{
     width: 100%;
