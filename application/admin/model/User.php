@@ -45,4 +45,15 @@ class User extends Model
 		return $userRow;	
 	}
 
+	public function index()
+	{
+		$data = Db::table('users')
+					->where('')
+					->select();
+		$total = count($data);
+
+		$data = array('rows' => $data,'total' => $total);
+		return json_encode($data);
+	}
+
 }

@@ -3,13 +3,15 @@ namespace app\admin\controller;
 
 use app\common\controller\AdminBase;
 use think\Session;
+use think\Request;
+use think\Loader;
 
 /**
 * 
 */
 class User extends AdminBase
 {
-    
+    // private $user;
     function __construct()
     {
         parent::__construct();
@@ -17,9 +19,21 @@ class User extends AdminBase
 
     public function index()
     {
-    	// var_dump(Session::delete('user'));
-        return view('index');
-       // return "你好";
+       
+        // $request = Request::instance();
+
+        // if($request->isAjax()){
+
+        //     $data = $request->param();
+        //     var_dump($data);
+
+        // }
+        $userModel = Loader::model('User');
+        $index = $userModel->index();
+        
+
+        // return $index;
+        return $this->fetch();
     }
 
     public function test()
