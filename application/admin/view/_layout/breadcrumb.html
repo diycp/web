@@ -1,5 +1,28 @@
-<div class="breadcrumbs">
-	<breadcrumb class="breadcrumb" split="&gt;">
-		<li><a href="javascript:void(0)"><i class="fa fa-home" aria-hidden="true"></i> 后台</a><span class="divider">&gt;</span></li>
-	</breadcrumb>
-</div>
+<!-- -->
+<?php
+
+
+
+$parents = \app\common\controller\Permission::getParents();
+
+// var_dump($parents);
+
+
+$html  = "";
+$html .= '<div class="breadcrumbs"><ol class="breadcrumb" split="&gt;">';
+
+$html .= '<li><a href="javascript:void(0)"><i class="fa fa-home" aria-hidden="true"></i> 后台 </a></li>';
+
+$html .= '<li><a href="javascript:void(0)"><i class="fa '. $parents['picon'] .' " aria-hidden="true"></i> '. $parents['ptitle'] .' </a></li>';
+
+$html .= '<li><a href="javascript:void(0)"><i class="fa '. $parents['icon'] .' " aria-hidden="true"></i> '. $parents['title'] .' </a></li>';
+
+$html .= '</ol></div>'; 
+
+
+echo $html;
+?>
+
+
+		
+	

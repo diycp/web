@@ -217,9 +217,12 @@ li > .dropdown-menu:before {
     display: block;
     overflow: hidden;
 }
+.breadcrumb{
+    padding: 0 15px;
+}
 
 .main-panel-content {
-    padding: 30px 15px;
+    padding: 15px 15px 30px;
     min-height: calc(100% - 123px);
 }
 

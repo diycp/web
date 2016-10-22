@@ -16,6 +16,7 @@ $(function() {
         this.currentRow = null;
         this.uniqueId = 'id';
         this.module = this.$toolbar.data('module');
+        // console.log(this.module)
 
         this.pagination = this.$table.data('pagination') == false ? false : true;
         this.sidePagination = this.$table.data('sidePagination') || "server";
@@ -223,7 +224,10 @@ $(function() {
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
             // 要执行的事件名称
             var $btn = $(this);
+            // console.log($btn)
             var eventName = $btn.data('name');
+            // console.log(eventName)
+
             var params = {
                 url: $btn.data('eventValue') == '' ? ($this.module + '/' + eventName) : $btn.data('eventValue'),
                 event_type: $btn.data('eventType'),
@@ -231,7 +235,9 @@ $(function() {
                 target: $btn.data('target'),
                 text: this.innerText
             };
+            // console.log(params)
 
+            //事件类型 1. 自定义 2.视图 3.默认
             if (params.event_type == 'custom') { // 自定义事件
                 return $this.$table.triggerHandler(eventName, [$this, params]);
             } else if (params.event_type == 'view') { // 打开网址
@@ -257,7 +263,7 @@ $(function() {
                 if (result === false) {
                     return;
                 }
-
+                //打开方式 1.模态框 2.本页打开 3.在新窗口打开
                 if (params.target == 'modal') {
                     $this.loadModal(params.url, params.data);
                 } else if (params.target == 'self' || params.target == '') {
@@ -282,19 +288,22 @@ $(function() {
                 $this.bootstrapTable.options.pageNumber = 1;
                 $this.$table.bootstrapTable('refresh');
             } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
+
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
                 }
                 // 验证数据
                 if (!$this.$form.valid()) {
-                    return; }
+                    return;
+                }
 
                 params.row = $this.getFormValue($this.$form);
                 delete params.row[$this.uniqueId]; // 添加需要清空主键
 
                 var result = $this.$table.triggerHandler(eventName, [$this, params]);
                 if (result === false) {
-                    return; }
+                    return;
+                }
 
                 alertConfirm({
                     title: '提示',
@@ -335,7 +344,8 @@ $(function() {
 
                 var result = $this.$table.triggerHandler(eventName, [$this, params]);
                 if (result === false || !$this.$form.valid()) {
-                    return; }
+                    return;
+                }
 
                 $.ajax({
                     url: params.url,
@@ -409,7 +419,8 @@ $(function() {
                                 // 通知删除成功
                                 var result = $this.$table.triggerHandler('deleted', [ajaxData, 'success']);
                                 if (result === false) {
-                                    return; }
+                                    return;
+                                }
 
                                 $this.$table.bootstrapTable('remove', { field: 'id', values: uniqueId });
 
@@ -431,7 +442,8 @@ $(function() {
                 // 通知我要删除
                 var result = $this.$table.triggerHandler('delete', [$this, params]);
                 if (result === false) {
-                    return; }
+                    return;
+                }
 
                 // 弹出删除提示
                 alertConfirm({
@@ -671,7 +683,7 @@ $(function() {
 
 
 
-        	
+
             return;
         }
 

@@ -145,21 +145,49 @@ class Permission
     	$action = $request->action();
 
     	$controller = strtolower($controller);
-
     	$map['menu.status'] = ['<>',0];
     	$map['menu.controller'] = ['=',$controller];
+    	$map['node.visible'] = ['=',1];
     	$nodes = Db::table(self::$table_menu)
     			->alias('menu')
     			->join(self::$table_node .' node', 'menu.id = node.pid')
     			->field('menu.title,menu.module,menu.controller,menu.action,node.*')
     			->where($map)
+    			->order('node.id,sort desc')
     			->select(); 
+    	// echo "<pre>";
+    	// var_dump($nodes);die;
 		return $nodes;
     }
 
+    /**
+     * 获取所有得上级父节菜单
+     * 1.获取到控制器
+     * 2.拿到控制器得父级
+     * 3.将操作方法添加到控制器下
+     * @return [type] [description]
+     */
     public static function getParents()
     {
-    	# code...
+    	$request = Request::instance();
+    	$module = $request->module();
+    	$controller = $request->controller();
+    	$action = $request->action();
+
+    	$controller = strtolower($controller);
+    	$map['menu.controller'] = ['=',$controller];
+    	$data = Db::table(self::$table_menu)
+    				->alias('menu')
+    				->where($map)
+    				->find();
+    	$ptitle = Db::table(self::$table_menu)
+    				->alias('menu')
+    				->where('id',$data['pid'])
+    				->field('title,icon')
+    				->find();
+    	$data['ptitle'] = $ptitle['title'];			
+    	$data['picon'] = $ptitle['icon'];			
+    	return $data;    	
     }
 
 	/**

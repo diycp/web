@@ -31,25 +31,12 @@ class User extends AdminBase
             return json_encode($index);
         }
 
-
-        $nodeList = \app\common\controller\Permission::getCurrentAccessList();
-
-        echo "<pre>";
-        var_dump($nodeList);
-
-
-
-
-
-        
-
-        // return $index;
         return $this->fetch();
     }
 
-    public function test()
+    public function add()
     {
-        $this->success('test');
+        // return $this->fetch();
     }
 
 }
