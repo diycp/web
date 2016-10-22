@@ -45,11 +45,15 @@ class User extends Model
 		return $userRow;	
 	}
 
-	public function index()
+	public function index($data = null)
 	{
-
+		$offset = $data['offset'];
+		$limit = $data['limit']; 
+		unset($data);
 		$data = Db::table('users')
 					->where('')
+					->limit($offset,$limit)
+					->order('id desc')
 					->select();
 
 		$total = count($data);

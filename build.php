@@ -22,4 +22,11 @@ return [
         'view'       => ['index/index'],
     ],
     // 其他更多的模块定义
+    // // 定义test模块的自动生成
+    'test'=>[
+        '__dir__'   =>  ['behavior','controller','model','widget'],
+        'controller'=>  ['Index','Test','UserType'],
+        'model'     =>   ['User','UserType'],
+        'view'      =>  ['index/index','index/test'],
+    ],
 ];

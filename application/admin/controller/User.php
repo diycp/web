@@ -24,11 +24,11 @@ class User extends AdminBase
 
         if($request->isAjax()){
 
-            // $data = $request->param();
-            // var_dump($data);
+            $data = $request->param();
+            
             $userModel = Loader::model('User');
-            $index = $userModel->index();
-            return json_encode($index);
+            $index = $userModel->index($data);
+            return $index;
         }
 
         return $this->fetch();
@@ -39,6 +39,7 @@ class User extends AdminBase
         // echo "string";
         // return $this->fetch();
         
+
     }
 
 }
