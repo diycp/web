@@ -1,1 +1,22 @@
-add.html
+<form method="post" action="__ACTION__" data-validate="true" data-continue="true" data-submit="ajax" class="form-horizontal">
+	<div class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>添加类别</h3>
+		</div>
+		<div class="modal-body">
+
+			<div class="control-group">
+				<label class="control-label must">类别名称</label>
+				<div class="controls">
+					<input type="text" name="name"
+						placeholder="最多20个字符" maxlength="20" class="required">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  		<button type="submit" class="btn btn-primary" aria-hidden="true">保存</button>
+		</div>
+	</div>
+</form>

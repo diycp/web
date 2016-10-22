@@ -37,6 +37,8 @@ $(function() {
 
     GridView.prototype.initTable = function() {
         zh_table();
+        // alert(zh_table() instanceof Object);
+
         var $this = this;
         $this.$table.bootstrapTable({
             striped: false, // 隔行换色

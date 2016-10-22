@@ -36,7 +36,9 @@ class User extends AdminBase
 
     public function add()
     {
+        // echo "string";
         // return $this->fetch();
+        
     }
 
 }
