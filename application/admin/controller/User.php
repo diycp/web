@@ -20,16 +20,27 @@ class User extends AdminBase
     public function index()
     {
        
-        // $request = Request::instance();
+        $request = Request::instance();
 
-        // if($request->isAjax()){
+        if($request->isAjax()){
 
-        //     $data = $request->param();
-        //     var_dump($data);
+            // $data = $request->param();
+            // var_dump($data);
+            $userModel = Loader::model('User');
+            $index = $userModel->index();
+            return json_encode($index);
+        }
 
-        // }
-        $userModel = Loader::model('User');
-        $index = $userModel->index();
+
+        $nodeList = \app\common\controller\Permission::getCurrentAccessList();
+
+        echo "<pre>";
+        var_dump($nodeList);
+
+
+
+
+
         
 
         // return $index;

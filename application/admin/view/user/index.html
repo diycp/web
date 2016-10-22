@@ -2,8 +2,20 @@
 	
 </toolbar>
 
+<div id="toolbar" class="btn-group">
+    <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-plus"></i>
+    </button>
+    <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-heart"></i>
+    </button>
+    <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-trash"></i>
+    </button>
+</div>
+
 <!-- 表格 -->
-<table id="table" data-toggle="gridview" class="table" data-url="/admin/user" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id">
+<table id="table" data-toggle="gridview" class="table" data-url="/admin/user"   data-show-columns="true" data-page-size="100" data-page-list="[100, 25, 50, All]"  >
     <thead>
 		<tr>
 			<th data-width="40" data-checkbox="true"></th>
@@ -13,3 +25,6 @@
 		</tr>
 	</thead>
 </table>
+
+
+

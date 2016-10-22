@@ -49,6 +49,7 @@ class Cx extends Taglib
         'for'        => ['attr' => 'start,end,name,comparison,step'],
         'url'        => ['attr' => 'link,vars,suffix,domain', 'close' => 0, 'expression' => true],
         'function'   => ['attr' => 'name,vars,use,call'],
+        'toolbar'   =>  array('attr' => 'id'),
     ];
 
     /**
@@ -669,5 +670,12 @@ class Cx extends Taglib
         $parseStr .= ' ?>' . $content . '<?php }; ';
         $parseStr .= $call ? '$' . $name . '(' . $call . '); ?>' : '?>';
         return $parseStr;
+    }
+
+
+    public function tagToolbar($tagT, $content)
+    {
+        $toolbar_node_list = \app\common\controller\Permission::getCurrentAccessList();
+        var_dump($toolbar_node_list);die;
     }
 }

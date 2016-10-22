@@ -5,6 +5,7 @@ use think\Session;
 use think\Config;
 use think\Cache;
 use think\Db;
+use think\Request;
 
 /**
 * 
@@ -129,6 +130,37 @@ class Permission
         return $menuList;
     }
 
+
+    /**
+     * 获取当前菜单的节点
+     * 1.获取当前的链接 拿到控制器
+     * 2.获取该控制器的id 
+     * 3.根据id 在node表pid
+     */
+    public static function getCurrentAccessList()
+    {	
+    	$request = Request::instance();
+    	$module = $request->module();
+    	$controller = $request->controller();
+    	$action = $request->action();
+
+    	$controller = strtolower($controller);
+
+    	$map['menu.status'] = ['<>',0];
+    	$map['menu.controller'] = ['=',$controller];
+    	$nodes = Db::table(self::$table_menu)
+    			->alias('menu')
+    			->join(self::$table_node .' node', 'menu.id = node.pid')
+    			->field('menu.title,menu.module,menu.controller,menu.action,node.*')
+    			->where($map)
+    			->select(); 
+		return $nodes;
+    }
+
+    public static function getParents()
+    {
+    	# code...
+    }
 
 	/**
 	 * 析构方法

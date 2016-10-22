@@ -25,6 +25,9 @@ return [
         'expire' => 0,
     ],
 
+    //调试
+    'app_debug' => true,
+
     'USER_AUTH_KEY'                     =>  'authId',   // 用户认证SESSION标记
     'ADMIN_AUTH_KEY'                    =>  'administrator',
     'USER_TABLE_NAME'                   =>  'users',    // 用户表名称
