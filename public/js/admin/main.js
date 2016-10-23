@@ -56,9 +56,10 @@ window.win = {
             });
         });
 
-        this.initDate(selector.find('.input-append.date'));
-        selector.find('.btn-back').on('click', function() { win.back();
-            return false; });
+        selector.find('.btn-back').on('click', function() { 
+        	win.back();
+            return false; 
+        });
 
         this.bootstrapTable(selector.find('table[data-toggle="table"]'));
 
@@ -382,6 +383,7 @@ function newId(length) {
 
 //jquery扩展ajax提交表单
 $.fn.ajaxSubmit = function() {
+	alert(8978)
     var $form = this;
     var $submit = $form.find(':submit');
     $submit.attr('disabled', true).toggleClass('btn-primary');

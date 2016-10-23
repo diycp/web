@@ -35,9 +35,15 @@ class User extends AdminBase
     }
 
     public function add()
-    {
-        // echo "string";
-        return view();
+    {   
+        $request = Request::instance();
+
+        if($request->isPost()){
+            $data = $request->param();
+            var_dump($data);
+        }
+
+        return $this->fetch();
     }
 
 }

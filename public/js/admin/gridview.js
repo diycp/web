@@ -304,8 +304,8 @@ $(function() {
 
             } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
 
-                alert(11011)
-                console.log(eventName);
+                // alert(11011)
+                // console.log(eventName);
 
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
@@ -566,7 +566,8 @@ $(function() {
     };
 
     GridView.prototype.loadModal = function(url, data) {
-        console.log(window)
+        // console.log(window)
+        // alert(window)
         // console.log(data);
         var $this = this;
         $.ajax({
@@ -576,44 +577,28 @@ $(function() {
             data: data,
             waitting: '正在加载，请稍后...',
             success: function(html) {
-
-                // console.log(html);return false;
-
-                var $html = $('<div>' + html + '</div>');
-
+                var ahtml = $(html);
+                var $html = ahtml.find('form');
                 var $modal = $html.find('.modal:eq(0)');
-
-                // console.log($modal);return false;
 
                 if ($modal.length == 0) {
                     alertMsg(html, 'warning');
                     return;
                 }
-
-
-                // $html.appendTo('body');
+                $html.appendTo('body');
                 win.init($html);
-                // alert(111);
-                // return false;
-                $modal.modal().show();
+                $modal.modal().show()
 
                 var action = '';
-                var $form = $html.find('form');
-                // console.log($form);
-                // return false;
-                $modal.on('hide', function() {
+                var $form = $html
 
-                    if ($form.length > 0 && $form.data('submited') == true) {
-                        if (action == '') {
-                            $this.$table.bootstrapTable('refresh');
-                        } else if (action == 'add') {
-                            $this.resetView();
-                            alert(1110)
-                        }
-                    }
-
-                    $html.remove();
-                });
+                //未提交，点击关闭
+                var dataDismiss = $form.find('.modal-footer').find('.btn-default');
+                if($form.length > 0 ){
+                    dataDismiss.click(function(){ 
+                        $html.remove();
+                    })
+                }
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
                     // alert(666)
