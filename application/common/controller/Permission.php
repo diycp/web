@@ -175,30 +175,24 @@ class Permission
     	$action = $request->action();
 
     	$controller = strtolower($controller);
-    	$map['menu.controller'] = ['=',$controller];
-    	$data = Db::table(self::$table_menu)
-    				->alias('menu')
-    				->where($map)
-    				->find();
-    	$ptitle = Db::table(self::$table_menu)
-    				->alias('menu')
-    				->where('id',$data['pid'])
-    				->field('title,icon')
-    				->find();
-    	$data['ptitle'] = $ptitle['title'];			
-    	$data['picon'] = $ptitle['icon'];			
+    	$data = [];
+    	if($controller != 'index'){
+	    	$map['menu.controller'] = ['=',$controller];
+	    	$data = Db::table(self::$table_menu)
+	    				->alias('menu')
+	    				->where($map)
+	    				->find();
+	    	$ptitle = Db::table(self::$table_menu)
+	    				->alias('menu')
+	    				->where('id',$data['pid'])
+	    				->field('title,icon')
+	    				->find();
+	    	$data['ptitle'] = $ptitle['title'];			
+	    	$data['picon'] = $ptitle['icon'];			
+    	}
     	return $data;    	
     }
-
-	/**
-	 * 析构方法
-	 */
-	public function __destruct()
-	{
-		// self::$table_menu = null;
-	}
-
-
+ 
 
 
 

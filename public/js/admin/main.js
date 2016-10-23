@@ -230,52 +230,7 @@ window.win = {
 
         $('head').append('<link rel="stylesheet" href="' + url + '">');
     },
-    initDate: function(selector) {
-        var $selector = $(selector);
-        if ($selector.length == 0) {
-            return;
-        }
-        if (typeof $.fn.datetimepicker == 'undefined') {
-            // win.getStyle('/bootstrap2.3.2/css/bootstrap-datetimepicker.min.css');
-            // win.getScript('/bootstrap2.3.2/js/bootstrap-datetimepicker.min.js', function() {
-            //     win.initDate($selector);
-            // });
-            return;
-        }
-
-        zh_date();
-
-        $selector.each(function(i, item) {
-            /*
-            // bootstrap官网提供的日期控件用法
-            $selector.eq(i).datetimepicker({
-            	weekStart: 1,
-                autoclose: true,
-                zIndex:99999,
-                format: $selector.eq(i).data('dateFormat') || 'yyyy-mm-dd',
-                startDate: $selector.eq(i).data('startDate'),
-                endDate: $selector.eq(i).data('endDate'),
-                startView: $selector.eq(i).data('startView') || 'month',
-            	minView: $selector.eq(i).data('minView') || 'month',
-            	maxView: $selector.eq(i).data('maxView') || 'decade',
-                todayBtn:$selector.eq(i).data('todayBtn') || false,
-                todayHighlight: true,
-                minuteStep: $selector.eq(i).data('minuteStep') || 1,
-                language: 'zh-CN'
-            });
-            */
-
-            // bootstrap 扩展的日期控件用法
-            $selector.eq(i).datetimepicker({
-                format: $selector.eq(i).data('dateFormat') || "yyyy-MM-dd",
-                pickDate: $selector.eq(i).data('pickDate') || true,
-                pickTime: $selector.eq(i).data('pickDate') || true,
-                startDate: $selector.eq(i).data('startDate') ? new Date($selector.eq(i).data('startDate')) : null,
-                endDate: $selector.eq(i).data('endDate') ? new Date($selector.eq(i).data('endDate')) : null,
-                language: 'zh-CN'
-            });
-        });
-    },
+ 
     validate: function(object) { // jquery.validate验证
         var $form = $(object);
         if ($form.length == 0) {
@@ -618,42 +573,21 @@ function alertConfirm(_option, ok) {
     });
 }
 
+
+ 
+
 /**
- * 修改密码
+ * 页面加载完需要执行的程序
+ * @param  func 函数体
  */
-function modifyPwd() {
-    win.modal('/admin/index/modifyPwd');
-}
-
-function getImageTextHtml(data) {
-    var url = data.url;
-    var html = '<div class="media_preview_area" data-appmsg-id="' + data.id + '"><div class="appmsg' + (!data.children ? '' : ' multi') + '"><div class="appmsg_content">';
-
-    var appmsg = data;
-    if (data.children) {
-        var index = 0;
-        do {
-            url = appmsg.url;
-            html += '<div class="appmsg_item js_appmsg_item has_thumb">';
-            html += '<img class="js_appmsg_thumb appmsg_thumb" src="' + appmsg.cover + '">';
-            html += '<h4 class="appmsg_title">';
-            html += '<a href="' + url + '">' + appmsg.title + '</a>';
-            html += '</h4>';
-            html += '</div>';
-            appmsg = data.children[index];
-            index++;
-        } while (appmsg);
-    } else {
-        html += '<h4 class="appmsg_title js_title"><a href="' + url + '" target="_blank">' + appmsg.title + '</a></h4>';
-        html += '<div class="appmsg_info">';
-        html += '	<em class="appmsg_date">' + appmsg.create_time + '</em>';
-        html += '</div>';
-        html += '<div class="appmsg_thumb_wrp">';
-        html += '	<img src="' + appmsg.cover + '" alt="封面" class="appmsg_thumb">';
-        html += '</div>';
-        html += '<p class="appmsg_desc">dssds</p>';
-    }
-
-    html += '</div></div></div>';
-    return html;
+function addLoadEvent(func){
+	var oldonload = window.onload;
+	if(typeof window.onload != 'function'){
+		window.onload = func;
+	}else{
+		window.onload = function(){
+			oldonload()
+			func();
+		}
+	}
 }

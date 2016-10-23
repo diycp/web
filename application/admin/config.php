@@ -13,7 +13,7 @@ return [
 	    'layout_on'    =>  true,
 	    'layout_name'  =>  'layout',
         'taglib_pre_load'    =>    'think\template\taglib\Cx',
-        // 'taglib_build_in'    =>    'think\template\taglib\Cx',
+        'taglib_build_in'    =>    'think\template\taglib\Cx',
 	],
     //缓存
     'cache'                             => [
@@ -28,7 +28,9 @@ return [
     ],
 
     //调试
-    'app_debug' => true,
+    // 'app_debug' => true,
+    // 
+    // 'app_trace'              => true,
 
     'USER_AUTH_KEY'                     =>  'authId',   // 用户认证SESSION标记
     'ADMIN_AUTH_KEY'                    =>  'administrator',

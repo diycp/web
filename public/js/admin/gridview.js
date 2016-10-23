@@ -1,5 +1,7 @@
 /**
- * 系统集成js
+ * GridView
+ * @author aierui
+ * @version 1.0
  */
 $(function() {
     var GridView = function(el, option) {
@@ -8,6 +10,7 @@ $(function() {
         if (this.$table.length == 0) {
             return;
         }
+        // console.log(this);
 
         this.$toolbar = $(this.$table.data('toolbar'));
         this.$form = this.$toolbar.find('.edit-form, .search-form');
@@ -30,6 +33,7 @@ $(function() {
     };
 
     GridView.prototype.init = function() {
+        // console.log(this)
         this.initTable();
         this.initForm();
         this.initToolbar();
@@ -228,7 +232,7 @@ $(function() {
             var $btn = $(this);
             // console.log($btn)
             var eventName = $btn.data('name');
-            // console.log(eventName)
+            // console.log(eventName);return false;
 
             var params = {
                 url: $btn.data('eventValue') == '' ? ($this.module + '/' + eventName) : $btn.data('eventValue'),
@@ -237,7 +241,8 @@ $(function() {
                 target: $btn.data('target'),
                 text: this.innerText
             };
-            // console.log(params)
+            // console.log(params);return false;
+
 
             //事件类型 1. 自定义 2.视图 3.默认
             if (params.event_type == 'custom') { // 自定义事件
@@ -246,6 +251,7 @@ $(function() {
                 params.data = {};
 
                 if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') {
+                    // alert(256)
                     if ($this.currentRow == null) {
                         return alertMsg('请先选择要编辑的数据！', 'warning');
                     }
@@ -267,7 +273,10 @@ $(function() {
                 }
                 //打开方式 1.模态框 2.本页打开 3.在新窗口打开
                 if (params.target == 'modal') {
+                    // console.log('0123');
+                    // return false;
                     $this.loadModal(params.url, params.data);
+
                 } else if (params.target == 'self' || params.target == '') {
                     window.location.href = params.url;
                 } else if (params.target == '_blank') {
@@ -284,12 +293,19 @@ $(function() {
                 return $('html').append('<script type="text/javascript">' + params.event_value + '</script>');
             }
 
+
+
+            //toolbar中默认四个按钮 添加、修改、删除、搜索
             if (eventName.substr(0, 6) == 'search') { // 搜索
                 var row = $this.getFormValue();
                 $this.queryParams = row;
                 $this.bootstrapTable.options.pageNumber = 1;
                 $this.$table.bootstrapTable('refresh');
+
             } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
+
+                alert(11011)
+                console.log(eventName);
 
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
@@ -550,6 +566,8 @@ $(function() {
     };
 
     GridView.prototype.loadModal = function(url, data) {
+        console.log(window)
+        // console.log(data);
         var $this = this;
         $.ajax({
             url: url,
@@ -558,26 +576,39 @@ $(function() {
             data: data,
             waitting: '正在加载，请稍后...',
             success: function(html) {
+
+                // console.log(html);return false;
+
                 var $html = $('<div>' + html + '</div>');
 
                 var $modal = $html.find('.modal:eq(0)');
+
+                // console.log($modal);return false;
+
                 if ($modal.length == 0) {
                     alertMsg(html, 'warning');
                     return;
                 }
 
-                $html.appendTo('body');
+
+                // $html.appendTo('body');
                 win.init($html);
+                // alert(111);
+                // return false;
                 $modal.modal().show();
 
                 var action = '';
                 var $form = $html.find('form');
+                // console.log($form);
+                // return false;
                 $modal.on('hide', function() {
+
                     if ($form.length > 0 && $form.data('submited') == true) {
                         if (action == '') {
                             $this.$table.bootstrapTable('refresh');
                         } else if (action == 'add') {
                             $this.resetView();
+                            alert(1110)
                         }
                     }
 
@@ -585,7 +616,9 @@ $(function() {
                 });
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
+                    // alert(666)
                     $form.on('ajaxSubmit', function(e, data) {
+                        alert(777)
                         var row = $this.getFormValue($form);
                         if (!win.empty(data)) {
                             row = $.extend(row, data);
@@ -671,6 +704,7 @@ $(function() {
 
     new GridView('table[data-toggle="gridview"]');
 
+
     $.fn.gridView = function(option, params) {
         var $gridview = this.data('gridview');
         if (typeof option == 'string') {
@@ -682,10 +716,6 @@ $(function() {
         }
 
         if ($gridview != undefined) {
-
-
-
-
             return;
         }
 

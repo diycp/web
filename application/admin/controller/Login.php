@@ -36,7 +36,7 @@ class Login extends Controller
                 return $this->error($userModel->getError());
             }
 
-            return $this->success('登录成功', Url::build('admin/index/index'));
+            return $this->success('登录成功', Url::build('/admin/menu'));
 
             
 		}else{

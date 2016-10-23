@@ -20,8 +20,6 @@ class AdminBase extends Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->request = Request::instance();
-
 		$this->module_name = Request::instance()->module();
 
 		if($this->module_name == "admin"){
@@ -38,6 +36,9 @@ class AdminBase extends Controller
 
 	public function checkAccess()
 	{
+
+
+		// echo "string";
 		$uid = $this->key();
 		$test = new Permission();//实例化后多了一个换行//
 		// var_dump($test);

@@ -5,6 +5,8 @@ use app\common\controller\AdminBase;
 use think\Db;
 use think\Config;
 use think\Cache;
+use think\Controller;
+
 
 /**
 * 
@@ -22,7 +24,7 @@ class Menu extends AdminBase
 
     public function index()
     {
-
+        // echo "string";die;
         // dump(Cache::get('menu'));die;
         return view('index');
     }

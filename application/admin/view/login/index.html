@@ -56,9 +56,11 @@
 					dataType: 'json',
 					success:function (data) {
 						if(data.code == 1){
-							msgerr.html(data.msg);
-
-							window.location.href = data.url;
+							msgerr.html('登录中···');
+							setTimeout(function() {
+								msgerr.html(data.msg);
+				                window.location.href = data.url;
+				            }, parseInt(data.wait) * 500)
 			  
 						}else if(data.code == 0){
 							msgerr.html(data.msg);
