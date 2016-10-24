@@ -38,12 +38,17 @@ class User extends AdminBase
     {   
         $request = Request::instance();
 
-        if($request->isPost()){
-            $data = $request->param();
-            var_dump($data);
-        }
+        if( $request->isPost() ){
 
+            $data = $request->param();
+            $userModel = Loader::model('User');
+            $result = $userModel->add($data);
+
+            return $result;
+        }
         return $this->fetch();
     }
+
+
 
 }

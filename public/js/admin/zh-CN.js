@@ -1,23 +1,23 @@
 // validator
 function zh_validator() {
     // 验证手机号
-    jQuery.validator.addMethod("mobile", function (value, element) {
+    jQuery.validator.addMethod("mobile", function(value, element) {
         var tel = /^1[3|4|5|7|8]\d{9}$/;
         return this.optional(element) || (tel.test(value));
     }, "请输入有效的手机号码");
 
     // 验证身份证号
-    jQuery.validator.addMethod("cardid", function (value, element) {
+    jQuery.validator.addMethod("cardid", function(value, element) {
         var tel = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
         return this.optional(element) || (tel.test(value));
     }, "请输入有效的身份证号");
-    
+
     // 自定义正则验证
-    jQuery.validator.addMethod("regular", function (value, element) {
+    jQuery.validator.addMethod("regular", function(value, element) {
         var regular = eval(element.getAttribute('data-rule-regular'));
         return this.optional(element) || (regular.test(value));
     }, "输入有误");
-    
+
     $.extend($.validator.messages, {
         required: "这是必填字段",
         remote: "请修正此字段",
@@ -42,13 +42,21 @@ function zh_validator() {
 // table
 function zh_table() {
     $.extend($.fn.bootstrapTable.defaults, {
-        formatLoadingMessage: function () { return '加载数据中，请稍候……'; },
-        formatRecordsPerPage: function (pageNumber) { return '每页显示 ' + pageNumber + ' 条记录'; },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) { return '显示第 ' + pageFrom + ' 到第 ' + pageTo + ' 条记录，总共 ' + totalRows + ' 条记录'; },
-        formatSearch: function () { return '搜索'; },
-        formatNoMatches: function () { return '没有找到匹配的记录'; },
-        formatRefresh: function () { return '刷新'; },
-        formatToggle: function () { return '切换'; },
-        formatColumns: function () { return '选择列'; }
+        formatLoadingMessage: function() {
+            return '加载数据中，请稍候……'; },
+        formatRecordsPerPage: function(pageNumber) {
+            return '每页显示 ' + pageNumber + ' 条记录'; },
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return '显示第 ' + pageFrom + ' 到第 ' + pageTo + ' 条记录，总共 ' + totalRows + ' 条记录'; },
+        formatSearch: function() {
+            return '搜索'; },
+        formatNoMatches: function() {
+            return '没有找到匹配的记录'; },
+        formatRefresh: function() {
+            return '刷新'; },
+        formatToggle: function() {
+            return '切换'; },
+        formatColumns: function() {
+            return '选择列'; }
     });
 }

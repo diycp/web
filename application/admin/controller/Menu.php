@@ -29,6 +29,11 @@ class Menu extends AdminBase
         return view('index');
     }
 
+    public function add()
+    {
+        return view();
+    }
+
 
 
     /****************************缓存菜单****************************/

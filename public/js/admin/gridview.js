@@ -33,7 +33,6 @@ $(function() {
     };
 
     GridView.prototype.init = function() {
-        // console.log(this)
         this.initTable();
         this.initForm();
         this.initToolbar();
@@ -41,8 +40,6 @@ $(function() {
 
     GridView.prototype.initTable = function() {
         zh_table();
-        // alert(zh_table() instanceof Object);
-
         var $this = this;
         $this.$table.bootstrapTable({
             striped: false, // 隔行换色
@@ -53,7 +50,7 @@ $(function() {
             classes: 'table table-hover table-no-bordered',
             sidePagination: $this.sidePagination,
             pageSize: $this.pageSize,
-            //clickToSelect: $this.clickToSelect,
+
             queryParams: function(params) {
                 params = $.extend(params, $this.queryParams);
 
@@ -68,7 +65,9 @@ $(function() {
                 return params;
             },
             onAll: function(name, args) {
-                //$table.trigger('all', [name, args]);
+                // console.log($this.$table-hover)
+                // 
+                // $table.trigger('all', [name, args]);
                 return false;
             },
             onClickCell: function(field, value, row, $element) {
@@ -485,11 +484,7 @@ $(function() {
         }
 
         this.$form[0].reset();
-        /*
-		this.$form.find('input[type=hidden]').each(function(i, item){
-    		item.value = '';
-    	});
-    	*/
+         
     };
 
     GridView.prototype.editRow = function(row) {
@@ -532,25 +527,7 @@ $(function() {
     };
 
     GridView.prototype.resetView = function(height) {
-        /*
-        if(this.$table.attr('data-height') != undefined){
-        	return;
-        }
-        if(height == undefined){
-        	height = $(window).height() - this.bootstrapTable.$tableHeader.offset().top;
-        	
-        	if(this.bootstrapTable.options.heightCut != undefined && this.bootstrapTable.options.heightCut != ''){
-        		if(!isNaN(this.bootstrapTable.options.heightCut)){
-        			height -= parseInt(this.bootstrapTable.options.heightCut);
-        		}else{
-        			height -= $(this.bootstrapTable.options.heightCut).outerHeight();
-        		}
-        	}
-        }
-        this.$table.bootstrapTable('resetView',{height: height});
-        */
-
-        //this.$table.bootstrapTable('resetView');
+ 
         if (this.$table.data('height') != undefined) {
             this.$table.bootstrapTable('resetView');
         }
@@ -594,57 +571,52 @@ $(function() {
 
                 //未提交，点击关闭
                 var dataDismiss = $form.find('.modal-footer').find('.btn-default');
-                if($form.length > 0 ){
-                    dataDismiss.click(function(){ 
+                if ($form.length > 0) {
+                    dataDismiss.click(function() {
                         $html.remove();
                     })
                 }
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
-                    // alert(666)
-                    $form.on('ajaxSubmit', function(e, data) {
-                        alert(777)
-                        var row = $this.getFormValue($form);
-                        if (!win.empty(data)) {
-                            row = $.extend(row, data);
-                        }
-
-                        if (!win.empty(row[$this.uniqueId])) {
-                            if ($form.data('success') == 'refresh') {
-                                $form.data('success', null);
-                            } else {
-                                // 获取当前数据所在行
-                                var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="' + row[$this.uniqueId] + '"]').attr('data-index');
-                                if (data_index == undefined) { // 添加数据
-                                    action = 'add';
-                                    $this.$table.bootstrapTable('insertRow', { index: 0, row: row });
-                                } else { // 更新行数据
-                                    action = 'edit';
-                                    $this.$table.bootstrapTable('updateRow', { index: data_index, row: row });
-                                }
-                            }
-                        }
+                    var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
+                    dataSuccess.on('click', function(e, data) {
+                        $this.ajaxSubmit($form)
+                        // alert(1236)
                     });
                 }
             }
         });
     };
 
-    GridView.prototype.showModal = function(modal) {
+    GridView.prototype.ajaxSubmit = function(selector) {
+        var $form = selector == undefined ? this.$form : $(selector);
         $this = this;
-        var $modal = $(modal);
 
-        $modal.modal().show();
-        $modal.on('hide', function() {
-            var $form = $modal[0].nodeName == 'FORM' ? $modal : $modal.find('form');
+        if ($form.length == 0) {
+            return;
+        }
 
-            if ($form.length > 0 && $form.data('submited') == true) {
-                $form.data('submited', false);
-                $this.$table.bootstrapTable('refresh');
+        $.ajax({
+            url: $form.attr('action'),
+            type: $form.attr('method'),
+            data: $form.serialize(),
+            dataType: 'json',
+            success: function(data) {
+                $this.refresh();
+                 
+
+            },
+            error: function() {
+                alert('error')
             }
-        });
-    };
+        })
+    }
 
+    /**
+     * 获取表单的值
+     * @param  {[type]} selector [description]
+     * @return {[type]}          [description]
+     */
     GridView.prototype.getFormValue = function(selector) {
         var $form = selector == undefined ? this.$form : $(selector);
         if ($form.length == 0) {
@@ -655,7 +627,7 @@ $(function() {
         var serializeArray = $form.serializeArray(),
             name;
 
-        // 仅支持到一位数组
+        // 仅支持到一维数组
         $.each(serializeArray, function(i, item) {
             name = item.name.substr(5, item.name.indexOf(']') - 5);
             if (name == '') {

@@ -27,6 +27,9 @@ return [
         'expire' => 0,
     ],
 
+    //伪静态
+    'url_html_suffix' => false,
+
     //调试
     // 'app_debug' => true,
     // 

@@ -312,60 +312,6 @@ window.win = {
         zh_table();
         $table.bootstrapTable();
     },
-    ajaxFileUpload: function($append) {
-        if (typeof $.ajaxFileUpload != 'function') {
-            var $win = this;
-            this.getScript('/js/ajaxfileupload.js', function() {
-                $win.ajaxFileUpload($append);
-            });
-            return;
-        }
-
-        $append = $($append);
-        var $input_str = $append.children('input[type="text"]');
-        $input_str.attr('readonly', 'readonly');
-
-        var file_id = newId(16);
-        var $addOn = $append.find('.add-on');
-        var file_type = $append.attr('data-type') || 'image';
-        var $file = $('<input type="file" id="' + file_id + '" name="upfile" />');
-        $file.appendTo($addOn);
-
-        $file.on('change', function() {
-            $.ajaxFileUpload({
-                url: '/admin/ueditor?action=upload' + file_type,
-                type: 'post',
-                secureuri: false, //一般设置为false
-                fileElementId: file_id, // 上传文件的id、name属性名
-                dataType: 'json', //返回值类型，一般设置为json、application/json
-                success: function(data, status) {
-                    if (data.status == 0) {
-                        alertMsg(data.info);
-                    } else {
-                        $input_str.val(data.url);
-                        if (file_type == 'image') {
-                            $addOn.data('popover').options.content = '<img src="' + data.url + '" style="width:128px; height: 128px;" />';
-                        }
-                    }
-                },
-                error: function(data, status, e) {
-                    alertMsg('上传文件失败！');
-                }
-            });
-        });
-
-        if (file_type == 'image') {
-            $addOn.popover({
-                html: true,
-                placement: 'bottom',
-                title: '图片预览',
-                content: '<img src="' + $input_str.val() + '" style="max-width:128px;" />',
-                trigger: 'hover'
-            });
-
-            var aaa;
-        }
-    }
 };
 
 /** */
@@ -383,6 +329,7 @@ function newId(length) {
 
 //jquery扩展ajax提交表单
 $.fn.ajaxSubmit = function() {
+	console.log(362)
 	alert(8978)
     var $form = this;
     var $submit = $form.find(':submit');
@@ -520,6 +467,7 @@ function alertMsg(content, time) {
 
 /** 弹出确认提示框 */
 function alertConfirm(_option, ok) {
+	alert('这是alertConfirm')
     if (typeof _option == 'string') {
         _option = { content: _option };
         if (typeof ok == 'function') {
@@ -574,6 +522,8 @@ function alertConfirm(_option, ok) {
         visibled_modal.show();
     });
 }
+
+
 
 
  

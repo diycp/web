@@ -16,7 +16,7 @@ class User extends Model
 	 */
 	public function login(array $data)
 	{
-		$password = md5($data['password']);
+		$password = md6($data['password']);
 		$map['username'] = $data['username'];
  
 		$userRow = Db::table('users')
@@ -64,6 +64,24 @@ class User extends Model
 
 		$data = array('rows' => $data,'total' => $total);
 		return $data;
+	}
+
+
+	public function add(array $data)
+	{
+		$data['password'] = md6($data['password']);
+		$res = Db::table('users')->insert($data);
+		
+		if($res == 1){
+			$result = [
+	            'code' => 1,
+	            'msg'  => '添加成功！',
+	            'data' => '',
+	            'url'  => '',
+	            'wait' => 3,
+        	];
+		}
+		return $result;
 	}
 
 }
