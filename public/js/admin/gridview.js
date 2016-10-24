@@ -579,9 +579,10 @@ $(function() {
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
                     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
-                    dataSuccess.on('click', function(e, data) {
-                        $this.ajaxSubmit($form)
-                        // alert(1236)
+
+                    $form.on('ajaxSubmit', function(e, data) {
+                        // $this.ajaxSubmit($form)
+                        alert(1236)
                     });
                 }
             }
@@ -602,6 +603,7 @@ $(function() {
             data: $form.serialize(),
             dataType: 'json',
             success: function(data) {
+                console.log(data);
                 $this.refresh();
                  
 

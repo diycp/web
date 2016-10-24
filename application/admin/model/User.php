@@ -9,6 +9,9 @@ use think\Config;
 
 class User extends Model
 {
+
+	
+
 	protected $table = 'users';
 
 	/**
@@ -73,15 +76,10 @@ class User extends Model
 		$res = Db::table('users')->insert($data);
 		
 		if($res == 1){
-			$result = [
-	            'code' => 1,
-	            'msg'  => '添加成功！',
-	            'data' => '',
-	            'url'  => '',
-	            'wait' => 3,
-        	];
+			
+		}else{
+			return $this->error = '添加失败！';
 		}
-		return $result;
 	}
 
 }

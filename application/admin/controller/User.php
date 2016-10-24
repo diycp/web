@@ -5,6 +5,7 @@ use app\common\controller\AdminBase;
 use think\Session;
 use think\Request;
 use think\Loader;
+use think\Db;
 
 /**
 * 
@@ -19,12 +20,9 @@ class User extends AdminBase
 
     public function index()
     {
-       
-        $request = Request::instance();
+        if(request()->isAjax()){
 
-        if($request->isAjax()){
-
-            $data = $request->param();
+            $data = request()->param();
             
             $userModel = Loader::model('User');
             $index = $userModel->index($data);
@@ -36,14 +34,21 @@ class User extends AdminBase
 
     public function add()
     {   
-        $request = Request::instance();
+        if( request()->isPost() ){
 
-        if( $request->isPost() ){
+            $data = request()->param();
 
-            $data = $request->param();
-            $userModel = Loader::model('User');
-            $result = $userModel->add($data);
+            $data['password'] = md6($data['password']);
+            $res = Db::table('users')->insert($data);
 
+            // $userModel = Loader::model('User');
+            // $result = $userModel->add($data);
+
+            if($res == 1){
+                return $this->success('添加成功！');
+            }else{
+                return $this->error('添加失败！');
+            }
             return $result;
         }
         return $this->fetch();
