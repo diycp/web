@@ -580,10 +580,35 @@ $(function() {
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
                     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
 
-                    $form.on('ajaxSubmit', function(e, data) {
-                        // $this.ajaxSubmit($form)
-                        alert(1236)
-                    });
+                    // $form.ajaxSubmit(function(){
+                    //     alert(3256)
+                    // })
+
+                    $('body').on('click',$form,function(){
+                        alert('123')
+                    })
+                   // $form.on('ajaxSubmit', function(e, data){
+                   //      var row = $this.getFormValue($form);
+                   //      if(!win.empty(data)){
+                   //          row = $.extend(row, data);
+                   //      }
+                        
+                   //      if(!win.empty(row[$this.uniqueId])){
+                   //          if($form.data('success') == 'refresh'){
+                   //              $form.data('success', null);
+                   //          }else{
+                   //              // 获取当前数据所在行
+                   //              var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="'+row[$this.uniqueId]+'"]').attr('data-index');
+                   //              if(data_index == undefined){ // 添加数据
+                   //                  action = 'add';
+                   //                  $this.$table.bootstrapTable('insertRow', {index: 0, row: row});
+                   //              }else{// 更新行数据
+                   //                  action = 'edit';
+                   //                  $this.$table.bootstrapTable('updateRow', {index: data_index, row: row});
+                   //              }
+                   //          }
+                   //      }
+                   //  });
                 }
             }
         });
