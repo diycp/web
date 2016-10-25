@@ -22,21 +22,26 @@ class Permission
 	private static $auth_key;
 
 	/**
-	 * 构造方法
+	 * 构造方法  不可用 因为不是每一个地方都需要实例化 该表
 	 */
 	public function __construct() 
 	{
+
+    }
+
+    public static function _initTable()
+    {
 		self::$table_menu = Config::get('AUTH_TABLE_MENU');
 		self::$table_node = Config::get('AUTH_TABLE_NODE');
 		self::$table_role = Config::get('AUTH_TABLE_ROLE');
 		self::$table_role_user = Config::get('AUTH_TABLE_ROLE_USER');
 		self::$auth_key = Config::get('USER_AUTH_KEY');
-	}
+    }
 
  
 	public static function getAllMenu()
 	{
-	
+	   
 		if(is_null(self::$menuData)){
 			self::$menuData = Cache::get('menu');
 		}
@@ -45,7 +50,8 @@ class Permission
  	
  
 	public static function authId()
-	{
+	{      
+        self::_initTable();
 		$authId = Session::get(self::$auth_key.'.id');//获取用户id
 		return $authId;
 	}	
@@ -54,15 +60,18 @@ class Permission
 	public static function getNodes()
 	{
 		$authId = self::authId();
+
 		$role_id = Db::table(self::$table_role_user)
 		 			->where('user_id',$authId)
 		 			->column('role_id');
+                    // var_dump($role_id);die;
 		foreach ($role_id as $id) {
 			$node = Db::table(self::$table_role)
 					->where('id',$id)
 					->column('node_id');
 			$nodes[] = $node[0];
 		}
+        // var_dump($nodes);die;
 		//将多个身份的node_id合并 一维数组
 		$nodes = implode(",", $nodes);
 		$tmp = explode(",", $nodes);
@@ -155,8 +164,6 @@ class Permission
     			->where($map)
     			->order('node.id,sort desc')
     			->select(); 
-    	// echo "<pre>";
-    	// var_dump($nodes);die;
 		return $nodes;
     }
 

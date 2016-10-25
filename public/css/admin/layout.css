@@ -2,6 +2,7 @@
 
 
 /*基本样式*/
+
 html,
 body {
     height: 100%;
@@ -9,23 +10,22 @@ body {
     /*font-size: 62.5%;*/
 }
 
-::selection{
+::selection {
     background-color: #4395ff;
     text-shadow: none;
     color: #fff;
 }
 
-
-ul,li{
+ul,
+li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
-
 
 .sidebar {
     position: absolute;
@@ -217,7 +217,8 @@ li > .dropdown-menu:before {
     display: block;
     overflow: hidden;
 }
-.breadcrumb{
+
+.breadcrumb {
     padding: 0 15px;
 }
 
@@ -228,43 +229,45 @@ li > .dropdown-menu:before {
 
 
 /*左侧菜单*/
-.menu-list > li{
+
+.menu-list > li {
     line-height: 40px
 }
-.admin-menu-parent{
+
+.admin-menu-parent {
     border-bottom: 1px dotted #cdb0f5;
 }
 
-.admin-menu-parent .admin-menu-dropdown-toggle{
+.admin-menu-parent .admin-menu-dropdown-toggle {
     width: 100%;
     min-height: 40px;
     height: auto;
     height: 100%;
     display: inline-block;
-    border-left: 4px solid transparent; 
+    border-left: 4px solid transparent;
 }
 
-.admin-menu-parent .admin-menu-dropdown-toggle:hover{
+.admin-menu-parent .admin-menu-dropdown-toggle:hover {
     border-left: 4px solid #1DC7EA;
     cursor: pointer;
-    background-color: rgba(103,58,183,.6);
+    background-color: rgba(103, 58, 183, .6);
 }
 
-.admin-menu-parent  .admin-menu-botton{
+.admin-menu-parent .admin-menu-botton {
     cursor: pointer;
-    background-color: rgba(103,58,183,.6);
+    background-color: rgba(103, 58, 183, .6);
     /*js不支持*/
-    border-left: 4px solid #1DC7EA; 
+    border-left: 4px solid #1DC7EA;
 }
 
-.admin-menu-parent .admin-menu-dropdown-toggle .icon{
+.admin-menu-parent .admin-menu-dropdown-toggle .icon {
     display: inline-block;
     line-height: 40px;
     margin-right: 20px;
     margin-left: 30px;
 }
 
-.admin-menu-parent .admin-menu-dropdown-toggle .title{
+.admin-menu-parent .admin-menu-dropdown-toggle .title {
     letter-spacing: 3px;
     line-height: 40px;
     display: inline-block;
@@ -273,40 +276,42 @@ li > .dropdown-menu:before {
     font-family: inherit;
     margin-right: 60px;
 }
- 
-.admin-menu-parent a{
+
+.admin-menu-parent a {
     color: #F7F7F8;
 }
 
-.admin-menu-parent  .admin-menu-botton .active{
-  -webkit-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+.admin-menu-parent .admin-menu-botton .active {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
-.admin-menu-child  li{
+.admin-menu-child li {
     line-height: 40px;
     width: 164px;
     height: 38px;
     margin: 4px auto;
     text-align: center;
 }
-.admin-menu-child  li a {
+
+.admin-menu-child li a {
     display: block;
     line-height: 40px;
     width: 164px;
     height: 38px;
     margin: 0 auto;
 }
-.admin-menu-child li:hover a, .menu-active{
-    box-shadow: 0 0 2px #ac89dd; 
+
+.admin-menu-child li:hover a,
+.menu-active {
+    box-shadow: 0 0 2px #ac89dd;
     background-color: #ac89dd;
     border-radius: 4px;
-
 }
 
-.hello-user{
+.hello-user {
     width: 100%;
     height: 39px;
     border-bottom: 1px dotted #cdb0f5;
@@ -315,3 +320,195 @@ li > .dropdown-menu:before {
     letter-spacing: 5px;
     font-size: 1.8rem;
 }
+
+
+
+/* 表单部分 */
+/*.control-label:after {
+    content: ': '
+}
+
+.checkbox input[type="radio"] {
+    margin-top: -2px;
+}
+
+.control-label.must:before,
+.control-label.must before {
+    content: '*';
+    color: red;
+}
+
+.bootstrap-table .fixed-table-header {
+    margin-bottom: -1px;
+}
+
+.bootstrap-table .table>thead>tr>th {
+    border-bottom: 1px solid #ddd !important;
+}
+
+.toolbar {
+    margin-bottom: 15px;
+}
+
+.toolbar input[type="text"] {
+    margin: 0;
+}
+
+.toolbar .search-box {
+    display: inline-block;
+    position: relative;
+}
+
+.toolbar form.search-form.search-box {
+    padding: 0;
+    margin: 0;
+    width: auto;
+    background-color: transparent;
+}
+
+.bootstrap-table .search-box input {
+    padding-right: 30px;
+    width: 164px;
+}
+
+.search-box .btn {
+    border: none;
+    background: none;
+    box-shadow: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    width: 35px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.bootstrap-table .search-box .btn {
+    top: 2px;
+}
+
+.bootstrap-table .toolbar {
+    margin-bottom: 0;
+}
+
+.toolbar form {
+    padding: 20px 0 0 0;
+    display: inline-block;
+    margin: 15px 0 0;
+    *margin: 15px 0 15px 0;
+    _margin: 15px 0 15px 0;
+    background-color: #f8f8f8;
+    width: 100%;
+}
+
+.toolbar form .input-append .add-on {
+    margin-top: 2px;
+}
+
+.bootstrap-table .fixed-table-toolbar {
+    position: relative;
+    width: 100%;
+}
+
+.bootstrap-table .fixed-table-toolbar .bars {
+    min-height: 30px;
+    float: initial;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.bootstrap-table .fixed-table-toolbar .columns {
+    position: absolute !important;
+    right: 0;
+    top: 0;
+    ;
+    top: 11px\9;
+    margin: 0 !important;
+}
+
+.bootstrap-table .fixed-table-toolbar .columns .keep-open .dropdown-menu input[type=checkbox] {
+    margin-top: -2px;
+}
+
+.bootstrap-table .fixed-table-container .no-records-found td {
+    text-align: center;
+}
+
+.modal .bootstrap-table .bars {
+    margin-bottom: 0;
+}
+
+.modal-mini {
+    width: 300px;
+    margin-left: -152px;
+}
+
+.modal-backdrop,
+.modal-backdrop.fade.in {
+    opacity: .1;
+    filter: alpha(opacity=10);
+}
+
+.form-horizontal .input-append input[type=text] {
+    width: 180px;
+}
+
+.form-horizontal .input-append input.form-control {
+    width: 240px;
+}
+
+.input-append.file {}
+
+.input-append.file .file_name {
+    display: none;
+}
+
+.input-append.file .add-on {
+    width: 28px;
+    overflow: hidden;
+    padding: 0;
+    height: 28px;
+    position: relative;
+}
+
+.input-append.file .add-on i {
+    position: absolute;
+    top: 6px;
+    left: 7px;
+}
+
+.input-append.file .add-on input[type=file] {
+    font-size: 58px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-control {
+    width: 270px;
+}
+
+select.form-control {
+    width: 283px;
+}
+
+.gray {
+    color: #bbb;
+}
+
+.add-img-box img {
+    position: relative;
+    top: -1px;
+}
+
+table[data-toggle="gridview"] {
+    display: none;
+}
+
+.bootstrap-table .fixed-table-container table[data-toggle="gridview"] {
+    display: table;
+}
+*/

@@ -24,9 +24,10 @@ class Menu extends AdminBase
 
     public function index()
     {
-        // echo "string";die;
+        // echo "string";
         // dump(Cache::get('menu'));die;
-        return view('index');
+        return view();
+        // return $this->display();
     }
 
     public function add()

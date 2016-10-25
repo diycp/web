@@ -19,8 +19,6 @@ return [
     'auto_bind_module'       => false,
     // 注册的根命名空间
     'root_namespace'         => [],
-    // 扩展配置文件
-    'extra_config_list'      => ['database', 'validate'],
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型
@@ -60,6 +58,8 @@ return [
     'default_validate'       => '',
     // 默认的空控制器名
     'empty_controller'       => 'Error',
+    // 操作方法前缀
+    'use_action_prefix'      => false,
     // 操作方法后缀
     'action_suffix'          => '',
     // 自动搜索控制器
@@ -85,6 +85,8 @@ return [
     'url_route_on'           => true,
     // 路由配置文件（支持配置多个）
     'route_config_file'      => ['route'],
+    // 路由使用完整匹配
+    'route_complete_match'   => false,
     // 是否强制使用路由
     'url_route_must'         => false,
     // 域名部署
@@ -97,6 +99,10 @@ return [
     'url_controller_layer'   => 'controller',
     // 表单请求类型伪装变量
     'var_method'             => '_method',
+    // 表单ajax伪装变量
+    'var_ajax'               => '_ajax',
+    // 表单pjax伪装变量
+    'var_pjax'               => '_pjax',
 
     // +----------------------------------------------------------------------
     // | 模板设置
@@ -186,7 +192,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => 'red-team',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION
@@ -223,15 +229,15 @@ return [
         // 数据库连接DSN配置
         'dsn'            => '',
         // 服务器地址
-        'hostname'       => 'localhost',
+        'hostname'       => '127.0.0.1',
         // 数据库名
-        'database'       => '',
+        'database'       => 'neweb',
         // 数据库用户名
         'username'       => 'root',
         // 数据库密码
         'password'       => '',
         // 数据库连接端口
-        'hostport'       => '',
+        'hostport'       => '3306',
         // 数据库连接参数
         'params'         => [],
         // 数据库编码默认采用utf8

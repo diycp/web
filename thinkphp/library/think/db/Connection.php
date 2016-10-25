@@ -104,6 +104,8 @@ abstract class Connection
         'sql_explain'    => false,
         // Builder类
         'builder'        => '',
+        // Query类
+        'query'          => '\\think\\db\\Query',
     ];
 
     // PDO连接参数
@@ -131,12 +133,14 @@ abstract class Connection
      * 创建指定模型的查询对象
      * @access public
      * @param string $model 模型类名称
+     * @param string $queryClass 查询对象类名
      * @return Query
      */
-    public function model($model)
+    public function model($model, $queryClass = '')
     {
         if (!isset($this->query[$model])) {
-            $this->query[$model] = new Query($this, $model);
+            $class               = $queryClass ?: $this->config['query'];
+            $this->query[$model] = new $class($this, $model);
         }
         return $this->query[$model];
     }
@@ -151,7 +155,8 @@ abstract class Connection
     public function __call($method, $args)
     {
         if (!isset($this->query['database'])) {
-            $this->query['database'] = new Query($this);
+            $class                   = $this->config['query'];
+            $this->query['database'] = new $class($this);
         }
         return call_user_func_array([$this->query['database'], $method], $args);
     }
@@ -416,6 +421,8 @@ abstract class Connection
                 $type  = is_array($val) ? $val[1] : PDO::PARAM_STR;
                 if (PDO::PARAM_STR == $type) {
                     $value = $this->quote($value);
+                } elseif (PDO::PARAM_INT == $type && '' === $value) {
+                    $value = 0;
                 }
                 // 判断占位符
                 $sql = is_numeric($key) ?
@@ -444,6 +451,9 @@ abstract class Connection
             // 占位符
             $param = is_numeric($key) ? $key + 1 : ':' . $key;
             if (is_array($val)) {
+                if (PDO::PARAM_INT == $val[1] && '' === $val[0]) {
+                    $val[0] = 0;
+                }
                 $result = $this->PDOStatement->bindValue($param, $val[0], $val[1]);
             } else {
                 $result = $this->PDOStatement->bindValue($param, $val);

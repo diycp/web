@@ -28,8 +28,7 @@ class User extends AdminBase
             $index = $userModel->index($data);
             return $index;
         }
-
-        return $this->fetch();
+        return view();
     }
 
     public function add()
@@ -45,13 +44,20 @@ class User extends AdminBase
             // $result = $userModel->add($data);
 
             if($res == 1){
-                return $this->success('添加成功！');
+                return info('添加成功！',1);
             }else{
-                return $this->error('添加失败！');
+                return info('添加失败！',0);
             }
-            return $result;
         }
         return $this->fetch();
+    }
+
+    public function edit($id == 0)
+    {
+        $
+        
+        $data = Db::table('users')->where('id',$id)->find();
+
     }
 
 

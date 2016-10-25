@@ -53,10 +53,10 @@ class Redirect extends Response
     {
         if (is_array($name)) {
             foreach ($name as $key => $val) {
-                Session::set($key, $val);
+                Session::flash($key, $val);
             }
         } else {
-            Session::set($name, $value);
+            Session::flash($name, $value);
         }
         return $this;
     }
@@ -67,7 +67,7 @@ class Redirect extends Response
      */
     public function getTargetUrl()
     {
-        return preg_match('/^(https?:|\/)/', $this->data) ? $this->data : Url::build($this->data, $this->params);
+        return (strpos($this->data, '://') || 0 === strpos($this->data, '/')) ? $this->data : Url::build($this->data, $this->params);
     }
 
     public function params($params = [])

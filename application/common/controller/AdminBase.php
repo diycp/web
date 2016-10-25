@@ -22,9 +22,9 @@ class AdminBase extends Controller
 		parent::__construct();
 		$this->module_name = Request::instance()->module();
 
-		if($this->module_name == "admin"){
-			$this->checkAccess();
-		}	
+		// if($this->module_name == "admin"){
+		// 	$this->checkAccess();
+		// }	
 	 	//获取session
 	 	$userId = Session::get(Config::get('USER_AUTH_KEY').'.id');
 
@@ -40,7 +40,7 @@ class AdminBase extends Controller
 
 		// echo "string";
 		$uid = $this->key();
-		$test = new Permission();//实例化后多了一个换行//
+		// $test = new Permission();//实例化后多了一个换行//
 		// var_dump($test);
   
 

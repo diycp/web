@@ -1,6 +1,6 @@
 <?php
 
-function info($msg = '', $url = '', $code = '', $data = '', $wait = 3 )
+function info($msg = '', $code = '', $url = '',  $data = '', $wait = 3 )
 {
 	if (is_numeric($msg)) {
         $code = $msg;

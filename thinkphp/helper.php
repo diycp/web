@@ -147,7 +147,7 @@ if (!function_exists('widget')) {
     /**
      * 渲染输出Widget
      * @param string    $name Widget名称
-     * @param array     $data 传人的参数
+     * @param array     $data 传入的参数
      * @return mixed
      */
     function widget($name, $data = [])
@@ -272,8 +272,8 @@ if (!function_exists('url')) {
     /**
      * Url生成
      * @param string        $url 路由地址
-     * @param string|array  $value 变量
-     * @param bool|string   $suffix 前缀
+     * @param string|array  $vars 变量
+     * @param bool|string   $suffix 生成的URL后缀
      * @param bool|string   $domain 域名
      * @return string
      */
@@ -298,7 +298,7 @@ if (!function_exists('session')) {
             Session::init($name);
         } elseif (is_null($name)) {
             // 清除
-            Session::clear($value);
+            Session::clear('' === $value ? null : $value);
         } elseif ('' === $value) {
             // 判断或获取
             return 0 === strpos($name, '?') ? Session::has(substr($name, 1), $prefix) : Session::get($name, $prefix);
@@ -361,7 +361,7 @@ if (!function_exists('cache')) {
         }
         if ('' === $value) {
             // 获取缓存
-            return Cache::get($name);
+            return 0 === strpos($name, '?') ? Cache::has(substr($name, 1)) : Cache::get($name);
         } elseif (is_null($value)) {
             // 删除缓存
             return Cache::rm($name);

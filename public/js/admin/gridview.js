@@ -579,36 +579,11 @@ $(function() {
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
                     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
-
-                    // $form.ajaxSubmit(function(){
-                    //     alert(3256)
-                    // })
-
-                    $('body').on('click',$form,function(){
-                        alert('123')
+                    dataSuccess.click(function(){
+                        $this.ajaxSubmit($form)
                     })
-                   // $form.on('ajaxSubmit', function(e, data){
-                   //      var row = $this.getFormValue($form);
-                   //      if(!win.empty(data)){
-                   //          row = $.extend(row, data);
-                   //      }
-                        
-                   //      if(!win.empty(row[$this.uniqueId])){
-                   //          if($form.data('success') == 'refresh'){
-                   //              $form.data('success', null);
-                   //          }else{
-                   //              // 获取当前数据所在行
-                   //              var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="'+row[$this.uniqueId]+'"]').attr('data-index');
-                   //              if(data_index == undefined){ // 添加数据
-                   //                  action = 'add';
-                   //                  $this.$table.bootstrapTable('insertRow', {index: 0, row: row});
-                   //              }else{// 更新行数据
-                   //                  action = 'edit';
-                   //                  $this.$table.bootstrapTable('updateRow', {index: data_index, row: row});
-                   //              }
-                   //          }
-                   //      }
-                   //  });
+
+
                 }
             }
         });
@@ -623,14 +598,21 @@ $(function() {
         }
 
         $.ajax({
-            url: $form.attr('action'),
-            type: $form.attr('method'),
+            url: $form.attr('data-action'),
+            type: $form.attr('data-method'),
             data: $form.serialize(),
             dataType: 'json',
             success: function(data) {
-                console.log(data);
-                $this.refresh();
-                 
+                if(data.code == 1){
+                    $form.remove();
+                    alertMsg('添加成功！')
+                    $this.refresh();
+
+                }else if(data.code == 0){
+                    $form.remove();
+                    alertMsg('添加失败！')
+                    $this.refresh();
+                }               
 
             },
             error: function() {
