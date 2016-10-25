@@ -52,12 +52,15 @@ class User extends AdminBase
         return $this->fetch();
     }
 
-    public function edit($id == 0)
+    public function edit($id = 0)
     {
-        $
+        // $
         
         $data = Db::table('users')->where('id',$id)->find();
 
+
+        $this->assign('data',$data);
+        return $this->fetch();
     }
 
 
