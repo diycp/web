@@ -302,10 +302,6 @@ $(function() {
                 $this.$table.bootstrapTable('refresh');
 
             } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
-
-                // alert(11011)
-                // console.log(eventName);
-
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
                 }
@@ -313,7 +309,7 @@ $(function() {
                 if (!$this.$form.valid()) {
                     return;
                 }
-
+                alert(111)
                 params.row = $this.getFormValue($this.$form);
                 delete params.row[$this.uniqueId]; // 添加需要清空主键
 
@@ -322,32 +318,32 @@ $(function() {
                     return;
                 }
 
-                alertConfirm({
-                    title: '提示',
-                    content: '确定' + params.text + '吗？',
-                    ok: function() {
-                        $.ajax({
-                            url: params.url,
-                            data: params.row,
-                            type: 'post',
-                            dataType: 'json',
-                            success: function(data) {
-                                $this.editRow(); // 重置表单
-                                if (!win.empty(data)) {
-                                    params.row = $.extend(params.row, data);
-                                }
+                // alertConfirm({
+                //     title: '提示',
+                //     content: '确定' + params.text + '吗？',
+                //     ok: function() {
+                //         $.ajax({
+                //             url: params.url,
+                //             data: params.row,
+                //             type: 'post',
+                //             dataType: 'json',
+                //             success: function(data) {
+                //                 $this.editRow(); // 重置表单
+                //                 if (!win.empty(data)) {
+                //                     params.row = $.extend(params.row, data);
+                //                 }
 
-                                if (win.empty(params.row[$this.uniqueId])) {
-                                    $this.refresh();
-                                } else {
-                                    var newData = { index: 0, row: params.row };
-                                    $this.$table.bootstrapTable('insertRow', newData);
-                                    $this.resetView();
-                                }
-                            }
-                        });
-                    }
-                });
+                //                 if (win.empty(params.row[$this.uniqueId])) {
+                //                     $this.refresh();
+                //                 } else {
+                //                     var newData = { index: 0, row: params.row };
+                //                     $this.$table.bootstrapTable('insertRow', newData);
+                //                     $this.resetView();
+                //                 }
+                //             }
+                //         });
+                //     }
+                // });
             } else if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') { // 编辑
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
@@ -356,6 +352,7 @@ $(function() {
                 if ($this.currentRow == null) {
                     return alertMsg('请先选择要编辑的数据！', 'warning');
                 }
+                alert(11102)
 
                 params.row = $this.getFormValue($this.$form);
 
@@ -363,6 +360,9 @@ $(function() {
                 if (result === false || !$this.$form.valid()) {
                     return;
                 }
+                
+
+                console.log(params);return false;
 
                 $.ajax({
                     url: params.url,

@@ -12,4 +12,5 @@
 - update admin node/users 16.10.21
 - update admin toolbar/bootstrap-table  16.10.22
 - update admin main.js/gridview.js  16.10.23
-- 改动main.js /gridview.js /add
+- 改动main.js /gridview.js /add 16.10.24/25
+- …………调试调试修改
