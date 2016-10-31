@@ -229,10 +229,7 @@ $(function() {
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
             // 要执行的事件名称
             var $btn = $(this);
-            // console.log($btn)
             var eventName = $btn.data('name');
-            // console.log(eventName);return false;
-
             var params = {
                 url: $btn.data('eventValue') == '' ? ($this.module + '/' + eventName) : $btn.data('eventValue'),
                 event_type: $btn.data('eventType'),
@@ -240,8 +237,6 @@ $(function() {
                 target: $btn.data('target'),
                 text: this.innerText
             };
-            // console.log(params);return false;
-
 
             //事件类型 1. 自定义 2.视图 3.默认
             if (params.event_type == 'custom') { // 自定义事件
@@ -256,13 +251,15 @@ $(function() {
                     }
                     if (undefined == $this.currentRow[$this.uniqueId]) {
                         params.data[$this.uniqueId] = $this.currentRow.order_no;
-                        //console.log($this.currentRow);return;
+                        // console.log($this.currentRow);return;
                     } else {
                         params.data[$this.uniqueId] = $this.currentRow[$this.uniqueId];
+                        // console.log($this.currentRow);
                     }
-
+                    // console.log(params.event_value);return;
                     if (params.event_value == '') {
                         params.url += '?' + $this.uniqueId + '=' + $this.currentRow[$this.uniqueId];
+                        // console.log(params);return;
                     }
                 }
 
@@ -291,8 +288,6 @@ $(function() {
             } else if (params.event_type == 'javascript') { // 打开网址
                 return $('html').append('<script type="text/javascript">' + params.event_value + '</script>');
             }
-
-
 
             //toolbar中默认四个按钮 添加、修改、删除、搜索
             if (eventName.substr(0, 6) == 'search') { // 搜索
@@ -345,6 +340,7 @@ $(function() {
                 //     }
                 // });
             } else if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') { // 编辑
+                alert(111)
                 if ($this.$form.length == 0) {
                     return $this.$table.triggerHandler(eventName, [$this, params]);
                 }
@@ -361,7 +357,7 @@ $(function() {
                     return;
                 }
                 
-
+                alert(1112)
                 console.log(params);return false;
 
                 $.ajax({

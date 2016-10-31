@@ -54,16 +54,19 @@ class User extends AdminBase
 
     public function edit($id = 0)
     {
+        // echo "string";die();
         
-        if(request()->isPost()){
             $data = request()->param();
 
-            $id = $data['id'];
+            $id = intval($data['id']);
+            // var_dump($id);die;
+        if(request()->isPost()){
             
         }
         
         $data = Db::table('users')->where('id',$id)->find();
 
+        // var_dump($data);die;
 
         $this->assign('data',$data);
         return $this->fetch();

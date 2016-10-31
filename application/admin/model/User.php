@@ -53,15 +53,15 @@ class User extends Model
 		$offset = $data['offset'];
 		$limit = $data['limit']; 
 		unset($data);
-		$map['status'] = 1;
+		// $map['status'] = 1;
 		$data = Db::table('users')
-					->where($map)
+					// ->where($map)
 					->limit($offset,$limit)
 					->order('id desc')
 					->select();
 
 		$total = Db::table('users')
-					->where($map)
+					// ->where($map)
 					->limit($offset,$limit)
 					->count();
 
