@@ -34,15 +34,9 @@ class User extends AdminBase
     public function add()
     {   
         if( request()->isPost() ){
-
             $data = request()->param();
-
             $data['password'] = md6($data['password']);
             $res = Db::table('users')->insert($data);
-
-            // $userModel = Loader::model('User');
-            // $result = $userModel->add($data);
-
             if($res == 1){
                 return info('添加成功！',1);
             }else{
@@ -54,23 +48,25 @@ class User extends AdminBase
 
     public function edit($id = 0)
     {
-        // echo "string";die();
-        
-            $data = request()->param();
-
-            $id = intval($data['id']);
-            // var_dump($id);die;
+        $data = request()->param();
+        $id = intval($data['id']);
         if(request()->isPost()){
-            
+            $data['password'] = md6($data['password']);
+            $res = Db::table('users')->update($data);
+            if($res >= 0){
+                return info('修改成功！',1);
+            }else{
+                return info('修改失败！',0);
+            }
         }
         
         $data = Db::table('users')->where('id',$id)->find();
-
-        // var_dump($data);die;
-
         $this->assign('data',$data);
         return $this->fetch();
     }
+
+
+
 
 
 

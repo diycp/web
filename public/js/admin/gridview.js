@@ -245,21 +245,16 @@ $(function() {
                 params.data = {};
 
                 if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') {
-                    // alert(256)
                     if ($this.currentRow == null) {
                         return alertMsg('请先选择要编辑的数据！', 'warning');
                     }
                     if (undefined == $this.currentRow[$this.uniqueId]) {
                         params.data[$this.uniqueId] = $this.currentRow.order_no;
-                        // console.log($this.currentRow);return;
                     } else {
                         params.data[$this.uniqueId] = $this.currentRow[$this.uniqueId];
-                        // console.log($this.currentRow);
                     }
-                    // console.log(params.event_value);return;
                     if (params.event_value == '') {
                         params.url += '?' + $this.uniqueId + '=' + $this.currentRow[$this.uniqueId];
-                        // console.log(params);return;
                     }
                 }
 
@@ -269,208 +264,186 @@ $(function() {
                 }
                 //打开方式 1.模态框 2.本页打开 3.在新窗口打开
                 if (params.target == 'modal') {
-                    // console.log('0123');
-                    // return false;
+                    // alert(110236)
                     $this.loadModal(params.url, params.data);
 
                 } else if (params.target == 'self' || params.target == '') {
                     window.location.href = params.url;
                 } else if (params.target == '_blank') {
                     window.open(params.url);
-                } else {
+                }  else {
                     var $container = $(params.target);
+                    // console.log($container)
                     $container.load(params.url, function() {
+                        // alert(1325)
                         win.init($container);
-                        $container.find('table[data-toggle="gridview"]').gridView();;
+                        var aaa = $container.find('table[data-toggle="gridview"]').gridView();;
+                        // console.log(aaa)
                     });
                 }
                 return;
             } else if (params.event_type == 'javascript') { // 打开网址
                 return $('html').append('<script type="text/javascript">' + params.event_value + '</script>');
-            }
+            }else if (params.event_type == 'default') {
 
-            //toolbar中默认四个按钮 添加、修改、删除、搜索
-            if (eventName.substr(0, 6) == 'search') { // 搜索
-                var row = $this.getFormValue();
-                $this.queryParams = row;
-                $this.bootstrapTable.options.pageNumber = 1;
-                $this.$table.bootstrapTable('refresh');
+                //toolbar中默认四个按钮 添加、修改、删除、搜索 
+                if (eventName.substr(0, 6) == 'search') { // 搜索
+                    var row = $this.getFormValue();
+                    $this.queryParams = row;
+                    $this.bootstrapTable.options.pageNumber = 1;
+                    $this.$table.bootstrapTable('refresh');
 
-            } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
-                if ($this.$form.length == 0) {
-                    return $this.$table.triggerHandler(eventName, [$this, params]);
-                }
-                // 验证数据
-                if (!$this.$form.valid()) {
-                    return;
-                }
-                alert(111)
-                params.row = $this.getFormValue($this.$form);
-                delete params.row[$this.uniqueId]; // 添加需要清空主键
-
-                var result = $this.$table.triggerHandler(eventName, [$this, params]);
-                if (result === false) {
-                    return;
-                }
-
-                // alertConfirm({
-                //     title: '提示',
-                //     content: '确定' + params.text + '吗？',
-                //     ok: function() {
-                //         $.ajax({
-                //             url: params.url,
-                //             data: params.row,
-                //             type: 'post',
-                //             dataType: 'json',
-                //             success: function(data) {
-                //                 $this.editRow(); // 重置表单
-                //                 if (!win.empty(data)) {
-                //                     params.row = $.extend(params.row, data);
-                //                 }
-
-                //                 if (win.empty(params.row[$this.uniqueId])) {
-                //                     $this.refresh();
-                //                 } else {
-                //                     var newData = { index: 0, row: params.row };
-                //                     $this.$table.bootstrapTable('insertRow', newData);
-                //                     $this.resetView();
-                //                 }
-                //             }
-                //         });
-                //     }
-                // });
-            } else if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') { // 编辑
-                alert(111)
-                if ($this.$form.length == 0) {
-                    return $this.$table.triggerHandler(eventName, [$this, params]);
-                }
-
-                if ($this.currentRow == null) {
-                    return alertMsg('请先选择要编辑的数据！', 'warning');
-                }
-                alert(11102)
-
-                params.row = $this.getFormValue($this.$form);
-
-                var result = $this.$table.triggerHandler(eventName, [$this, params]);
-                if (result === false || !$this.$form.valid()) {
-                    return;
-                }
-                
-                alert(1112)
-                console.log(params);return false;
-
-                $.ajax({
-                    url: params.url,
-                    data: params.row,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function(data) {
-                        // 重置表单
-                        $this.editRow();
-
-                        // 获取当前数据所在行
-                        if (!win.empty(data)) { params.row = data; }
-                        var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="' + params.row[$this.uniqueId] + '"]').attr('data-index');
-
-                        // 更新行数据
-                        var newData = { index: data_index, row: params.row };
-                        $this.$table.bootstrapTable('updateRow', newData);
-
-                        // 重置大小
-                        $this.resetView();
+                } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
+                    if ($this.$form.length == 0) {
+                        return $this.$table.triggerHandler(eventName, [$this, params]);
                     }
-                });
-            } else if (eventName.substr(0, 6) == 'delete') {
-                var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
-                if (rows.length == 0) {
-                    alertMsg('请勾选要删除的数据', 'warning');
-                    return;
-                }
+                    // 验证数据
+                    if (!$this.$form.valid()) {
+                        return;
+                    }
+                    alert(111)
+                    params.row = $this.getFormValue($this.$form);
+                    delete params.row[$this.uniqueId]; // 添加需要清空主键
 
-                var params = {
-                    rows: rows,
-                    length: rows.length,
-                    url: $this.module + '/' + eventName,
-                    backdrop: true,
-                    title: '提示',
-                    message: '确定要删除选中的' + rows.length + '项吗？',
-                    okValue: '确定',
-                    cancelValue: '取消',
-                    ajaxMsg: '正在删除中...',
-                    data: null,
-                    ok: function() {
-                        var post_data = {};
+                    var result = $this.$table.triggerHandler(eventName, [$this, params]);
+                    if (result === false) {
+                        return;
+                    }
+     
+                } else if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') { // 编辑
+                    alert(111)
+                    if ($this.$form.length == 0) {
+                        return $this.$table.triggerHandler(eventName, [$this, params]);
+                    }
 
-                        var uniqueId = [];
-                        var needRestForm = false;
-                        var editUniqueId = $this.$form.find('input[name="' + $this.uniqueId + '"]').val();
-                        for (var i in params.rows) {
-                            uniqueId.push(params.rows[i][$this.uniqueId]);
-                            // 判断当前编辑的数据是否在删除数组中
-                            if (editUniqueId == params.rows[i][$this.uniqueId]) {
-                                needRestForm = true;
-                            }
+                    if ($this.currentRow == null) {
+                        return alertMsg('请先选择要编辑的数据！', 'warning');
+                    }
+                    alert(11102)
+
+                    params.row = $this.getFormValue($this.$form);
+
+                    var result = $this.$table.triggerHandler(eventName, [$this, params]);
+                    if (result === false || !$this.$form.valid()) {
+                        return;
+                    }
+                    
+                    alert(1112)
+                    console.log(params);return false;
+
+                    $.ajax({
+                        url: params.url,
+                        data: params.row,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(data) {
+                            // 重置表单
+                            $this.editRow();
+
+                            // 获取当前数据所在行
+                            if (!win.empty(data)) { params.row = data; }
+                            var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="' + params.row[$this.uniqueId] + '"]').attr('data-index');
+
+                            // 更新行数据
+                            var newData = { index: data_index, row: params.row };
+                            $this.$table.bootstrapTable('updateRow', newData);
+
+                            // 重置大小
+                            $this.resetView();
                         }
+                    });
+                } else if (eventName.substr(0, 6) == 'delete') {
+                    var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
+                    if (rows.length == 0) {
+                        alertMsg('请勾选要删除的数据', 'warning');
+                        return;
+                    }
 
-                        if (params.data == null) {
-                            post_data[$this.uniqueId] = uniqueId.join(',');
-                        } else {
-                            post_data = params.data;
-                        }
+                    var params = {
+                        rows: rows,
+                        length: rows.length,
+                        url: $this.module + '/' + eventName,
+                        backdrop: true,
+                        title: '提示',
+                        message: '确定要删除选中的' + rows.length + '项吗？',
+                        okValue: '确定',
+                        cancelValue: '取消',
+                        ajaxMsg: '正在删除中...',
+                        data: null,
+                        ok: function() {
+                            var post_data = {};
 
-                        // 请求服务器删除数据
-                        $.ajax({
-                            url: params.url,
-                            dataType: 'json',
-                            data: post_data,
-                            waitting: params.ajaxMsg,
-                            type: 'post',
-                            success: function(ajaxData) {
-                                if (needRestForm) { $this.editRow(); }
-                                ajaxData.deletedRows = params.rows;
-                                // 通知删除成功
-                                var result = $this.$table.triggerHandler('deleted', [ajaxData, 'success']);
-                                if (result === false) {
-                                    return;
+                            var uniqueId = [];
+                            var needRestForm = false;
+                            var editUniqueId = $this.$form.find('input[name="' + $this.uniqueId + '"]').val();
+                            for (var i in params.rows) {
+                                uniqueId.push(params.rows[i][$this.uniqueId]);
+                                // 判断当前编辑的数据是否在删除数组中
+                                if (editUniqueId == params.rows[i][$this.uniqueId]) {
+                                    needRestForm = true;
                                 }
-
-                                $this.$table.bootstrapTable('remove', { field: 'id', values: uniqueId });
-
-                                if ($this.bootstrapTable.data.length == 0 && $this.bootstrapTable.options.sidePagination == 'server') {
-                                    $this.$table.bootstrapTable('refresh');
-                                } else {
-                                    $this.resetView();
-                                }
-                            },
-                            error: function(ajaxData) {
-                                ajaxData.deletedRows = params.rows;
-                                $this.$table.triggerHandler('deleted', [ajaxData, 'error']);
                             }
-                        });
-                    },
-                    cancel: function() {}
-                };
 
-                // 通知我要删除
-                var result = $this.$table.triggerHandler('delete', [$this, params]);
-                if (result === false) {
-                    return;
+                            if (params.data == null) {
+                                post_data[$this.uniqueId] = uniqueId.join(',');
+                            } else {
+                                post_data = params.data;
+                            }
+
+                            // 请求服务器删除数据
+                            $.ajax({
+                                url: params.url,
+                                dataType: 'json',
+                                data: post_data,
+                                waitting: params.ajaxMsg,
+                                type: 'post',
+                                success: function(ajaxData) {
+                                    if (needRestForm) { $this.editRow(); }
+                                    ajaxData.deletedRows = params.rows;
+                                    // 通知删除成功
+                                    var result = $this.$table.triggerHandler('deleted', [ajaxData, 'success']);
+                                    if (result === false) {
+                                        return;
+                                    }
+
+                                    $this.$table.bootstrapTable('remove', { field: 'id', values: uniqueId });
+
+                                    if ($this.bootstrapTable.data.length == 0 && $this.bootstrapTable.options.sidePagination == 'server') {
+                                        $this.$table.bootstrapTable('refresh');
+                                    } else {
+                                        $this.resetView();
+                                    }
+                                },
+                                error: function(ajaxData) {
+                                    ajaxData.deletedRows = params.rows;
+                                    $this.$table.triggerHandler('deleted', [ajaxData, 'error']);
+                                }
+                            });
+                        },
+                        cancel: function() {}
+                    };
+
+                    // 通知我要删除
+                    var result = $this.$table.triggerHandler('delete', [$this, params]);
+                    if (result === false) {
+                        return;
+                    }
+
+                    // 弹出删除提示
+                    alertConfirm({
+                        title: params.title,
+                        content: params.message,
+                        okValue: params.okValue,
+                        cancelValue: params.cancelValue,
+                        ok: params.ok,
+                        cancel: params.cancel,
+                        backdrop: params.backdrop
+                    });
+                } else {
+                    $table.triggerHandler(eventName, [$this, params]);
                 }
-
-                // 弹出删除提示
-                alertConfirm({
-                    title: params.title,
-                    content: params.message,
-                    okValue: params.okValue,
-                    cancelValue: params.cancelValue,
-                    ok: params.ok,
-                    cancel: params.cancel,
-                    backdrop: params.backdrop
-                });
-            } else {
-                $table.triggerHandler(eventName, [$this, params]);
             }
+
         });
     };
 
@@ -539,9 +512,6 @@ $(function() {
     };
 
     GridView.prototype.loadModal = function(url, data) {
-        // console.log(window)
-        // alert(window)
-        // console.log(data);
         var $this = this;
         $.ajax({
             url: url,
@@ -601,12 +571,12 @@ $(function() {
             success: function(data) {
                 if(data.code == 1){
                     $form.remove();
-                    alertMsg('添加成功！')
+                    alertMsg(data.msg)
                     $this.refresh();
 
                 }else if(data.code == 0){
                     $form.remove();
-                    alertMsg('添加失败！')
+                    alertMsg(data.msg)
                     $this.refresh();
                 }               
 

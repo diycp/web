@@ -329,8 +329,6 @@ function newId(length) {
 
 //jquery扩展ajax提交表单
 $.fn.ajaxSubmit = function() {
-	// console.log(362)
-	alert(8978)
     var $form = this;
     var $submit = $form.find(':submit');
     $submit.attr('disabled', true).toggleClass('btn-primary');
