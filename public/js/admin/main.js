@@ -465,7 +465,6 @@ function alertMsg(content, time) {
 
 /** 弹出确认提示框 */
 function alertConfirm(_option, ok) {
-	alert('这是alertConfirm')
     if (typeof _option == 'string') {
         _option = { content: _option };
         if (typeof ok == 'function') {
@@ -484,7 +483,8 @@ function alertConfirm(_option, ok) {
     }, _option);
 
     var html = '';
-    html += '<div class="modal modal-mini hide fade" tabindex="-1" role="dialog">';
+    html += '<div class="modal bs-example-modal-sm  fade" tabindex="-1" role="dialog"  aria-labelledby="mySmallModalLabel" aria-hidden="true">';
+    html += '<div class="modal-dialog modal-sm">';
     html += '	<div class="modal-header">';
     html += '		<button type="button" class="close" data-dismiss="modal">×</button>';
     html += '		<h3 id="myModalLabel">' + option.title + '</h3>';
@@ -494,17 +494,22 @@ function alertConfirm(_option, ok) {
     html += '    <button class="btn" data-dismiss="modal">' + option.cancelValue + '</button>';
     html += '    <button class="btn btn-primary">' + option.okValue + '</button>';
     html += '  </div>';
+    html += '  </div>';
     html += '</div>';
+
+ 
 
     var visibled_modal = $('.modal:visible');
     visibled_modal.hide();
 
     var mydialog = $(html);
     mydialog.appendTo('body');
+    // mydialog.show();
     mydialog.modal({
         backdrop: option.backdrop
     }).show();
 
+    //取消按钮
     mydialog.find('button[data-dismiss="modal"]').on('click', function() {
         var go = option.cancel();
         if (go != false) {
@@ -514,6 +519,7 @@ function alertConfirm(_option, ok) {
             mydialog.remove();
         }, 600);
     });
+    //确认按钮
     mydialog.find('.btn-primary').on('click', function() {
         option.ok();
         mydialog.modal('hide');

@@ -65,6 +65,19 @@ class User extends AdminBase
         return $this->fetch();
     }
 
+    
+
+    public function delete($id = 0){
+        if(empty($id)){
+            return info('删除项不能为空！',0);
+        }
+        
+        $result = Db::table('users')->delete($id);
+        if ($result > 0) {
+            return info('删除成功！',1);            
+        }        
+    }
+
 
 
 

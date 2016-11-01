@@ -389,7 +389,6 @@ $(function() {
                             } else {
                                 post_data = params.data;
                             }
-
                             // 请求服务器删除数据
                             $.ajax({
                                 url: params.url,
@@ -423,11 +422,14 @@ $(function() {
                         cancel: function() {}
                     };
 
+                    // console.log(params);return ;
                     // 通知我要删除
                     var result = $this.$table.triggerHandler('delete', [$this, params]);
+                        // console.log(result)
                     if (result === false) {
                         return;
                     }
+                        // alert(35)
 
                     // 弹出删除提示
                     alertConfirm({
