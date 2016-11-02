@@ -183,17 +183,15 @@ $(function() {
         if ($this.$form.length == 0) {
             return;
         }
-
         if (typeof $.fn.validate == 'undefined') {
             win.getScript('/js/admin/jquery.validate.min.js', function() {
                 $this.initForm();
             });
             return;
         }
-
         zh_validator();
         $this.$form.validate({
-            errorClass: "help-inline",
+            errorClass: "alert alert-danger",
             errorElement: "span",
             ignore: ".ignore",
             onfocusout: false,
@@ -201,7 +199,7 @@ $(function() {
             onclick: false,
             focusInvalid: false,
             focusCleanup: true,
-            highlight: function(element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {//未通过验证的元素
                 $(element).parents('.control-group:eq(0)').addClass('error');
             },
             unhighlight: function(element, errorClass, validClass) {
@@ -254,7 +252,7 @@ $(function() {
                         params.data[$this.uniqueId] = $this.currentRow[$this.uniqueId];
                     }
                     if (params.event_value == '') {
-                        params.url += '?' + $this.uniqueId + '=' + $this.currentRow[$this.uniqueId];
+                        // params.url += '?' + $this.uniqueId + '=' + $this.currentRow[$this.uniqueId];
                     }
                 }
 
@@ -264,21 +262,16 @@ $(function() {
                 }
                 //打开方式 1.模态框 2.本页打开 3.在新窗口打开
                 if (params.target == 'modal') {
-                    // alert(110236)
                     $this.loadModal(params.url, params.data);
-
                 } else if (params.target == 'self' || params.target == '') {
                     window.location.href = params.url;
                 } else if (params.target == '_blank') {
                     window.open(params.url);
                 }  else {
                     var $container = $(params.target);
-                    // console.log($container)
                     $container.load(params.url, function() {
-                        // alert(1325)
                         win.init($container);
                         var aaa = $container.find('table[data-toggle="gridview"]').gridView();;
-                        // console.log(aaa)
                     });
                 }
                 return;
@@ -422,15 +415,12 @@ $(function() {
                         cancel: function() {}
                     };
 
-                    // console.log(params);return ;
                     // 通知我要删除
                     var result = $this.$table.triggerHandler('delete', [$this, params]);
                         // console.log(result)
                     if (result === false) {
                         return;
                     }
-                        // alert(35)
-
                     // 弹出删除提示
                     alertConfirm({
                         title: params.title,
@@ -440,7 +430,7 @@ $(function() {
                         ok: params.ok,
                         cancel: params.cancel,
                         backdrop: params.backdrop
-                    });
+                    });//删除 ok
                 } else {
                     $table.triggerHandler(eventName, [$this, params]);
                 }
@@ -539,11 +529,11 @@ $(function() {
 
                 //未提交，点击关闭
                 var dataDismiss = $form.find('.modal-footer').find('.btn-default');
-                if ($form.length > 0) {
-                    dataDismiss.click(function() {
-                        $html.remove();
-                    })
-                }
+                // console.log($modal);return;
+                $modal.on('hide','.modal-backdrop',function () {
+                     
+                    $html.remove();
+                })
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
                     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
@@ -558,8 +548,8 @@ $(function() {
     };
 
     GridView.prototype.ajaxSubmit = function(selector) {
-        var $form = selector == undefined ? this.$form : $(selector);
         $this = this;
+        var $form = selector == undefined ? $this.$form : $(selector);
 
         if ($form.length == 0) {
             return;
@@ -584,7 +574,7 @@ $(function() {
 
             },
             error: function() {
-                alert('error')
+                alertMsg('网络连接失败，请稍后再试！', 'error');
             }
         })
     }

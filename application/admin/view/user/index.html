@@ -1,20 +1,32 @@
 {cx:toolbar id="toolbar"}
-
-
 {/cx:toolbar}
 
 <!-- 表格 -->
 <table id="table" data-toggle="gridview" class="table table-striped" data-url="/admin/user"  data-toolbar="#toolbar"   data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]"  data-search="true">
     <thead>
 		<tr>
-			<th data-width="40" data-checkbox="true"></th>
+			<th data-width="10" data-checkbox="true"></th>
 			<th data-width="100" data-field="username">账号</th>
-			<th data-width="100" data-field="status" >状态</th>
+			<th data-width="100" data-field="nick">姓名</th>
+			<th data-width="100" data-field="status" data-formatter="format_status">状态</th>
 			<th data-width="100" data-field="create_time">创建时间</th>
 		</tr>
 	</thead>
 </table>
 
+<script type="text/javascript">
+	function format_status(status,row,index) {
+		// if(status != null && status != ""){
+			if(status == 1){
+				return '显示'
+			}else if(status == 2){
+				return '隐藏'
+			}else if(status == 0){
+				return '禁用'
+			}
+		// }
+	}
+</script>
 
 
 

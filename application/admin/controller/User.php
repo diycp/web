@@ -12,10 +12,11 @@ use think\Db;
 */
 class User extends AdminBase
 {
-    // private $user;
+    private $users;
     function __construct()
     {
         parent::__construct();
+        $this->users = Db::table('users');
     }
 
     public function index()
@@ -35,14 +36,12 @@ class User extends AdminBase
     {   
         if( request()->isPost() ){
             $data = request()->param();
-            $data['password'] = md6($data['password']);
-            $res = Db::table('users')->insert($data);
-            if($res == 1){
-                return info('添加成功！',1);
-            }else{
-                return info('添加失败！',0);
-            }
+            
+            $userModel = Loader::model('User');
+            $add = $userModel->add($data);
+            return $add;
         }
+        // return view();
         return $this->fetch();
     }
 
@@ -52,7 +51,7 @@ class User extends AdminBase
         $id = intval($data['id']);
         if(request()->isPost()){
             $data['password'] = md6($data['password']);
-            $res = Db::table('users')->update($data);
+            $res = $this->users->update($data);
             if($res >= 0){
                 return info('修改成功！',1);
             }else{
@@ -60,7 +59,7 @@ class User extends AdminBase
             }
         }
         
-        $data = Db::table('users')->where('id',$id)->find();
+        $data = $this->users->where('id',$id)->find();
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -72,7 +71,7 @@ class User extends AdminBase
             return info('删除项不能为空！',0);
         }
         
-        $result = Db::table('users')->delete($id);
+        $result = $this->users->delete($id);
         if ($result > 0) {
             return info('删除成功！',1);            
         }        

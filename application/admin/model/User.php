@@ -52,16 +52,24 @@ class User extends Model
 	{
 		$offset = $data['offset'];
 		$limit = $data['limit']; 
+		$where = "(1 = 1)";
+		if(!empty($data['search'])){
+			$search = $data['search'];
+			$where .= " and ( username = '{$search}' or nick like '%{$search}%') "; 
+		}
 		unset($data);
-		// $map['status'] = 1;
 		$data = Db::table('users')
-					// ->where($map)
+					->where($where)
 					->limit($offset,$limit)
 					->order('id desc')
+					// ->fetchSql()
 					->select();
-
+		foreach ($data as $key => $value) {
+			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
+		}
+					// var_dump($data);die;
 		$total = Db::table('users')
-					// ->where($map)
+					->where($where)
 					->limit($offset,$limit)
 					->count();
 
@@ -71,15 +79,26 @@ class User extends Model
 
 
 	public function add(array $data)
-	{
+	{	
+		if($data['password2'] != $data['password']){
+            return info('两次密码不一致！',0);
+        }
 		$data['password'] = md6($data['password']);
-		$res = Db::table('users')->insert($data);
-		
+		$data['create_time'] = time();
+		$user = new User($data); 
+		// echo "<pre>";
+		// var_dump($user);die;
+		$res = $user->allowField(true)->save();
 		if($res == 1){
+            return info('添加成功！',1);
+        }else{
+            return info('添加失败！',0);
+        }
+	}
+
+	public function edit(array $data)
+	{
 			
-		}else{
-			return $this->error = '添加失败！';
-		}
 	}
 
 }

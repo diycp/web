@@ -323,13 +323,9 @@ li > .dropdown-menu:before {
 
 
 
-/* 表单部分 */
-/*.control-label:after {
+/* 表单部分（modal-body） */
+.control-label:after {
     content: ': '
-}
-
-.checkbox input[type="radio"] {
-    margin-top: -2px;
 }
 
 .control-label.must:before,
@@ -338,177 +334,19 @@ li > .dropdown-menu:before {
     color: red;
 }
 
-.bootstrap-table .fixed-table-header {
-    margin-bottom: -1px;
+.control-group{
+    margin-bottom: 20px;
 }
 
-.bootstrap-table .table>thead>tr>th {
-    border-bottom: 1px solid #ddd !important;
-}
+.control-group .control-label{
+    float: left;
+    text-align: right;
+    width: 160px;
 
-.toolbar {
-    margin-bottom: 15px;
+    font-family: monospace;
+    font-weight: 500;
 }
-
-.toolbar input[type="text"] {
-    margin: 0;
-}
-
-.toolbar .search-box {
-    display: inline-block;
-    position: relative;
-}
-
-.toolbar form.search-form.search-box {
-    padding: 0;
-    margin: 0;
-    width: auto;
-    background-color: transparent;
-}
-
-.bootstrap-table .search-box input {
-    padding-right: 30px;
-    width: 164px;
-}
-
-.search-box .btn {
-    border: none;
-    background: none;
-    box-shadow: none;
-    cursor: pointer;
-    position: absolute;
-    top: 0px;
-    right: 0;
-    width: 35px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-
-.bootstrap-table .search-box .btn {
-    top: 2px;
-}
-
-.bootstrap-table .toolbar {
-    margin-bottom: 0;
-}
-
-.toolbar form {
-    padding: 20px 0 0 0;
-    display: inline-block;
-    margin: 15px 0 0;
-    *margin: 15px 0 15px 0;
-    _margin: 15px 0 15px 0;
-    background-color: #f8f8f8;
-    width: 100%;
-}
-
-.toolbar form .input-append .add-on {
-    margin-top: 2px;
-}
-
-.bootstrap-table .fixed-table-toolbar {
-    position: relative;
-    width: 100%;
-}
-
-.bootstrap-table .fixed-table-toolbar .bars {
-    min-height: 30px;
-    float: initial;
-    width: 100%;
-    margin-top: 0px;
-}
-
-.bootstrap-table .fixed-table-toolbar .columns {
-    position: absolute !important;
-    right: 0;
-    top: 0;
-    ;
-    top: 11px\9;
-    margin: 0 !important;
-}
-
-.bootstrap-table .fixed-table-toolbar .columns .keep-open .dropdown-menu input[type=checkbox] {
-    margin-top: -2px;
-}
-
-.bootstrap-table .fixed-table-container .no-records-found td {
-    text-align: center;
-}
-
-.modal .bootstrap-table .bars {
-    margin-bottom: 0;
-}
-
-.modal-mini {
-    width: 300px;
-    margin-left: -152px;
-}
-
-.modal-backdrop,
-.modal-backdrop.fade.in {
-    opacity: .1;
-    filter: alpha(opacity=10);
-}
-
-.form-horizontal .input-append input[type=text] {
-    width: 180px;
-}
-
-.form-horizontal .input-append input.form-control {
+.control-group .controls{
+    margin-left: 180px;
     width: 240px;
 }
-
-.input-append.file {}
-
-.input-append.file .file_name {
-    display: none;
-}
-
-.input-append.file .add-on {
-    width: 28px;
-    overflow: hidden;
-    padding: 0;
-    height: 28px;
-    position: relative;
-}
-
-.input-append.file .add-on i {
-    position: absolute;
-    top: 6px;
-    left: 7px;
-}
-
-.input-append.file .add-on input[type=file] {
-    font-size: 58px;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.form-control {
-    width: 270px;
-}
-
-select.form-control {
-    width: 283px;
-}
-
-.gray {
-    color: #bbb;
-}
-
-.add-img-box img {
-    position: relative;
-    top: -1px;
-}
-
-table[data-toggle="gridview"] {
-    display: none;
-}
-
-.bootstrap-table .fixed-table-container table[data-toggle="gridview"] {
-    display: table;
-}
-*/

@@ -237,6 +237,8 @@ window.win = {
         if ($form.length == 0) {
             return;
         }
+        alert(11)
+        
 
         if (typeof $.fn.validate == 'undefined') {
             this.getScript('/js/admin/jquery.validate.min.js', function() {
@@ -246,7 +248,6 @@ window.win = {
         }
 
         zh_validator();
-
         $form.each(function(i, form) {
             $form.eq(i).validate({
                 errorClass: $form.eq(i).data('errorClass') == undefined ? "help-inline" : $form.eq(i).data('errorClass'),
@@ -485,14 +486,16 @@ function alertConfirm(_option, ok) {
     var html = '';
     html += '<div class="modal bs-example-modal-sm  fade" tabindex="-1" role="dialog"  aria-labelledby="mySmallModalLabel" aria-hidden="true">';
     html += '<div class="modal-dialog modal-sm">';
-    html += '	<div class="modal-header">';
+    html += '<div class="modal-content">';
+    html += '	<div class="modal-header" style="padding: 5px 15px 5px;">';
     html += '		<button type="button" class="close" data-dismiss="modal">×</button>';
-    html += '		<h3 id="myModalLabel">' + option.title + '</h3>';
+    html += '		<h3>' + option.title + '</h3>';
     html += ' 	</div>';
     html += '  <div class="modal-body" style="text-align:center;">' + option.content + '</div>';
     html += '  <div class="modal-footer">';
     html += '    <button class="btn" data-dismiss="modal">' + option.cancelValue + '</button>';
     html += '    <button class="btn btn-primary">' + option.okValue + '</button>';
+    html += '  </div>';
     html += '  </div>';
     html += '  </div>';
     html += '</div>';
@@ -504,7 +507,6 @@ function alertConfirm(_option, ok) {
 
     var mydialog = $(html);
     mydialog.appendTo('body');
-    // mydialog.show();
     mydialog.modal({
         backdrop: option.backdrop
     }).show();
@@ -524,6 +526,10 @@ function alertConfirm(_option, ok) {
         option.ok();
         mydialog.modal('hide');
         visibled_modal.show();
+
+        setTimeout(function() {
+            mydialog.remove();
+        }, 1000);
     });
 }
 
