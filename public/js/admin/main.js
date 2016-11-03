@@ -237,30 +237,28 @@ window.win = {
         if ($form.length == 0) {
             return;
         }
-        alert(11)
-        
-
         if (typeof $.fn.validate == 'undefined') {
             this.getScript('/js/admin/jquery.validate.min.js', function() {
                 win.validate($form);
             });
             return;
         }
-
         zh_validator();
         $form.each(function(i, form) {
             $form.eq(i).validate({
-                errorClass: $form.eq(i).data('errorClass') == undefined ? "help-inline" : $form.eq(i).data('errorClass'),
+                errorClass: "help-inline",
                 errorElement: "span",
                 ignore: ".ignore",
                 highlight: function(element, errorClass, validClass) {
                     var $element = $(element);
+                    console.log($element)
                     $element.parents('.control-group:eq(0)').addClass('error');
                     $element.parents('.control-group:eq(0)').removeClass('success');
                 },
                 unhighlight: function(element, errorClass, validClass) {
                     var $element = $(element);
-                    if ($element.attr('aria-invalid') != undefined) {
+
+                    if ($element.attr('aria-invalid') != true) {
                         $element.parents('.control-group:eq(0)').removeClass('error');
                         $element.parents('.control-group:eq(0)').addClass('success');
                     }

@@ -11,31 +11,31 @@
                     <div class="control-group">
                         <label class="control-label must">姓名</label>
                         <div class="controls">
-                            <input type="text" name="nick" placeholder="最多8个字符" maxlength="8" class="form-control required">
+                            <input type="text" name="nick" placeholder="最多8个字符" maxlength="8" class="form-control" required>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label must">手机号码</label>
                         <div class="controls">
-                            <input type="tel" name="username" placeholder="最多11个字符" maxlength="11" class="form-control required" required>
+                            <input type="tel" name="mobile" placeholder="最多11个字符" maxlength="11" class="form-control"  required>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label must">登陆密码</label>
                         <div class="controls">
-                            <input type="password" name="password" placeholder="最多32个字符" maxlength="32" class="form-control required">
+                            <input type="password" name="password" placeholder="最多32个字符" maxlength="32" class="form-control">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label must">确认密码</label>
                         <div class="controls">
-                            <input type="password" name="password2" placeholder="最多32个字符" maxlength="32" class="form-control required" >
+                            <input type="password" name="password2" placeholder="最多32个字符" maxlength="32" class="form-control" >
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label must">状态</label>
                         <div class="controls">
-                            <select name="status" class="form-control">
+                            <select name="status" class="form-control" required>
                                 <option value="1" {$data[ 'status']==1 ? 'selected' : ''}>显示</option>
                                 <option value="2" {$data[ 'status']==2 ? 'selected' : ''}>隐藏</option>
                                 <option value="0" {$data[ 'status']==0 ? 'selected' : ''}>禁用</option>

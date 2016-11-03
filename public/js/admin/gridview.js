@@ -10,8 +10,6 @@ $(function() {
         if (this.$table.length == 0) {
             return;
         }
-        // console.log(this);
-
         this.$toolbar = $(this.$table.data('toolbar'));
         this.$form = this.$toolbar.find('.edit-form, .search-form');
         this.bootstrapTable = null;
@@ -19,8 +17,6 @@ $(function() {
         this.currentRow = null;
         this.uniqueId = 'id';
         this.module = this.$toolbar.data('module');
-        // console.log(this.module)
-
         this.pagination = this.$table.data('pagination') == false ? false : true;
         this.sidePagination = this.$table.data('sidePagination') || "server";
         this.clientSort = this.$table.data('clientSort') == false ? false : true;
@@ -120,7 +116,6 @@ $(function() {
             },
             onLoadSuccess: function(data) {
                 $this.resetView();
-                return false;
             },
             onLoadError: function(status) {
                 //$table.trigger('loadError', [status]);
@@ -191,7 +186,7 @@ $(function() {
         }
         zh_validator();
         $this.$form.validate({
-            errorClass: "alert alert-danger",
+            errorClass: "help-inline",
             errorElement: "span",
             ignore: ".ignore",
             onfocusout: false,
@@ -280,72 +275,7 @@ $(function() {
             }else if (params.event_type == 'default') {
 
                 //toolbar中默认四个按钮 添加、修改、删除、搜索 
-                if (eventName.substr(0, 6) == 'search') { // 搜索
-                    var row = $this.getFormValue();
-                    $this.queryParams = row;
-                    $this.bootstrapTable.options.pageNumber = 1;
-                    $this.$table.bootstrapTable('refresh');
-
-                } else if (eventName.substr(0, 3) == 'add' || eventName.substr(0, 6) == 'insert') { // 添加
-                    if ($this.$form.length == 0) {
-                        return $this.$table.triggerHandler(eventName, [$this, params]);
-                    }
-                    // 验证数据
-                    if (!$this.$form.valid()) {
-                        return;
-                    }
-                    alert(111)
-                    params.row = $this.getFormValue($this.$form);
-                    delete params.row[$this.uniqueId]; // 添加需要清空主键
-
-                    var result = $this.$table.triggerHandler(eventName, [$this, params]);
-                    if (result === false) {
-                        return;
-                    }
-     
-                } else if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') { // 编辑
-                    alert(111)
-                    if ($this.$form.length == 0) {
-                        return $this.$table.triggerHandler(eventName, [$this, params]);
-                    }
-
-                    if ($this.currentRow == null) {
-                        return alertMsg('请先选择要编辑的数据！', 'warning');
-                    }
-                    alert(11102)
-
-                    params.row = $this.getFormValue($this.$form);
-
-                    var result = $this.$table.triggerHandler(eventName, [$this, params]);
-                    if (result === false || !$this.$form.valid()) {
-                        return;
-                    }
-                    
-                    alert(1112)
-                    console.log(params);return false;
-
-                    $.ajax({
-                        url: params.url,
-                        data: params.row,
-                        type: 'post',
-                        dataType: 'json',
-                        success: function(data) {
-                            // 重置表单
-                            $this.editRow();
-
-                            // 获取当前数据所在行
-                            if (!win.empty(data)) { params.row = data; }
-                            var data_index = $this.bootstrapTable.$body.find('tr[data-uniqueid="' + params.row[$this.uniqueId] + '"]').attr('data-index');
-
-                            // 更新行数据
-                            var newData = { index: data_index, row: params.row };
-                            $this.$table.bootstrapTable('updateRow', newData);
-
-                            // 重置大小
-                            $this.resetView();
-                        }
-                    });
-                } else if (eventName.substr(0, 6) == 'delete') {
+                if (eventName.substr(0, 6) == 'delete') {
                     var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
                     if (rows.length == 0) {
                         alertMsg('请勾选要删除的数据', 'warning');
@@ -417,7 +347,6 @@ $(function() {
 
                     // 通知我要删除
                     var result = $this.$table.triggerHandler('delete', [$this, params]);
-                        // console.log(result)
                     if (result === false) {
                         return;
                     }
@@ -439,6 +368,9 @@ $(function() {
         });
     };
 
+    /**
+     * 重置表单
+     */
     GridView.prototype.resetForm = function() {
         if (this.$form.length == 0) {
             return;
@@ -448,6 +380,9 @@ $(function() {
          
     };
 
+    /**
+     * 编辑表单
+     */
     GridView.prototype.editRow = function(row) {
         this.currentRow = row;
         if (this.$form.length == 0) {
@@ -487,6 +422,9 @@ $(function() {
         }
     };
 
+    /**
+     * 重置
+     */
     GridView.prototype.resetView = function(height) {
  
         if (this.$table.data('height') != undefined) {
@@ -499,10 +437,21 @@ $(function() {
         }
     };
 
+    /**
+     * 刷新
+     */
     GridView.prototype.refresh = function() {
+       
         this.$table.bootstrapTable('refresh');
     };
 
+
+    /**
+     * 对view类型modal打开类型 会被调用 将view加载成模态框视图
+     * @param  string url  加载链接
+     * @param  object data 页面数据 1.添加（add）data为空object 2.修改（edit）data为 id 值
+     * @return {[type]}      
+     */
     GridView.prototype.loadModal = function(url, data) {
         var $this = this;
         $.ajax({
@@ -520,16 +469,19 @@ $(function() {
                     alertMsg(html, 'warning');
                     return;
                 }
-                $html.appendTo('body');
-                win.init($html);
+                var $dialogModal = $('<div class="dialogModal"></div>');
+                $html.appendTo($dialogModal)
+                $dialogModal.appendTo('body');
+
+                //调用数据效验
+                win.init($dialogModal);
                 $modal.modal().show()
 
-                var action = '';
                 var $form = $html
 
-                //未提交，点击关闭 
+                //未提交，点击关闭 移除模态框等元素
                 $modal.on('hide.bs.modal',function () {
-                    $html.remove();
+                    $dialogModal.remove();
                 })
 
                 if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
@@ -537,8 +489,6 @@ $(function() {
                     dataSuccess.click(function(){
                         $this.ajaxSubmit($form)
                     })
-
-
                 }
             }
         });
