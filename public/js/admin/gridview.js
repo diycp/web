@@ -527,11 +527,8 @@ $(function() {
                 var action = '';
                 var $form = $html
 
-                //未提交，点击关闭
-                var dataDismiss = $form.find('.modal-footer').find('.btn-default');
-                // console.log($modal);return;
-                $modal.on('hide','.modal-backdrop',function () {
-                     
+                //未提交，点击关闭 
+                $modal.on('hide.bs.modal',function () {
                     $html.remove();
                 })
 
