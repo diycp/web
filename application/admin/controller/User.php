@@ -41,7 +41,6 @@ class User extends AdminBase
             $add = $userModel->add($data);
             return $add;
         }
-        // return view();
         return $this->fetch();
     }
 
@@ -49,28 +48,23 @@ class User extends AdminBase
     {
         $data = request()->param();
         $id = intval($data['id']);
-        if(request()->isPost()){
-            $data['password'] = md6($data['password']);
-            $res = $this->users->update($data);
-            if($res >= 0){
-                return info('修改成功！',1);
-            }else{
-                return info('修改失败！',0);
-            }
+        if(empty($id)){
+            return info('数据ID异常',0);
         }
-        
+        if(request()->isPost()){
+            $userModel = Loader::model('User');
+            $edit = $userModel->edit($data);
+            return $edit;
+        }
         $data = $this->users->where('id',$id)->find();
         $this->assign('data',$data);
         return $this->fetch();
     }
 
-    
-
     public function delete($id = 0){
         if(empty($id)){
             return info('删除项不能为空！',0);
         }
-        
         $result = $this->users->delete($id);
         if ($result > 0) {
             return info('删除成功！',1);            

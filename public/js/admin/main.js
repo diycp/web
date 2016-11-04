@@ -1,4 +1,4 @@
-/*左侧从菜单*/
+/*左侧菜单*/
 
 $(function() {
     win.start();
@@ -42,8 +42,8 @@ window.win = {
     },
     init: function(selector) {
         selector = $(selector);
+        // console.log(selector)
         this.validate(selector.find('form[data-validate="true"]'));
-
         var $form = selector.find('form[data-submit="ajax"]');
         $form.each(function(i, item) {
             if ($form.eq(i).data('validate') == true) {
@@ -63,9 +63,6 @@ window.win = {
 
         this.bootstrapTable(selector.find('table[data-toggle="table"]'));
 
-        selector.find('.input-append.file').each(function(i, item) {
-            win.ajaxFileUpload(item);
-        });
     },
     empty: function(obj) {
         if (obj === undefined || obj === null || obj === '') {
@@ -158,26 +155,26 @@ window.win = {
                         data = $.parseJSON(data);
                     }
 
-                    if (typeof data.info == 'string' && data.info != '') {
-                        alertMsg(data.info);
+                    if (typeof data.msg == 'string' && data.msg != '') {
+                        alertMsg(data.msg);
                     }
 
                     if (!win.empty(data.url)) {
                         return win.redirect(data.url, 2);
                     }
 
-                    if (!win.empty(data.status)) {
-                        if (data.status == 1) {
+                    if (!win.empty(data.code)) {
+                        if (data.code == 1) {
                             if (typeof this.custom.success == 'function') {
-                                return this.custom.success(typeof data.info == 'object' ? data.info : {}, textStatus, jqXHR);
+                                return this.custom.success(typeof data.msg == 'object' ? data.msg : {}, textStatus, jqXHR);
                             } else {
                                 return;
                             }
-                        } else if (data.status == 0) {
+                        } else if (data.code == 0) {
                             if (typeof this.custom.error == 'function') {
-                                if (typeof data.info == 'object') {
+                                if (typeof data.msg == 'object') {
                                     alertMsg('操作失败！', 'warning');
-                                    return this.custom.error(data.info, textStatus, jqXHR);
+                                    return this.custom.error(data.msg, textStatus, jqXHR);
                                 } else {
                                     return this.custom.error({}, textStatus, jqXHR);
                                 }
@@ -246,40 +243,32 @@ window.win = {
         zh_validator();
         $form.each(function(i, form) {
             $form.eq(i).validate({
-                errorClass: "help-inline",
+                errorClass: "help-block",
                 errorElement: "span",
                 ignore: ".ignore",
                 highlight: function(element, errorClass, validClass) {
                     var $element = $(element);
-                    console.log($element)
-                    $element.parents('.control-group:eq(0)').addClass('error');
-                    $element.parents('.control-group:eq(0)').removeClass('success');
+                    $element.parents('.form-group:eq(0)').addClass('has-error');
+                    $element.parents('.form-group:eq(0)').removeClass('has-success');
                 },
                 unhighlight: function(element, errorClass, validClass) {
                     var $element = $(element);
-
                     if ($element.attr('aria-invalid') != true) {
-                        $element.parents('.control-group:eq(0)').removeClass('error');
-                        $element.parents('.control-group:eq(0)').addClass('success');
+                        $element.parents('.form-group:eq(0)').removeClass('has-error');
+                        $element.parents('.form-group:eq(0)').addClass('has-success');
                     }
                 },
                 errorPlacement: function($error, $element) {
                     if ($element[0].tagName == 'SELECT' && $error.text() == '必须填写') {
                         $error.html('必须选择');
                     }
-
-                    var $parent = $element.parent();
-                    if ($parent.hasClass('input-append')) {
-                        $error.insertAfter($parent);
+                    if (this.errorClass == 'help-block') {
+                        $error.insertAfter($element.parent());
                     } else {
-                        if (this.errorClass == 'help-inline') {
-                            $error.insertAfter($element);
-                        } else {
-                            $error.appendTo($element.parents('.controls:eq(0)'));
-                        }
+                        $error.appendTo($element.parent());
                     }
                 },
-                submitHandler: function() {
+                submitHandler: function() { 
                     var result = $form.eq(i).triggerHandler('valid');
                     if (result === false) {
                         return false;
@@ -331,13 +320,13 @@ $.fn.ajaxSubmit = function() {
     var $form = this;
     var $submit = $form.find(':submit');
     $submit.attr('disabled', true).toggleClass('btn-primary');
-
     $.ajax({
-        url: $form.attr('action'),
-        type: $form.attr('method'),
+        url: $form.attr('data-action'),
+        type: $form.attr('data-method'),
         data: $form.serialize(),
         dataType: 'json',
         success: function(data, str) {
+
             $form.data('submited', true);
             var result = $form.triggerHandler('submited', [data, str]);
             if (result == false) {
@@ -345,7 +334,6 @@ $.fn.ajaxSubmit = function() {
             }
 
             var form_success = $form.data('success');
-
             // 表单提交后操作
             if (!win.empty(data.url)) { // 跳转到其他页面
                 win.redirect(data.url, 2000);
@@ -397,8 +385,10 @@ $.fn.ajaxSubmit = function() {
                 if ($modal.length > 0) {
                     $modal.modal('hide');
                 }
+
                 $submit.removeAttr('disabled', false).toggleClass('btn-primary');
-                $form.find('.control-group').removeClass('success');
+                $form.find('.form-group').removeClass('success');
+
             }
         },
         error: function(data) {
@@ -406,7 +396,6 @@ $.fn.ajaxSubmit = function() {
         },
         complete: function(data) {}
     });
-
     return this;
 };
 
@@ -531,10 +520,6 @@ function alertConfirm(_option, ok) {
     });
 }
 
-
-
-
- 
 
 /**
  * 页面加载完需要执行的程序

@@ -186,7 +186,7 @@ $(function() {
         }
         zh_validator();
         $this.$form.validate({
-            errorClass: "help-inline",
+            errorClass: "help-block",
             errorElement: "span",
             ignore: ".ignore",
             onfocusout: false,
@@ -479,17 +479,20 @@ $(function() {
 
                 var $form = $html
 
-                //未提交，点击关闭 移除模态框等元素
+                //隐藏模态框 刷新表单 移除模态框等元素
                 $modal.on('hide.bs.modal',function () {
+                    if($form.length > 0 && $form.data('submited') == true){
+                        $this.$table.bootstrapTable('refresh')
+                    }
                     $dialogModal.remove();
                 })
 
-                if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
-                    var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
-                    dataSuccess.click(function(){
-                        $this.ajaxSubmit($form)
-                    })
-                }
+                // if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
+                //     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
+                //     dataSuccess.click(function(){
+                //         $this.ajaxSubmit($form)
+                //     })
+                // }
             }
         });
     };

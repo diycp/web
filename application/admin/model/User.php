@@ -20,7 +20,7 @@ class User extends Model
 	public function login(array $data)
 	{
 		$password = md6($data['password']);
-		$map['username'] = $data['username'];
+		$map['mobile'] = $data['mobile'];
  
 		$userRow = Db::table('users')
 					->where($map)
@@ -55,12 +55,13 @@ class User extends Model
 		$where = "(1 = 1)";
 		if(!empty($data['search'])){
 			$search = $data['search'];
-			$where .= " and ( username = '{$search}' or nick like '%{$search}%') "; 
+			$where .= " and ( mobile = '{$search}' or username like '%{$search}%') "; 
 		}
 		unset($data);
 		$data = Db::table('users')
 					->where($where)
 					->limit($offset,$limit)
+					->field('id,username,mobile,status,create_time')
 					->order('id desc')
 					// ->fetchSql()
 					->select();
@@ -86,8 +87,6 @@ class User extends Model
 		$data['password'] = md6($data['password']);
 		$data['create_time'] = time();
 		$user = new User($data); 
-		// echo "<pre>";
-		// var_dump($user);die;
 		$res = $user->allowField(true)->save();
 		if($res == 1){
             return info('添加成功！',1);
@@ -98,7 +97,18 @@ class User extends Model
 
 	public function edit(array $data)
 	{
-			
+		if($data['password2'] != $data['password']){
+            return info('两次密码不一致！',0);
+        }
+		$data['password'] = md6($data['password']);
+		$data['create_time'] = time();
+		$user = new User; 
+		$res = $user->allowField(true)->save($data,['id'=>$data['id']]);
+		if($res == 1){
+            return info('修改成功！',1);
+        }else{
+            return info('修改失败！',0);
+        }
 	}
 
 }

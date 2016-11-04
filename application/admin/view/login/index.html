@@ -22,7 +22,7 @@
     
 
 账号：
-<input type="text" name="username" id="username" >
+<input type="text" name="mobile" id="mobile" >
 <br>
 密码：
 <input type="password" name="password" id="password">
@@ -33,8 +33,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-		if($("#username") == ''){
-			$("#username").focus();
+		if($("#mobile") == ''){
+			$("#mobile").focus();
 		}else{
 			$("#password").focus();
 		}
@@ -42,9 +42,9 @@
 		var data = {};
 		var msgerr = $(".msgerr")
 		$('button').click(function () {
-			data.username = $("#username").val()
+			data.mobile = $("#mobile").val()
 			data.password = $("#password").val()
-			if(data.username == ''){
+			if(data.mobile == ''){
 				msgerr.html("请输入账号！")
 			}else if(data.password == ''){
 				msgerr.html("请输入密码！")

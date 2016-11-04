@@ -324,29 +324,18 @@ li > .dropdown-menu:before {
 
 
 /* 表单部分（modal-body） */
-.control-label:after {
-    content: ': '
-}
 
-.control-label.must:before,
-.control-label.must before {
+.modal-body-content{
+    width: 85%;
+    margin: 0 auto;
+}
+.form-group.must .control-label:before,
+.form-group.must .control-label before {
     content: '*';
     color: red;
 }
 
-.control-group{
-    margin-bottom: 20px;
-}
-
-.control-group .control-label{
-    float: left;
-    text-align: right;
-    width: 160px;
-
-    font-family: monospace;
-    font-weight: 500;
-}
-.control-group .controls{
-    margin-left: 180px;
-    width: 240px;
+.help-block{
+    font-size: 10px;
+    vertical-align: mid
 }
