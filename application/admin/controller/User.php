@@ -41,7 +41,7 @@ class User extends AdminBase
             $add = $userModel->add($data);
             return $add;
         }
-        return $this->fetch();
+        return $this->fetch('edit');
     }
 
     public function edit($id = 0)
