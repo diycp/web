@@ -68,7 +68,6 @@ class User extends Model
 		foreach ($data as $key => $value) {
 			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
 		}
-					// var_dump($data);die;
 		$total = Db::table('users')
 					->where($where)
 					->limit($offset,$limit)
