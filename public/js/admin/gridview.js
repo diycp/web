@@ -486,13 +486,7 @@ $(function() {
                     }
                     $dialogModal.remove();
                 })
-
-                // if ($form.length > 0 && $form.attr('data-submit') == 'ajax') {
-                //     var dataSuccess = $form.find('.modal-footer').find('.btn-primary');
-                //     dataSuccess.click(function(){
-                //         $this.ajaxSubmit($form)
-                //     })
-                // }
+ 
             }
         });
     };

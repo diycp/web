@@ -2,7 +2,7 @@
 {/cx:toolbar}
 
 <!-- 表格 -->
-<table id="table" data-toggle="gridview" class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-side-pagination="">
+<table id="table" data-toggle="gridview" data-height="410"  class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-side-pagination="">
     <thead>
 		<tr>
 			<th data-width="10" data-checkbox="true"></th>
@@ -39,7 +39,7 @@
 				.on('clickRow',function(e, row, $element) {
 							if ($btn_gridview == null) {
 								var $gridview2 = $('.gridview2');
-								
+
 								$gridview2.load(toolbarUrl + row.id,
 									function() {
 											// win.init($gridview2);

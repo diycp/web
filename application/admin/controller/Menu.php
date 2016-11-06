@@ -156,7 +156,7 @@ class Menu extends AdminBase
             return $data;
         }
         $this->assign('menu_id', $menu);
-        return $this->fetch();
+        return view();
     }
 
 
