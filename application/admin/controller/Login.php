@@ -49,7 +49,7 @@ class Login extends Controller
 	public function out()
 	{
 		Session::delete('user');
-		return $this->success('退出成功！', '/admin/login');
+		return view('Login/index');
 	}
     
 }

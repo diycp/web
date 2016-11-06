@@ -18,22 +18,131 @@ class Menu extends AdminBase
     function __construct()
     {
         parent::__construct();
-        $this->menu = Config::get('AUTH_TABLE_MENU');
+        $this->menu = Db::name(Config::get('AUTH_TABLE_MENU'));
+
         $this->node = Config::get('AUTH_TABLE_NODE');
     }
 
-    public function index()
-    {
-        // echo "string";
-        // dump(Cache::get('menu'));die;
-        return view();
-        // return $this->display();
+    private function menu_list($all = true){
+        if(!$all){
+            $this->menu->field("id, pid, title, status");
+            $id = input('get.id/d');
+            if($id > 0){
+                $this->menu->where("id!={$id}");
+            }
+        }
+        $rows = $this->menu->order('pid, sort DESC, id')->select();
+        $rows = sort_list($rows);
+        return $rows;
     }
 
-    public function add()
+    /**
+     * 列表
+     */
+    public function index()
     {
+        if (request()->isAjax()) {
+            $rows = $this->menu_list(true);
+            foreach ($rows as $i => $item) {
+                $rows[$i]['title'] = $item['split'].$item['title'];
+                $rows[$i]['url'] = (empty($item['module']) ? '' : '/'.$item['module']) . '/' . $item['controller'];
+                if(!empty($item['action'])){
+                    $rows[$i]['url'] .= '/' . $item['action'];
+                }
+                if (! empty($item['params'])) {
+                    $rows[$i]['url'] .= '?' . $item['params'];
+                }
+            
+            }
+            $total = $this->menu->count();
+            $data = array('rows' => $rows,'total' => $total);
+           return $data;
+        }
         return view();
     }
+    
+    
+    /**
+     * 添加菜单
+     */
+    public function add(){
+        if(request()->isPost()){
+            $data = request()->param();
+            //模块参数都需要填写 不然无效
+            if(empty($data['module']) || empty($data['controller']) || empty($data['action'])){
+                unset($data['module']);
+                unset($data['controller']);
+                unset($data['action']);
+            }
+
+            $LastId = $this->menu->insertGetId($data);
+            if($LastId >  0){
+                // 自动创建菜单
+                if(!empty($data['module']) && !empty($data['controller'])){
+                    if(empty($data['action'])){
+                        $data['action'] = 'index';
+                    }
+                    $nodes = [
+                                ['pid' => $LastId, 'title' => '查看', 'name' => $data['action'], 'icon' => '', 'group' => 1, 'visible' => 0, 'event_type' => 'view', 'target' => 'self', 'sort' => '100'],
+                                ['pid' => $LastId, 'title' => '添加', 'name' => 'add', 'icon' => 'icon-plus', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
+                                ['pid' => $LastId, 'title' => '编辑', 'name' => 'edit', 'icon' => 'icon-file', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
+                                ['pid' => $LastId, 'title' => '删除', 'name' => 'delete', 'icon' => 'icon-trash', 'group' => 1, 'visible' => 1, 'event_type' => 'default', 'target' => '', 'sort' => '99'],
+                                ['pid' => $LastId, 'title' => '搜索', 'name' => 'search', 'icon' => 'icon-search', 'group' => 2, 'visible' => 0, 'event_type' => 'default', 'target' => '', 'sort' => '99']
+                            ];
+                   Db::name($this->node)->insertAll($nodes);
+                }
+                return info('添加成功！',1);
+            }
+            return info('添加失败！',0);
+        }       
+        $list = $this->menu_list(false);
+        $this->assign(array('list' => $list,'data' => array('sort' => 99, 'status' => 1)));
+        return $this->fetch('edit');
+    }
+    
+    /**
+     * 编辑
+     */
+    public function edit($id = 0){
+        $data = request()->param();
+        $id = intval($data['id']);
+        if(request()->isPost()){
+            if($id <= 0){
+                $this->error('数据ID异常！');
+            }            
+            if(empty($data['module']) || empty($data['controller']) || empty($data['action'])){
+                unset($data['module']);
+                unset($data['controller']);
+                unset($data['action']);
+            }
+            $result = $this->menu->update($data);
+            if($result >= 0){
+                return info('修改成功！',1);
+            }
+            return info('修改失败！',0);
+        }
+        
+        $data = $this->menu->where('id',$id)->find();
+        $list = $this->menu_list(false);
+        $this->assign(array('data' => $data,'list' => $list ));
+        return $this->fetch();
+    }
+
+
+    /**
+     * 删除菜单
+     */
+    public function delete($id = 0){
+        if(empty($id)){
+            return info('删除项不能为空！',0);
+        }
+        $result = $this->menu->delete($id);
+        if($result > 0){
+            Db::table($this->node)->where("pid IN ({$id})")->delete();
+        }
+        return info('删除成功！',1);
+    }
+    
 
 
 

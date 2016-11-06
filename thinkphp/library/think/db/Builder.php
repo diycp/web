@@ -649,7 +649,7 @@ abstract class Builder
      * @return string
      */
     public function insertAll($dataSet, $options)
-    {
+    {   
         // 获取合法的字段
         if ('*' == $options['field']) {
             $fields = array_keys($this->query->getFieldsType($options));

@@ -708,7 +708,7 @@ class Cx extends Taglib
                                 $toolbar_prev_group = $btn["group"];
                             }
                            
-                            echo \'<button type="button" data-name="\' . $btn["name"] . \'" class="btn btn-default" data-event-type="\' . $btn["event_type"] . \'" data-event-value="\' . $btn["event_value"] . \'" data-target="\' . $btn["target"] . \'"><i class="fa \' . $btn["icon"] . \'" aria-hidden="true"> </i>\' . $btn["title"] . \'</button>\';
+                            echo \'<button type="button" data-name="\' . $btn["name"] . \'" class="btn btn-default" data-event-type="\' . $btn["event_type"] . \'" data-event-value="\' . $btn["event_value"] . \'" data-target="\' . $btn["target"] . \'"><i class="fa \' . $btn["icon"] . \'" aria-hidden="true"> </i>\' . '.' '.'$btn["title"] . \'</button>\';
                             
                             if($i == $toolbar_node_count - 1){
                                 echo \'</div>\';

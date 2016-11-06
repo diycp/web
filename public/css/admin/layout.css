@@ -339,3 +339,10 @@ li > .dropdown-menu:before {
     font-size: 10px;
     vertical-align: middle;
 }
+.sort{
+    width:32px; 
+    height: 25px;
+    margin:0;
+    text-align:center;
+    padding: 0 3px;
+}

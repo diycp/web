@@ -20,7 +20,7 @@ class Role extends AdminBase
     {
        
          
-        return $this->fetch();
+        return view();
     }
 
     public function test()

@@ -1,0 +1,82 @@
+<form data-method="post" data-action="/{$Request.module}/{$Request.controller}/{$Request.action}" data-submit="ajax" data-validate="true" class="form-horizontal">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">{$data['id']?'修改':'添加'}菜单</h3>
+                </div>
+                <input type="hidden" name="id" value="{$data.id ?? ''}">
+                <div class="modal-body">
+                    <div class="modal-body-content">
+
+                        <div class="form-group must">
+                            <label class="col-sm-3 control-label">父级菜单</label>
+                            <div class="col-sm-7">
+                                <select name="pid" class="form-control" required>
+                                    <option value="0">一级菜单</option>
+                                    {foreach name="list" item="r"}
+                                        <option value="{$r.id}">{$r.split}{$r.title}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group must">
+                            <label class="col-sm-3 control-label">菜单名称</label>
+                            <div class="col-sm-7"> 
+                                <input type="text" class="form-control" name="title" maxlength="8" placeholder="至多8个字符" required value="{$data.title ?? ''}"  >
+                            </div>
+                        </div>
+ 
+
+                        <div class="form-group must">
+                            <label class="col-sm-3 control-label">模块</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="module"  placeholder="module" required value="{$data.module ?? ''}" style="width: 80px;display: inline-block;">
+                                <input type="text" class="form-control" name="controller"  placeholder="controller"   value="{$data.controller ?? ''}" style="width: 90px;display: inline-block;">
+                                <input type="text" class="form-control" name="action"  placeholder="action"  value="{$data.action ?? ''}" style="width: 90px;display: inline-block;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">参数</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="params" placeholder="?id=123&page=1" value="{$data.params ?? ''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图标</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="icon" placeholder="css的class样式名称" value="{$data.icon ?? ''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control digits" name="sort" placeholder="数字越大越靠前" value="{$data.sort ?? '0'}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-7">
+                                <select name="status" class="form-control" required>
+                                    <option value="1" {$data['status']==1 ? ' selected ' : ''}>显示</option>
+                                    <option value="2" {$data['status']==2 ? ' selected ' : ''}>隐藏</option>
+                                    <option value="0" {$data['status']==0 ? ' selected ' : ''}>禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
