@@ -190,7 +190,6 @@ window.win = {
                     if (typeof this.custom.error == 'function') {
                         this.custom.error({}, textStatus, jqXHR);
                     } else {
-                        // alert(33)
                         alertMsg('网络连接失败，请稍后再试！', 'error');
                     }
                 };
