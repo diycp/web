@@ -1,0 +1,45 @@
+
+{toolbar id="btn_toolbar"}
+	
+{/toolbar}
+<table id="btn_gridview" data-toggle="gridview" data-height="210" class="table table-hover" data-pagination="false" 
+	data-toolbar="#btn_toolbar" data-method="post" data-url="/admin/menu/boolbar/menu={$menu_id}" data-unique-id="id">
+	<thead>
+		<tr>
+			<th data-width="40" data-align="center" data-checkbox="true"></th>
+			<th data-width="50" data-field="sort" data-formatter="format_sort">排序</th>
+			<th data-field="title">按钮名称</th>
+			<th data-field="name">按钮标识</th>
+			<th data-field="visible" data-formatter="fomat_visible">是否显示</th>
+			<th data-field="access" data-formatter="fomat_access">权限</th>
+			<th data-field="event_type">事件类型</th>
+			<th data-field="event_value">事件值</th>
+			<th data-field="target">执行方式</th>
+			<th data-field="icon" data-formatter="fomat_icon" data-align="center">图标</th>
+			<th data-field="group" data-align="center">分组</th>
+			<th data-field="remark">说明</th>
+		</tr>
+	</thead>
+</table>
+
+<script type="text/javascript">
+ 
+
+function fomat_icon(icon, row, index){
+	return '<i class="'+icon+'"></i>';
+}
+function fomat_access(val, row, index){
+	val +='';
+	switch(val){
+		case '-1':
+			return '禁止访问';
+		case '1':
+			return '无限制';
+		default:
+			return '系统默认';
+	}
+}
+function fomat_visible(val, row, index){
+	return val == 1 ? '显示' : '不显示';
+}
+</script>

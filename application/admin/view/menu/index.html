@@ -16,6 +16,8 @@
 </table>
 
 
+<div class="gridview2"></div>
+
 <script type="text/javascript">
 	function format_status(status,row,index) {
 		if(status == 1){
@@ -30,4 +32,73 @@
 	function format_sort(sort,row,index) {
 		return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
 	}
+
+	var toolbarUrl = '/admin/menu/toolbar?menu=', $menuTable, $btn_gridview;
+	$(function() {
+		$menuTable = $('#table')
+				.on('clickRow',function(e, row, $element) {
+							if ($btn_gridview == null) {
+								var $gridview2 = $('.gridview2');
+								
+								$gridview2.load(toolbarUrl + row.id,
+									function() {
+											// win.init($gridview2);
+											// $btn_gridview = $('#btn_gridview').gridView();
+
+											// $menuTable.gridView('resetView');
+											// $('#current_menu').val(row.id);
+											// $btn_gridview.data('data-menu',row.id);
+										});
+								return;
+							} else if ($btn_gridview.data('data-menu') == row.id) {
+								return;
+							}
+
+							// $btn_gridview.data('data-menu', row.id);
+							// $btn_gridview.data('bootstrap.table').options.url = toolbarUrl
+							// 		+ row.id;
+							// $btn_gridview.bootstrapTable('refresh');
+						}).on('deleted', function(e, ajaxData, status) {
+					// 菜单删除移除按钮
+					if (status != 'success') {
+						return;
+					}
+
+					if ($btn_gridview != undefined) {
+						var menu_id = $btn_gridview.data('data-menu');
+						$.each(ajaxData.deletedRows, function(i, item) {
+							if (menu_id == item.id) {
+								$btn_gridview.bootstrapTable('load', {
+									total : 0,
+									rows : []
+								});
+								return false;
+							}
+						});
+					}
+				}).on('saveSort', function(e, gridview, params) {
+					var list = {};
+					$('#table tbody .sort').each(function(i, input) {
+						list[input.dataset.id] = input.value;
+					});
+
+					alertConfirm({
+						content : '<h4>确定保存排序吗？</h4>数字越大越靠前',
+						ok : function() {
+							$.ajax({
+								url : '__URL__/saveSort',
+								data : {
+									list : list
+								},
+								dataType : "json",
+								type : 'post',
+								error : function() {
+									alertMsg('排序失败！');
+								}
+							});
+						}
+					});
+				});
+
+	});
 </script>

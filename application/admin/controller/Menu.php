@@ -142,7 +142,22 @@ class Menu extends AdminBase
         }
         return info('删除成功！',1);
     }
+
+
     
+    /**
+     * 工具栏按钮列表
+     * @param number $menu_id
+     */
+    public function toolbar($menu = 0){
+        if(request()->isPost()){
+            $rows = Db::table($this->node)->where("pid=".$menu)->order("`group`, sort desc, id")->select();
+            $data = array( 'total' => count($rows), 'rows' => $rows );
+            return $data;
+        }
+        $this->assign('menu_id', $menu);
+        return $this->fetch();
+    }
 
 
 
