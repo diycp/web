@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2016-10-22 14:59:00
+Date: 2016-11-06 17:59:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,13 +32,13 @@ CREATE TABLE `bs_menu` (
   `icon` varchar(25) DEFAULT NULL COMMENT '图标',
   `target` varchar(15) DEFAULT NULL COMMENT '打开方式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 -- ----------------------------
 -- Records of bs_menu
 -- ----------------------------
 INSERT INTO `bs_menu` VALUES ('1', '系统管理', null, null, null, null, '0', '1', '99', 'fa-tachometer', null);
-INSERT INTO `bs_menu` VALUES ('2', '菜单管理', 'admin', 'menu', 'index', null, '1', '1', '30', null, null);
+INSERT INTO `bs_menu` VALUES ('2', '菜单管理', 'admin', 'menu', 'index', null, '1', '1', '30', 'fa-cog', null);
 INSERT INTO `bs_menu` VALUES ('3', '账号管理', 'admin', 'user', 'index', null, '1', '1', '99', 'fa-user', null);
 INSERT INTO `bs_menu` VALUES ('4', '角色管理', 'admin', 'role', 'index', null, '1', '1', '60', null, null);
 INSERT INTO `bs_menu` VALUES ('5', '菜单按钮管理', 'admin', 'menu', 'toolbar', null, '1', '1', '99', null, null);
@@ -67,27 +67,28 @@ CREATE TABLE `bs_node` (
   `access` int(1) DEFAULT '0' COMMENT '-1禁止访问，0默认，1公共（无权限控制）',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`,`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='菜单权限节点表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='菜单权限节点表';
 
 -- ----------------------------
 -- Records of bs_node
 -- ----------------------------
 INSERT INTO `bs_node` VALUES ('1', '2', '查看', 'index', null, '1', '0', null, '0', 'view', null, null, '0');
-INSERT INTO `bs_node` VALUES ('2', '2', '添加', 'add', null, '1', '0', null, '0', 'view', null, 'modal', '0');
-INSERT INTO `bs_node` VALUES ('3', '2', '修改', 'edit', null, '1', '0', null, '0', 'view', null, 'modal', '0');
-INSERT INTO `bs_node` VALUES ('4', '2', '删除', 'delete', null, '1', '0', null, '0', 'view', '', 'default', '0');
+INSERT INTO `bs_node` VALUES ('2', '2', '添加', 'add', 'fa-plus', '1', '1', null, '0', 'view', null, 'modal', '0');
+INSERT INTO `bs_node` VALUES ('3', '2', '编辑', 'edit', 'fa-edit', '1', '1', null, '0', 'view', null, 'modal', '0');
+INSERT INTO `bs_node` VALUES ('4', '2', '删除', 'delete', 'fa-trash', '1', '1', null, '0', 'default', '', 'default', '0');
 INSERT INTO `bs_node` VALUES ('5', '3', '查看', 'index', '', '1', '0', '', '0', 'view', '', '', '0');
-INSERT INTO `bs_node` VALUES ('6', '3', '添加', 'add', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('7', '3', '修改', 'edit', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('8', '3', '删除', 'delete', '', '1', '0', '', '0', 'view', '', 'default', '0');
+INSERT INTO `bs_node` VALUES ('6', '3', '添加', 'add', 'fa-plus', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('7', '3', '编辑', 'edit', 'fa-edit', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('8', '3', '删除', 'delete', 'fa-trash', '1', '1', '', '0', 'default', '', 'default', '0');
 INSERT INTO `bs_node` VALUES ('9', '4', '查看', 'index', '', '1', '0', '', '0', 'view', '', '', '0');
-INSERT INTO `bs_node` VALUES ('10', '4', '添加', 'add', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('11', '4', '修改', 'edit', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('12', '4', '删除', 'delete', '', '1', '0', '', '0', 'view', '', 'default', '0');
+INSERT INTO `bs_node` VALUES ('10', '4', '添加', 'add', 'fa-plus', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('11', '4', '编辑', 'edit', 'fa-edit', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('12', '4', '删除', 'delete', 'fa-trash', '1', '1', '', '0', 'default', '', 'default', '0');
 INSERT INTO `bs_node` VALUES ('13', '7', '查看', 'index', '', '1', '0', '', '0', 'view', '', '', '0');
-INSERT INTO `bs_node` VALUES ('14', '7', '添加', 'add', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('15', '8', '修改', 'edit', '', '1', '0', '', '0', 'view', '', 'modal', '0');
-INSERT INTO `bs_node` VALUES ('16', '9', '删除', 'delete', '', '1', '0', '', '0', 'view', '', 'default', '0');
+INSERT INTO `bs_node` VALUES ('14', '7', '添加', 'add', 'fa-plus', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('15', '8', '编辑', 'edit', 'fa-edit', '1', '1', '', '0', 'view', '', 'modal', '0');
+INSERT INTO `bs_node` VALUES ('16', '9', '删除', 'delete', 'fa-trash', '1', '1', '', '0', 'default', '', 'default', '0');
+INSERT INTO `bs_node` VALUES ('17', '3', '搜索', 'search', 'fa-search', '1', '0', null, '0', 'default', null, 'default', '0');
 
 -- ----------------------------
 -- Table structure for bs_role
@@ -132,15 +133,16 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(16) DEFAULT NULL COMMENT '账号',
+  `mobile` varchar(12) DEFAULT NULL COMMENT '手机号',
   `password` varchar(32) DEFAULT NULL COMMENT '密码',
   `status` int(11) DEFAULT '0' COMMENT '状态 （0禁止 1可用）',
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '13330613012', 'e10adc3949ba59abbe56e057f20f883e', '1', '1474375341');
-INSERT INTO `users` VALUES ('2', '13330613000', 'e10adc3949ba59abbe56e057f20f883e', '1', '1474375285');
-INSERT INTO `users` VALUES ('3', 'admin', '1', '0', null);
+INSERT INTO `users` VALUES ('1', '石金融', '13330613012', '8d2900097997c9fb32a6d7ba49466412', '1', '1478252401');
+INSERT INTO `users` VALUES ('2', '测试账号', '13330613000', '8d2900097997c9fb32a6d7ba49466412', '1', '1478253560');
+INSERT INTO `users` VALUES ('3', '201eee', '13330613000', '1e853d17d9a540b9e67281a8ddc8c32e', '1', '1478256918');
