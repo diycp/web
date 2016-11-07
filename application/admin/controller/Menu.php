@@ -174,7 +174,6 @@ class Menu extends AdminBase
         $menuList = $this->menuList();
         //生成缓存文件
         Cache::set('menu',$menuList,'admin');
-
         //获取节点
         $nodeList = $this->nodeList();
         //生成缓存文件
@@ -188,15 +187,15 @@ class Menu extends AdminBase
     public function menuList()
     {
         //一级菜单id
-        $parent = $this->menu
+        $parent = Db::name(Config::get('AUTH_TABLE_MENU'))
                 ->where('status<>0 and pid = 0')
-                ->order('id')
+                ->order('sort desc,id')
                 ->column('id');
         $list = array();
         foreach ($parent as $key => $id) {
-            $list['button'] = $this->menu->where("pid = 0 and id = $id")->value('title');
-            $list['icon'] = $this->menu->where("pid = 0 and id = $id")->value('icon');
-            $sub = $this->menu->where("status<>0 and pid = $id")->order('sort desc,id')->select();
+            $list['button'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('title');
+            $list['icon'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('icon');
+            $sub = Db::name(Config::get('AUTH_TABLE_MENU'))->where("status<>0 and pid = $id")->order('sort desc,id')->select();
             foreach ($sub as $k => $item) {
                 //title
                 $sub_button[$k]['title'] = $item['title'];
@@ -227,7 +226,7 @@ class Menu extends AdminBase
 
     public function nodeList()
     {
-        $list = $this->menu
+        $list = Db::name(Config::get('AUTH_TABLE_MENU'))
                     ->alias('menu')
                     ->join("$this->node node",'node.pid=menu.id')
                     ->field('menu.module, menu.controller, node.*')
