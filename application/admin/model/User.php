@@ -25,7 +25,7 @@ class User extends Model
 		$userRow = Db::table('users')
 					->where($map)
 					->find();
-					
+					// var_dump($userRow);die;
 		if( empty($userRow) || $userRow['status'] == 0 || $userRow['password'] != $password ){
 			if(empty($userRow)){
 				$this->error = '该手机号未注册！';
@@ -41,7 +41,7 @@ class User extends Model
 		}
 
         unset($userRow['password']);
-        Session::set(Config::get('USER_AUTH_KEY'), $userRow);
+        Session::set(Config::get('USER_AUTH_KEY'), $userRow,'admin');
 
         //登录成功要记录在日志里
         // Loader::model('BackstageLog')->record('登录');

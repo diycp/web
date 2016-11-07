@@ -14,28 +14,32 @@ use think\Request;
 
 class Permission
 {
-	private static $menuData;
+    private static $menuData;
+	private static $accessData;
 	private static $table_menu;
 	private static $table_node;
 	private static $table_role;
 	private static $table_role_user;
-	private static $auth_key;
+    private static $auth_key;
+	private static $auth_type;
 
-	/**
-	 * 构造方法  不可用 因为不是每一个地方都需要实例化 该表
-	 */
-	public function __construct() 
-	{
 
-    }
-
-    public static function _initTable()
+    public static function _initConfig()
     {
 		self::$table_menu = Config::get('AUTH_TABLE_MENU');
 		self::$table_node = Config::get('AUTH_TABLE_NODE');
 		self::$table_role = Config::get('AUTH_TABLE_ROLE');
 		self::$table_role_user = Config::get('AUTH_TABLE_ROLE_USER');
-		self::$auth_key = Config::get('USER_AUTH_KEY');
+        self::$auth_key = Config::get('USER_AUTH_KEY');
+		self::$auth_type = Config::get('USER_AUTH_TYPE');
+    }
+
+    public static function getAllAccess()
+    {
+        if (is_null(self::$accessData)) {
+            self::$accessData = Cache::get('node');
+        }
+        return self::$accessData;
     }
 
  
@@ -47,22 +51,34 @@ class Permission
 		}
 		return self::$menuData;
 	}
+
+    public function test()
+    {
+        $test = self::getAllAccess();
+        return $test;   
+    }
  	
  
-	public static function authId()
+	public static function authUser()
 	{      
-        self::_initTable();
-		$authId = Session::get(self::$auth_key.'.id');//获取用户id
-		return $authId;
-	}	
+        self::_initConfig();
+		$authUser = Session::get(self::$auth_key,'admin');//获取用户id
+		return $authUser;
+	}
+
+    public function checkAccess($auth = null)
+    {
+        
+    }
+
+
 
 
 	public static function getNodes()
 	{
-		$authId = self::authId();
-
+		$authUser = self::authUser();
 		$role_id = Db::table(self::$table_role_user)
-		 			->where('user_id',$authId)
+		 			->where('user_id',$authUser['id'])
 		 			->column('role_id');
                     // var_dump($role_id);die;
 		foreach ($role_id as $id) {
@@ -103,38 +119,44 @@ class Permission
 
     public static function menuList()
     {
-        //一级菜单id
-        $data = self::getParentId();
-        $parent = $data['parentId'];
-        $list = array();
-        foreach ($parent as $key => $id) {
-            $list['button'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('title');
-            $list['icon'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('icon');
-            $sub = Db::table(self::$table_menu)->where("status<>0 and pid = $id")->where('id','in',$data['pid'])->order('sort desc,id')->select();
-            foreach ($sub as $k => $item) {
-                //title
-                $sub_button[$k]['title'] = $item['title'];
-                // 组合URL
-                if(!empty($item['module']) && !empty($item['controller']) && !empty($item['action'])){
-                    $sub_button[$k]['url'] = '/'.$item['module'].'/'.$item['controller'];
-                    if($item['action'] != 'index'){
-                        $sub_button[$k]['url'] .= '/'.$item['action'];
+        $authUser = self::authUser();
+
+        if ($authUser['administrator'] == 1) {
+            $menuList = self::getAllMenu();
+        }else{//验证获取
+            //一级菜单id
+            $data = self::getParentId();
+            $parent = $data['parentId'];
+            $list = array();
+            foreach ($parent as $key => $id) {
+                $list['button'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('title');
+                $list['icon'] = Db::table(self::$table_menu)->where("pid = 0 and id = $id")->value('icon');
+                $sub = Db::table(self::$table_menu)->where("status<>0 and pid = $id")->where('id','in',$data['pid'])->order('sort desc,id')->select();
+                foreach ($sub as $k => $item) {
+                    //title
+                    $sub_button[$k]['title'] = $item['title'];
+                    // 组合URL
+                    if(!empty($item['module']) && !empty($item['controller']) && !empty($item['action'])){
+                        $sub_button[$k]['url'] = '/'.$item['module'].'/'.$item['controller'];
+                        if($item['action'] != 'index'){
+                            $sub_button[$k]['url'] .= '/'.$item['action'];
+                        }
+                        if(!empty($item['params'])){
+                            $sub_button[$k]['url'] .= $item['params'];
+                        }
+                    }else{
+                        $sub_button[$k]['url'] = '';
                     }
-                    if(!empty($item['params'])){
-                        $sub_button[$k]['url'] .= $item['params'];
-                    }
-                }else{
-                    $sub_button[$k]['url'] = '';
+                    //icon
+                    $sub_button[$k]['icon'] = $item['icon'];
+                    //target
+                    $sub_button[$k]['target'] = $item['target'];
                 }
-                //icon
-                $sub_button[$k]['icon'] = $item['icon'];
-                //target
-                $sub_button[$k]['target'] = $item['target'];
+                $list['sub_button']  = $sub_button;
+                unset($sub_button);
+                $menuList[$key] = $list;
+                unset($list);
             }
-            $list['sub_button']  = $sub_button;
-            unset($sub_button);
-            $menuList[$key] = $list;
-            unset($list);
         }
         return $menuList;
     }

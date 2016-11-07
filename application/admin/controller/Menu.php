@@ -89,7 +89,8 @@ class Menu extends AdminBase
                                 ['pid' => $LastId, 'title' => '删除', 'name' => 'delete', 'icon' => 'icon-trash', 'group' => 1, 'visible' => 1, 'event_type' => 'default', 'target' => '', 'sort' => '99'],
                                 ['pid' => $LastId, 'title' => '搜索', 'name' => 'search', 'icon' => 'icon-search', 'group' => 2, 'visible' => 0, 'event_type' => 'default', 'target' => '', 'sort' => '99']
                             ];
-                   Db::name($this->node)->insertAll($nodes);
+                    Db::name($this->node)->insertAll($nodes);
+                    $this->cache();
                 }
                 return info('添加成功！',1);
             }
@@ -117,6 +118,7 @@ class Menu extends AdminBase
             }
             $result = $this->menu->update($data);
             if($result >= 0){
+                $this->cache();
                 return info('修改成功！',1);
             }
             return info('修改失败！',0);
@@ -139,6 +141,7 @@ class Menu extends AdminBase
         $result = $this->menu->delete($id);
         if($result > 0){
             Db::table($this->node)->where("pid IN ({$id})")->delete();
+            $this->cache();
         }
         return info('删除成功！',1);
     }
@@ -170,14 +173,13 @@ class Menu extends AdminBase
         //获取菜单
         $menuList = $this->menuList();
         //生成缓存文件
-        Cache::set('menu',$menuList,0);
+        Cache::set('menu',$menuList,'admin');
 
         //获取节点
         $nodeList = $this->nodeList();
         //生成缓存文件
-        Cache::set('node',$nodeList,0);
-        
-        $this->success('缓存已更新！', '/admin/menu/');
+        Cache::set('node',$nodeList,'admin');
+        return $this->success('缓存已更新！', '/admin/menu/');
     }
 
     /****************************缓存菜单****************************/
@@ -186,20 +188,20 @@ class Menu extends AdminBase
     public function menuList()
     {
         //一级菜单id
-        $parent = Db::table($this->menu)
+        $parent = $this->menu
                 ->where('status<>0 and pid = 0')
                 ->order('id')
                 ->column('id');
         $list = array();
         foreach ($parent as $key => $id) {
-            $list['button'] = Db::table($this->menu)->where("pid = 0 and id = $id")->column('title');
-            $sub = Db::table($this->menu)->where("status<>0 and pid = $id")->order('sort desc,id')->select();
+            $list['button'] = $this->menu->where("pid = 0 and id = $id")->value('title');
+            $list['icon'] = $this->menu->where("pid = 0 and id = $id")->value('icon');
+            $sub = $this->menu->where("status<>0 and pid = $id")->order('sort desc,id')->select();
             foreach ($sub as $k => $item) {
                 //title
                 $sub_button[$k]['title'] = $item['title'];
                 // 组合URL
                 if(!empty($item['module']) && !empty($item['controller']) && !empty($item['action'])){
-
                     $sub_button[$k]['url'] = '/'.$item['module'].'/'.$item['controller'];
                     if($item['action'] != 'index'){
                         $sub_button[$k]['url'] .= '/'.$item['action'];
@@ -225,7 +227,7 @@ class Menu extends AdminBase
 
     public function nodeList()
     {
-        $list = Db::table($this->menu)
+        $list = $this->menu
                     ->alias('menu')
                     ->join("$this->node node",'node.pid=menu.id')
                     ->field('menu.module, menu.controller, node.*')
