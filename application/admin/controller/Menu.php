@@ -153,7 +153,7 @@ class Menu extends AdminBase
      * @param number $menu_id
      */
     public function toolbar($menu = 0){
-        if(request()->isPost()){
+        if(request()->isAjax()){
             $rows = Db::table($this->node)->where("pid=".$menu)->order("`group`, sort desc, id")->select();
             $data = array( 'total' => count($rows), 'rows' => $rows );
             return $data;

@@ -2,7 +2,7 @@
 {/cx:toolbar}
 
 <!-- 表格 -->
-<table id="table" data-toggle="gridview" data-height="4   10"  class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-side-pagination="">
+<table id="table" data-toggle="gridview" data-height="300"  class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-side-pagination="">
     <thead>
 		<tr>
 			<th data-width="10" data-checkbox="true"></th>
@@ -15,90 +15,91 @@
 	</thead>
 </table>
 
+<toolbar id="btn_toolbar" class="toolbar">
+    <div class="btn-group">
+        <button type="button" data-name="addBotton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true"> </i>添加</button>
+        <button type="button" data-name="editBotton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true"> </i>编辑</button>
+        <button type="button" data-name="deleteBotton" class="btn btn-default" data-event-type="default" data-event-value="" data-target="default"><i class="fa fa-trash" aria-hidden="true"> </i>删除</button>
+    </div>
+</toolbar>
 
-<div class="gridview2"></div>
+
+<div class="gridview2" >
+    <table id="btn_gridview" data-toggle="gridview" data-height="380" class="table table-hover" data-pagination="false" data-toolbar="#btn_toolbar" data-url="/admin/menu/toolbar?menu=3" data-method="post"   data-unique-id="id">
+        <thead>
+            <tr>
+                <th data-width="10" data-align="center" data-checkbox="true"></th>
+                <th data-width="10" data-field="sort" data-formatter="format_sort">排序</th>
+                <th data-field="title">按钮名称</th>
+                <th data-field="name">按钮标识</th>
+                <th data-field="visible" data-formatter="fomat_visible">是否显示</th>
+                <th data-field="access" data-formatter="fomat_access">权限</th>
+                <th data-field="event_type">事件类型</th>
+                <th data-field="event_value">事件值</th>
+                <th data-field="target">执行方式</th>
+                <th data-field="icon" data-formatter="fomat_icon" data-align="center">图标</th>
+                <th data-field="group" data-align="center">分组</th>
+                <th data-field="remark">说明</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
 
 <script type="text/javascript">
-	function format_status(status,row,index) {
-		if(status == 1){
-			return '显示'
-		}else if(status == 2){
-			return  '隐藏'
-		}else if(status == 0){
-			return  '禁止'
-		}
+
+	var btn_toolbarUrl = '/admin/menu/toolbar?menu='
+
+	$(function () {
+		$("#table").on('clickRow',function (e,row,$element) {
+
+			var $gridview2 = $(".gridview2")
+			var $btn_gridview = $("#btn_gridview");
+			$gridview2.find('table:eq(0)').attr('data-url',btn_toolbarUrl + row.id)  
+
+			$btn_gridview.bootstrapTable('refresh',btn_toolbarUrl + row.id)
+
+		})
+	})
+  
+
+
+
+
+
+
+
+
+function format_status(status,row,index) {
+	if(status == 1){
+		return '显示'
+	}else if(status == 2){
+		return  '隐藏'
+	}else if(status == 0){
+		return  '禁止'
 	}
+}
 
-	function format_sort(sort,row,index) {
-		return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
+function format_sort(sort,row,index) {
+	return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
+}
+
+
+function fomat_icon(icon, row, index){
+	return '<i class="fa '+icon+'"></i>';
+}
+function fomat_access(val, row, index){
+	val +='';
+	switch(val){
+		case '-1':
+			return '禁止访问';
+		case '1':
+			return '无限制';
+		default:
+			return '系统默认';
 	}
-
-	var toolbarUrl = '/admin/menu/toolbar?menu=', $menuTable, $btn_gridview;
-	$(function() {
-		$menuTable = $('#table')
-				.on('clickRow',function(e, row, $element) {
-							if ($btn_gridview == null) {
-								var $gridview2 = $('.gridview2');
-
-								$gridview2.load(toolbarUrl + row.id,
-									function() {
-											// win.init($gridview2);
-											// $btn_gridview = $('#btn_gridview').gridView();
-
-											// $menuTable.gridView('resetView');
-											// $('#current_menu').val(row.id);
-											// $btn_gridview.data('data-menu',row.id);
-										});
-								return;
-							} else if ($btn_gridview.data('data-menu') == row.id) {
-								return;
-							}
-
-							// $btn_gridview.data('data-menu', row.id);
-							// $btn_gridview.data('bootstrap.table').options.url = toolbarUrl
-							// 		+ row.id;
-							// $btn_gridview.bootstrapTable('refresh');
-						}).on('deleted', function(e, ajaxData, status) {
-					// 菜单删除移除按钮
-					if (status != 'success') {
-						return;
-					}
-
-					if ($btn_gridview != undefined) {
-						var menu_id = $btn_gridview.data('data-menu');
-						$.each(ajaxData.deletedRows, function(i, item) {
-							if (menu_id == item.id) {
-								$btn_gridview.bootstrapTable('load', {
-									total : 0,
-									rows : []
-								});
-								return false;
-							}
-						});
-					}
-				}).on('saveSort', function(e, gridview, params) {
-					var list = {};
-					$('#table tbody .sort').each(function(i, input) {
-						list[input.dataset.id] = input.value;
-					});
-
-					alertConfirm({
-						content : '<h4>确定保存排序吗？</h4>数字越大越靠前',
-						ok : function() {
-							$.ajax({
-								url : '__URL__/saveSort',
-								data : {
-									list : list
-								},
-								dataType : "json",
-								type : 'post',
-								error : function() {
-									alertMsg('排序失败！');
-								}
-							});
-						}
-					});
-				});
-
-	});
+}
+function fomat_visible(val, row, index){
+	return val == 1 ? '显示' : '不显示';
+}
 </script>

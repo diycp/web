@@ -42,7 +42,7 @@ window.win = {
     },
     init: function(selector) {
         selector = $(selector);
-        // console.log(selector)
+        // console.log(selector);return;
         this.validate(selector.find('form[data-validate="true"]'));
         var $form = selector.find('form[data-submit="ajax"]');
         $form.each(function(i, item) {
@@ -142,6 +142,8 @@ window.win = {
                 this.custom.complete = this.complete;
 
                 this.success = function(data, textStatus, jqXHR) {
+                    // console.log(data);
+                    // return ;
                     var response_type = jqXHR.getResponseHeader("Content-Type");
                     if (this.dataType != 'json' && response_type != 'application/json; charset=utf-8') {
                         if (typeof this.custom.success == 'function') {

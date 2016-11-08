@@ -26,6 +26,7 @@ $(function() {
         this.$table.data('gridview', this);
         this.enabledEdit = this.$table.data('edit') || false;
         this.init();
+        // console.log(this)
     };
 
     GridView.prototype.init = function() {
@@ -220,6 +221,7 @@ $(function() {
         });
 
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
+            alert(33333)
             // 要执行的事件名称
             var $btn = $(this);
             var eventName = $btn.data('name');
@@ -491,37 +493,7 @@ $(function() {
         });
     };
 
-    GridView.prototype.ajaxSubmit = function(selector) {
-        $this = this;
-        var $form = selector == undefined ? $this.$form : $(selector);
 
-        if ($form.length == 0) {
-            return;
-        }
-
-        $.ajax({
-            url: $form.attr('data-action'),
-            type: $form.attr('data-method'),
-            data: $form.serialize(),
-            dataType: 'json',
-            success: function(data) {
-                if(data.code == 1){
-                    $form.remove();
-                    alertMsg(data.msg)
-                    $this.refresh();
-
-                }else if(data.code == 0){
-                    $form.remove();
-                    alertMsg(data.msg)
-                    $this.refresh();
-                }               
-
-            },
-            error: function() {
-                alertMsg('网络连接失败，请稍后再试！', 'error');
-            }
-        })
-    }
 
     /**
      * 获取表单的值
