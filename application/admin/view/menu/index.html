@@ -2,34 +2,32 @@
 {/cx:toolbar}
 
 <!-- 表格 -->
-<table id="table" data-toggle="gridview" data-height="300"  class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-side-pagination="">
+<table id="table" data-toggle="gridview" data-height="300"  class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id"  data-pagination="true" data-side-pagination="client">
     <thead>
 		<tr>
-			<th data-width="10" data-checkbox="true"></th>
+			<th data-width="10" data-checkbox="true"></th> 
 			<th data-width="10" data-field="sort" data-formatter="format_sort">排序</th>
 			<th data-width="30" data-field="title">菜单名称</th>
 			<th data-width="10" data-field="level" >级别</th>
 			<th data-width="10" data-field="status" data-formatter="format_status" >状态</th>
 			<th data-width="100" data-field="url" >链接地址</th>
-		</tr>
+		</tr>	
 	</thead>
 </table>
 
-
-
 <toolbar id="btn_toolbar">
-    <div id="btn_gridview">
+    <div >
         <div class="btn-group">
-            <button type="button" data-name="add" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true"> </i>添加</button>
-            <button type="button" data-name="edit" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true"> </i>编辑</button>
-            <button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="default"><i class="fa fa-trash" aria-hidden="true"> </i>删除</button>
+            <button type="button" data-name="addButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true"> </i>添加</button>
+            <button type="button" data-name="editButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true"> </i>编辑</button>
+            <button type="button" data-name="deleteButton" class="btn btn-default" data-event-type="default" data-event-value="" data-target="default"><i class="fa fa-trash" aria-hidden="true"> </i>删除</button>
         </div>
     </div>
 </toolbar>
 
-<div class="gridview2">
-	<table id="btn_gridview" data-toggle="gridview" data-height="210" class="table table-hover" data-pagination="false" 
-	data-toolbar="#btn_toolbar"   data-unique-id="id">
+<div class="gridview2" >
+	<table id="btn_gridview" data-toggle="gridview" data-height="310" class="table table-hover" data-pagination="false" 
+	data-toolbar="#btn_toolbar" data-url="/admin/menu/toolbar?menu=1" >
 	<thead>
 		<tr>
 			<th data-width="40" data-align="center" data-checkbox="true"></th>
@@ -50,27 +48,66 @@
 </div>
 
 <script type="text/javascript">
-	function format_status(status,row,index) {
-		if(status == 1){
-			return '显示'
-		}else if(status == 2){
-			return  '隐藏'
-		}else if(status == 0){
-			return  '禁止'
-		}
-	}
 
-	function format_sort(sort,row,index) {
-		return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
-	}
+	var toolbarUrl = '/admin/menu/toolbar?menu=', 
+		$menuTable, 
+		$btn_gridview;
+	
+		$btn_gridview = $("#btn_gridview");
 
-	var toolbarUrl = '/admin/menu/toolbar?menu=', $menuTable, $btn_gridview;
-	$(function() {
-		$menuTable = $('#table')
-			.on('clickRow',function(e, row, $element) {
-				 $("#btn_gridview").bootstrapTable({
-				 	url: toolbarUrl + row.id
-				 })
-			})
-	});
+$(function() {
+	$menuTable = $('#table')
+		.on('clickRow',function(e, row, $element) {
+			$btn_gridview.attr('data-url',toolbarUrl + row.id)
+				$.ajax({
+					url: toolbarUrl + row.id,
+					type: 'post',
+					dataType: 'json',
+					success:function(data){
+						 
+						// $btn_gridview.bootstrapTable('load',data);
+						// $btn_gridview.bootstrapTable('refresh');
+
+					},
+					error:function(){
+
+					}
+				})
+		})
+});
+
+
+
+	
+
+function format_status(status,row,index) {
+	if(status == 1){
+		return '显示'
+	}else if(status == 2){
+		return  '隐藏'
+	}else if(status == 0){
+		return  '禁止'
+	}
+}
+
+function format_sort(sort,row,index) {
+	return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
+}
+function fomat_icon(icon, row, index){
+	return '<i class="fa '+icon+'"></i>';
+}
+function fomat_access(val, row, index){
+	val +='';
+	switch(val){
+		case '-1':
+			return '禁止访问';
+		case '1':
+			return '无限制';
+		default:
+			return '系统默认';
+	}
+}
+function fomat_visible(val, row, index){
+	return val == 1 ? '显示' : '不显示';
+}
 </script>

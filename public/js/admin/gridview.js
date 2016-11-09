@@ -38,6 +38,7 @@ $(function() {
     GridView.prototype.initTable = function() {
         zh_table();
         var $this = this;
+            // console.log(this)
         $this.$table.bootstrapTable({
             striped: false, // 隔行换色
             uniqueId: 'id',
@@ -47,7 +48,6 @@ $(function() {
             classes: 'table table-hover table-no-bordered',
             sidePagination: $this.sidePagination,
             pageSize: $this.pageSize,
-
             queryParams: function(params) {
                 params = $.extend(params, $this.queryParams);
 
@@ -221,7 +221,7 @@ $(function() {
         });
 
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
-            alert(33333)
+            // alert(33333)
             // 要执行的事件名称
             var $btn = $(this);
             var eventName = $btn.data('name');

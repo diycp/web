@@ -54,9 +54,7 @@ class Menu extends AdminBase
                 }
             
             }
-            $total = $this->menu->count();
-            $data = array('rows' => $rows,'total' => $total);
-           return $data;
+           return $rows;
         }
         return view();
     }
@@ -156,11 +154,14 @@ class Menu extends AdminBase
         if(request()->isAjax()){
             $rows = Db::table($this->node)->where("pid=".$menu)->order("`group`, sort desc, id")->select();
             $data = array( 'total' => count($rows), 'rows' => $rows );
-            return $data;
+            return $rows;
         }
-        $this->assign('menu_id', $menu);
-        return view();
+        // $this->assign('menu_id', $menu);
+        // return view();
     }
+
+
+
 
 
 
@@ -196,6 +197,7 @@ class Menu extends AdminBase
             $list['button'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('title');
             $list['icon'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('icon');
             $sub = Db::name(Config::get('AUTH_TABLE_MENU'))->where("status<>0 and pid = $id")->order('sort desc,id')->select();
+                $sub_button = array();
             foreach ($sub as $k => $item) {
                 //title
                 $sub_button[$k]['title'] = $item['title'];
@@ -216,6 +218,7 @@ class Menu extends AdminBase
                 //target
                 $sub_button[$k]['target'] = $item['target'];
             }
+            
             $list['sub_button']  = $sub_button;
             unset($sub_button);
             $menuList[$key] = $list;
