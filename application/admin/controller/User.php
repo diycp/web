@@ -72,6 +72,41 @@ class User extends AdminBase
     }
 
     
+    public function auth($id = 0)
+    {
+        $data['id'] = $id;
+        if(request()->isPost()){
+            $data = request()->param();
+            $user_id = $data['id'];
+            $roles = $data['role'];
+            $total = count($roles);
+            Db::table('bs_role_user')->where('user_id',$user_id)->delete();
+            for ($i=0; $i <$total ; $i++) { 
+                $row['role_id'] = $roles[$i];
+                $row['user_id'] = $user_id;
+                Db::table('bs_role_user')->insert($row);
+            }
+            return info('编辑成功！',1);    
+        }
+        $list = Db::table('bs_role')->order('id')->select();
+        $this->assign('data',$data);
+        $this->assign('list',$list);
+        return $this->fetch();
+    }
+
+    public function password($id = 0)
+    {
+        if(request()->isPost()){
+            $data = request()->param();
+
+            $userModel = Loader::model('User');
+            $edit = $userModel->edit($data);
+            return $edit;
+        }
+        $this->assign('data',$id);
+        return $this->fetch();
+    }
+
 
 
 

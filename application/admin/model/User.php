@@ -100,7 +100,7 @@ class User extends Model
             return info('两次密码不一致！',0);
         }
 		$data['password'] = md6($data['password']);
-		$data['create_time'] = time();
+		// $data['create_time'] = time();
 		$user = new User; 
 		$res = $user->allowField(true)->save($data,['id'=>$data['id']]);
 		if($res == 1){
@@ -109,5 +109,6 @@ class User extends Model
             return info('修改失败！',0);
         }
 	}
+
 
 }

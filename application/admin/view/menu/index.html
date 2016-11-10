@@ -5,7 +5,7 @@
 <table id="table" data-toggle="gridview" data-height="370" class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
     <thead>
         <tr>
-            <th data-width="10" data-checkbox="true"></th>
+            <th data-width="10"  data-align="center"  data-checkbox="true"></th>
             <th data-width="10" data-field="sort" data-formatter="format_sort">排序</th>
             <th data-width="30" data-field="title">菜单名称</th>
             <th data-width="10" data-field="level">级别</th>
@@ -16,65 +16,22 @@
 </table>
 
 
-<!-- 表格2 -->
-<toolbar id="btn_toolbar" class="toolbar" data-module="/admin/menu">
-    <div class="btn-group">
-        <button type="button" data-name="addButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true"> </i>添加</button>
-        <button type="button" data-name="editButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true"> </i>编辑</button>
-        <button type="button" data-name="deleteButton" class="btn btn-default" data-event-type="default" data-event-value="" data-target="default"><i class="fa fa-trash" aria-hidden="true"> </i>删除</button>
-    </div>
-</toolbar>
+<div class="gridview2"></div>
 
-
-
-<div class="gridview2" >
-	<table id="btn_gridview" data-toggle="gridview" data-height="310" class="table" data-pagination="false" data-toolbar="#btn_toolbar" data-url="">
-	<thead>
-		<tr>
-			<th data-width="40" data-align="center" data-checkbox="true"></th>
-			<th data-width="50" data-field="sort" data-formatter="format_sort">排序</th>
-			<th data-field="title">按钮名称</th>
-			<th data-field="name">按钮标识</th>
-			<th data-field="visible" data-formatter="fomat_visible">是否显示</th>
-			<th data-field="access" data-formatter="fomat_access">权限</th>
-			<th data-field="event_type">事件类型</th>
-			<th data-field="event_value">事件值</th>
-			<th data-field="target">执行方式</th>
-			<th data-field="icon" data-formatter="fomat_icon" data-align="center">图标</th>
-			<th data-field="group" data-align="center">分组</th>
-			<th data-field="remark">说明</th>
-		</tr>
-	</thead>
-</table>
-</div>
 
 <script type="text/javascript">
 
 	var toolbarUrl = '/admin/menu/toolbar?menu=', 
 		$menuTable, 
-		$btn_gridview;
-	
-		$btn_gridview = $("#btn_gridview");
+		$gridview2;
+		$gridview2 = $(".gridview2")
 
 $(function() {
 	$('#table').on('clickRow',function(e, row, $element) {
-				$.ajax({
-					url: toolbarUrl + row.id,
-					type: 'post',
-					dataType: 'json',
-					success:function(data){
-						$btn_gridview.bootstrapTable('load',data);
-						$btn_gridview.on('clickRow',function(e, row, $element){
-						return false;
-					})
-					},
-					error:function(){
-						alertMsg('网络出错，请稍后再试！','error')
-					}
-				})
-		}).on('addButton',function(){
-			alert(35)
-		})
+				win.init($gridview2)
+
+			})
+
 });
 
 

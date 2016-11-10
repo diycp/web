@@ -1,0 +1,24 @@
+<form data-method="post" data-action="/{$Request.module}/{$Request.controller}/{$Request.action}" data-submit="ajax" data-validate="true" class="form-horizontal">
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">选择授权角色</h3>
+                </div>
+                <input type="hidden" name="id" value="{$data.id ?? ''}">
+                <div class="modal-body">
+                    {volist name="list" id="r"}
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="{$r.id}" name="role[]">{$r.name}</label>
+                    </div>
+                    {/volist}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

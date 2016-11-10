@@ -26,6 +26,22 @@
 			}
 		// }
 	}
+
+	$(function(){
+		$("#table").on('auth',function(e, gridview, params){
+			if(gridview.currentRow == null){
+				alertMsg("请先选择授权的用户！")
+				return false;
+			}
+			params.data.id = gridview.currentRow.id
+		}).on('password',function(e, gridview, params){
+			if(gridview.currentRow == null){
+				alertMsg("请先选择用户！")
+				return false;
+			}
+			params.data.id = gridview.currentRow.id
+		})
+	})
 </script>
 
 
