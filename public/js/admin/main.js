@@ -416,7 +416,7 @@ function alertMsg(content, time) {
         option.status = time;
     }
 
-    var html = '<div id="msg_box_div" style="position:fixed;left:20%;right:20%; top: -25%;z-index:9999;text-align: center;-webkit-transition: opacity .3s linear,top .3s ease-out; -moz-transition: opacity .3s linear,top .3s ease-out;-o-transition: opacity .3s linear,top .3s ease-out;transition: opacity .3s linear,top .3s ease-out;">';
+    var html = '<div id="msg_box_div" style="position:fixed;left:20%;right:20%; top: 65px;z-index:9999;text-align: center;-webkit-transition: opacity .3s linear,top .3s ease-out; -moz-transition: opacity .3s linear,top .3s ease-out;-o-transition: opacity .3s linear,top .3s ease-out;transition: opacity .3s linear,top .3s ease-out;">';
     html += '	<div class="alert alert-' + option.status + '" style="display:inline-block; padding:4px 20px 4px 20px;margin: 0;">';
     if (option.title != undefined && option.title !== false && option.title != '') {
         html += '		<h4>' + option.title + '</h4>';

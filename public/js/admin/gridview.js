@@ -464,7 +464,9 @@ $(function() {
             success: function(html) {
                 var ahtml = $(html);
                 var $html = ahtml.find('form');
-                var $modal = $html.find('.modal:eq(0)');
+
+                var $modal = ahtml.find('.modal:eq(0)');
+                console.log($modal)
 
                 if ($modal.length == 0) {
                     alertMsg(html, 'warning');
