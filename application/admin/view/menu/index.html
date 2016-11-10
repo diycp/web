@@ -27,7 +27,7 @@
 
 <div class="gridview2" >
 	<table id="btn_gridview" data-toggle="gridview" data-height="310" class="table table-hover" data-pagination="false" 
-	data-toolbar="#btn_toolbar" data-url="/admin/menu/toolbar?menu=3" >
+	data-toolbar="#btn_toolbar">
 	<thead>
 		<tr>
 			<th data-width="40" data-align="center" data-checkbox="true"></th>
@@ -59,18 +59,16 @@ $(function() {
 	$menuTable = $('#table')
 		.on('clickRow',function(e, row, $element) {
 			$btn_gridview.attr('data-url',toolbarUrl + row.id)
+
 				$.ajax({
 					url: toolbarUrl + row.id,
 					type: 'post',
 					dataType: 'json',
 					success:function(data){
-						 
-						// $btn_gridview.bootstrapTable('load',data);
-						// $btn_gridview.bootstrapTable('refresh');
-
+						$btn_gridview.bootstrapTable('load',data);
 					},
 					error:function(){
-
+						alertMsg('网络出错，请稍后再试！','error')
 					}
 				})
 		})

@@ -160,6 +160,11 @@ class Menu extends AdminBase
         // return view();
     }
 
+    public function addButton()
+    {
+        var_dump(333);die;
+    }
+
 
 
 
