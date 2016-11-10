@@ -77,13 +77,7 @@ class Role extends AdminBase
     public function access_menu($id = 0)
     {
         if (request()->isPost()) {
-            $data = request()->param();
-            $res = $this->role->insert($data);
-            if($res == 1){
-                return info('添加成功！',1);
-            }else{
-                return info('添加失败！',0);
-            }
+             
         }
         return $this->fetch();
     }

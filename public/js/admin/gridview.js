@@ -463,24 +463,29 @@ $(function() {
             waitting: '正在加载，请稍后...',
             success: function(html) {
                 var ahtml = $(html);
-                var $html = ahtml.find('form');
+                var $form = ahtml.find('form');
 
-                var $modal = ahtml.find('.modal:eq(0)');
-                console.log($modal)
-
+                if($form.length == 0){
+                    var $modal = ahtml.find('.modal:eq(0)');
+                }else{
+                    var $modal = $form.find('.modal:eq(0)');
+                }
                 if ($modal.length == 0) {
                     alertMsg(html, 'warning');
                     return;
                 }
                 var $dialogModal = $('<div class="dialogModal"></div>');
-                $html.appendTo($dialogModal)
+                if ($form.length == 0) {
+                    $modal.appendTo($dialogModal)
+                }else{
+                    $form.appendTo($dialogModal)
+                }
                 $dialogModal.appendTo('body');
 
                 //调用数据效验
                 win.init($dialogModal);
                 $modal.modal().show()
 
-                var $form = $html
 
                 //隐藏模态框 刷新表单 移除模态框等元素
                 $modal.on('hide.bs.modal',function () {
