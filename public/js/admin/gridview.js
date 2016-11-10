@@ -221,7 +221,7 @@ $(function() {
         });
 
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
-            // alert(33333)
+            alert(33333)
             // 要执行的事件名称
             var $btn = $(this);
             var eventName = $btn.data('name');

@@ -157,7 +157,7 @@ class Menu extends AdminBase
             return $rows;
         }
         // $this->assign('menu_id', $menu);
-        // return view();
+        return view();
     }
 
     public function addButton()
