@@ -197,7 +197,7 @@ class Menu extends AdminBase
             $list['button'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('title');
             $list['icon'] = Db::name(Config::get('AUTH_TABLE_MENU'))->where("pid = 0 and id = $id")->value('icon');
             $sub = Db::name(Config::get('AUTH_TABLE_MENU'))->where("status<>0 and pid = $id")->order('sort desc,id')->select();
-                $sub_button = array();
+            $sub_button = array();
             foreach ($sub as $k => $item) {
                 //title
                 $sub_button[$k]['title'] = $item['title'];

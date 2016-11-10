@@ -1,5 +1,28 @@
 框架TP5
 
+======================
+
+# 功能
+后台自己重写了模型,实现组件化开发 详情见public\js\admin\  main.js / gridview.js 
+
+### 账号管理
+**添加、编辑、删除、搜索等**
+![效果](http://7xpqdb.com1.z0.glb.clouddn.com/filehelper_1478765591922_47.png)
+![效果](http://7xpqdb.com1.z0.glb.clouddn.com/filehelper_1478765591922_47.png)
+![效果](http://7xpqdb.com1.z0.glb.clouddn.com/filehelper_1478765592059_7.png)
+
+### 菜单管理
+**添加、编辑、删除等**，对每一个菜单同时能够对其节点增删改操作
+![效果](http://7xpqdb.com1.z0.glb.clouddn.com/filehelper_1478765927500_24.png)
+
+
+
+
+
+
+
+
+
 =======================
 
 - doing... 
