@@ -1,4 +1,4 @@
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="access_modal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,8 +12,47 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="submit" class="btn btn-primary">保存</button>
+                <button onclick="save_access()" class="btn btn-primary">保存</button>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+    $('#tree').jstree({ 
+        core : {
+            data : {$list},
+            dblclick_toggle: false
+        },
+        checkbox : {
+             keep_selected_style : false,
+             three_state: true, // 父级选中自动全选子集
+        },
+        plugins : [  "checkbox" ]
+    });
+});
+
+function save_access(){
+    var checked_menu = $('#tree').jstree('get_checked');
+    var node = [];
+    for(var i in checked_menu){
+        if(checked_menu[i].indexOf('_') != -1){
+            var array = checked_menu[i].split('_');
+            node.push(array[1]);
+        }
+    }
+    
+    var node_id = node.join(',');
+    
+    $.ajax({
+        url: '/admin/role/access_menu',
+        data: {role_id: {$role_id}, node_id: node_id},
+        dataType: 'json',
+        type: 'post',
+        success: function(){
+            $('#access_modal').modal('hide');
+        }
+    });
+}
+</script>

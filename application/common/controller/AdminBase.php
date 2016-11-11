@@ -20,6 +20,7 @@ class AdminBase extends Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->request = Request::instance();
 		$this->module_name = Request::instance()->module();
 
 		if($this->module_name == "admin"){
@@ -71,6 +72,17 @@ class AdminBase extends Controller
 		Session::clear();
 		$redirect = '/admin/login/'; 
 		$this->redirect(Url::build($redirect));
+	}
+
+
+	protected function fetch($template = '', $vars = [], $replace = [], $config = [])
+	{
+		if (request()->isPost() || request()->isAjax()) {
+			Config::set('layout_on',false);
+		}
+		// var_dump(321);die;
+		parent::fetch($template, $vars, $replace, $config);
+		exit();
 	}
 
 

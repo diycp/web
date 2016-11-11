@@ -462,6 +462,9 @@ $(function() {
             data: data,
             waitting: '正在加载，请稍后...',
             success: function(html) {
+                
+                console.log(html)
+
                 var ahtml = $(html);
                 var $form = ahtml.find('form');
 
