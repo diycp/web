@@ -86,7 +86,7 @@ class User extends AdminBase
                 $row['user_id'] = $user_id;
                 Db::table('bs_role_user')->insert($row);
             }
-            return info('编辑成功！',1);    
+            return info('授权成功！',1);    
         }
         $list = Db::table('bs_role')->order('id')->select();
         $this->assign('data',$data);

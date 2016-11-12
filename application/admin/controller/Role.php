@@ -84,8 +84,9 @@ class Role extends AdminBase
             $data = array();
             $data['id'] = input('post.role_id/d', 0);
             $data['node_id'] = input('post.node_id');
+            // var_dump($data);die;
             $this->role->update($data);
-            return info("添加成功！",1);
+            return info("授权成功！",1);
 
         }elseif(!is_numeric($role_id) || $role_id < 1){
             return info("角色ID不能为空！",0);
@@ -119,11 +120,7 @@ class Role extends AdminBase
                 );
         }
 
-        // echo "<pre>";
-        // var_dump($menu);die;
-        
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
-
         $this->assign(array('list' => $menu, 'role_id' => $role_id));
 
         return $this->fetch();
