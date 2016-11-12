@@ -24,11 +24,10 @@ class AdminBase extends Controller
 		$this->module_name = Request::instance()->module();
 
 		if($this->module_name == "admin"){
-			// $this->checkAccess();
+			$this->checkAccess();
 		}	
 	 	//获取session
 	 	$userId = Session::get(config('USER_AUTH_KEY').'.id','admin');
-	 	// var_dump($userId);die;
 	 	if(is_null($userId)){
 	 		$this->goLogin();
 	 	}
@@ -39,18 +38,12 @@ class AdminBase extends Controller
 	{
 
 
-		// echo "string";
 		$uid = $this->key();
-		// $test = new Permission();//实例化后多了一个换行//
-		// $data = $test->test();
-  
 
 		if(is_null($uid)){
 			$this->goLogin();
 			return false;
 		}
-
-		
 		
 	}
 
