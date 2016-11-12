@@ -111,8 +111,6 @@ class User extends AdminBase
     public function detail()
     {
         $user = Session::get(Config::get('USER_AUTH_KEY'),'admin');
-        
-        
         return $this->fetch();
     }
 

@@ -39,7 +39,6 @@ class User extends Model
 	    	// Loader::model('BackstageLog')->record(" 登录失败, username:[{$data['username']}] password:$password ");
 	    	return false;
 		}
-
         unset($userRow['password']);
         Session::set(Config::get('USER_AUTH_KEY'), $userRow,'admin');
 

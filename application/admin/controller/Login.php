@@ -30,17 +30,13 @@ class Login extends Controller
 			if($result != true){
 				return ['status' => 0, 'data' => $result];
 			}
-
 			$userModel = Loader::model('User');
 			$userRow = $userModel->login($data);
 
 			if ($userRow === false) {
                 return $this->error($userModel->getError());
             }
-            // echo "string";die;
             return $this->success('登录成功', Url::build('/admin/user'));
-
-            
 		}else{
 			return $this->fetch();
 		}
@@ -50,7 +46,7 @@ class Login extends Controller
 	{
 		Session::delete(config('USER_AUTH_KEY'),'admin');
 
-		return $this->fetch('/login/index');
+		return $this->success('退出成功~');
 	}
     
 }
