@@ -33,9 +33,10 @@ function get_menu_child_html($list){
 }
 
 $_menuList = \app\common\controller\Permission::menuList();
+$_authUser = \app\common\controller\Permission::authUser();
 
 echo '<div>
-        <div class="hello-user">欢迎使用  </div>
+        <div class="hello-user">欢迎您~'. $_authUser['username'] .'  </div>
         <ul class="menu-list">'.get_menu_child_html($_menuList).'</ul>
       </div>';
 ?>

@@ -24,11 +24,11 @@ class AdminBase extends Controller
 		$this->module_name = Request::instance()->module();
 
 		if($this->module_name == "admin"){
-			$this->checkAccess();
+			// $this->checkAccess();
 		}	
 	 	//获取session
-	 	$userId = Session::get(Config::get('USER_AUTH_KEY').'.id');
-
+	 	$userId = Session::get(config('USER_AUTH_KEY').'.id','admin');
+	 	// var_dump($userId);die;
 	 	if(is_null($userId)){
 	 		$this->goLogin();
 	 	}
@@ -56,7 +56,7 @@ class AdminBase extends Controller
 
 	public function key()
 	{
-		$user = Session::get(Config::get('USER_AUTH_KEY'));
+		$user = Session::get(config('USER_AUTH_KEY'),'admin');
 		if(is_null($user)){
 			$this->goLogin();
 		}
@@ -64,7 +64,7 @@ class AdminBase extends Controller
 			$this->goLogin();
 		}
 		$user = reset($user);
-		return false; $user;
+		return $user;
 	}
 
 	public function goLogin()

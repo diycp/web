@@ -63,6 +63,9 @@ class Permission
 	{      
         self::_initConfig();
 		$authUser = Session::get(self::$auth_key,'admin');//获取用户id
+        if (is_null($authUser)) {
+            
+        }
 		return $authUser;
 	}
 
@@ -178,7 +181,7 @@ class Permission
     	$controller = strtolower($controller);
     	$map['menu.status'] = ['<>',0];
     	$map['menu.controller'] = ['=',$controller];
-    	$map['node.visible'] = ['=',1];
+        	$map['node.visible'] = ['=',1];
     	$nodes = Db::table(self::$table_menu)
     			->alias('menu')
     			->join(self::$table_node .' node', 'menu.id = node.pid')
@@ -221,6 +224,8 @@ class Permission
     	}
     	return $data;    	
     }
+
+ 
  
 
 

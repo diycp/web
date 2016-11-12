@@ -84,7 +84,6 @@ class Role extends AdminBase
             $data = array();
             $data['id'] = input('post.role_id/d', 0);
             $data['node_id'] = input('post.node_id');
-            // var_dump($data);die;
             $this->role->update($data);
             return info("授权成功！",1);
 
@@ -122,11 +121,8 @@ class Role extends AdminBase
 
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
         $this->assign(array('list' => $menu, 'role_id' => $role_id));
-
         return $this->fetch();
     }
-
-
 
     private function detail($id){
         if(is_numeric($id) && $id > 0){

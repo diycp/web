@@ -6,6 +6,7 @@ use think\Session;
 use think\Request;
 use think\Loader;
 use think\Db;
+use think\Config;
 
 /**
 * 
@@ -104,6 +105,14 @@ class User extends AdminBase
             return $edit;
         }
         $this->assign('data',$id);
+        return $this->fetch();
+    }
+
+    public function detail()
+    {
+        $user = Session::get(Config::get('USER_AUTH_KEY'),'admin');
+        
+        
         return $this->fetch();
     }
 

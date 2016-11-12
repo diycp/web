@@ -37,8 +37,8 @@ class Login extends Controller
 			if ($userRow === false) {
                 return $this->error($userModel->getError());
             }
-
-            return $this->success('登录成功', Url::build('/admin/menu'));
+            // echo "string";die;
+            return $this->success('登录成功', Url::build('/admin/user'));
 
             
 		}else{
@@ -48,8 +48,9 @@ class Login extends Controller
 
 	public function out()
 	{
-		Session::delete('user');
-		return view('Login/index');
+		Session::delete(config('USER_AUTH_KEY'),'admin');
+
+		return $this->fetch('/login/index');
 	}
     
 }
