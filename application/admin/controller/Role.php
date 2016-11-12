@@ -35,7 +35,9 @@ class Role extends AdminBase
             $data = request()->param();
             $res = $this->role->insert($data);
             if($res == 1){
+                // return $this->success('添加成功！');
                 return info('添加成功！',1);
+                // return $this->result(null,1,'添加成功！');
             }else{
                 return info('添加失败！',0);
             }
@@ -116,12 +118,15 @@ class Role extends AdminBase
                     'icon' => ' ',
                 );
         }
+
+        // echo "<pre>";
+        // var_dump($menu);die;
         
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
 
         $this->assign(array('list' => $menu, 'role_id' => $role_id));
 
-        return $this->fetch('access_menu');
+        return $this->fetch();
     }
 
 

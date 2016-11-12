@@ -75,15 +75,22 @@ class AdminBase extends Controller
 	}
 
 
-	protected function fetch($template = '', $vars = [], $replace = [], $config = [])
-	{
-		if (request()->isPost() || request()->isAjax()) {
-			Config::set('layout_on',false);
-		}
-		// var_dump(321);die;
-		parent::fetch($template, $vars, $replace, $config);
-		exit();
-	}
+		/**
+		 * 取消模板布局
+		 */
+	// protected function fetch($template = '', $vars = [], $replace = [], $config = [])
+	// {
+	// 	if (request()->isPost() || request()->isAjax()) {
+	// 		// Config::set('layout_on',false);
+	// 		// config(['layout_on'] => false);
+	// 		// {__NOLAYOUT__}
+	// 	}
+	// 	// var_dump(321);die;
+	// 	parent::fetch($template, $vars, $replace, $config);
+	// 	exit();
+	// }
+
+
 
 
 

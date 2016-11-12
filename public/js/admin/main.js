@@ -42,7 +42,6 @@ window.win = {
     },
     init: function(selector) {
         selector = $(selector);
-        // console.log(selector);return;
         this.validate(selector.find('form[data-validate="true"]'));
         var $form = selector.find('form[data-submit="ajax"]');
         $form.each(function(i, item) {
