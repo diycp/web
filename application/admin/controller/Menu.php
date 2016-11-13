@@ -169,13 +169,14 @@ class Menu extends AdminBase
 
     public function addButton($menu_id = 0)
     {
+
+
         if(request()->isPost()){
             $data = request()->param();
-            var_dump($data);die;
+
         }
 
         $data = array('pid' => $menu_id,'visible' => 1);
-
         $this->assign('data',$data);
         return $this->fetch('editButton');
     }
@@ -183,7 +184,13 @@ class Menu extends AdminBase
 
     public function editButton($id = 0)
     {
-        # code...
+        $data = request()->param();
+        $id = intval($data['id']);
+        
+        $data = Db::table('bs_node')->where('id',$id)->find();
+
+        $this->assign('data',$data);
+        return $this->fetch();
     }
 
 
