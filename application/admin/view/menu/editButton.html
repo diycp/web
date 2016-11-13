@@ -132,13 +132,13 @@ $('#event_type').on('change', function(){
 
 
 
-$('#icon_list').on('hide', function(){
+$('#icon_list').on('hide.bs.modal', function(){
 	$('#editButtonForm').show();
 });
 
 $('#select_icon').on('click', function(){
 	$('#editButtonForm').hide();
-	$('#icon_list').modal('show	');
+	$('#icon_list').modal({backdrop: false}).show();
 });
 
 $('#icon_list li').on('click', function(){
@@ -153,13 +153,15 @@ $('#icon_list li').on('click', function(){
 
 <style type="text/css">#icon_list ul li {float:left; width: 33.3%;}</style>
 
-<div id="icon_list" class="form-horizontal modal hide fade" tabindex="-1" role="dialog">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>从图标库中选择</h3>
-  </div>
-  <div class="modal-body">
-  	<ul>
+<div class="modal fade" id="icon_list" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel"从图标库中选择</h4>
+      </div>
+      <div class="modal-body">
+       <ul>
             <li><i class="icon-glass"></i> icon-glass</li>
             <li><i class="icon-music"></i> icon-music</li>
             <li><i class="icon-search"></i> icon-search</li>
@@ -305,8 +307,11 @@ $('#icon_list li').on('click', function(){
             <li><i class="icon-briefcase"></i> icon-briefcase</li>
             <li><i class="icon-fullscreen"></i> icon-fullscreen</li>
 	</ul>
-  </div>
-  <div class="modal-footer">
-  	<button type="button" class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
   </div>
 </div>
