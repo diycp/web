@@ -9,7 +9,7 @@ use think\Db;
 use think\Config;
 
 /**
-* 
+* 用户管理
 */
 class User extends AdminBase
 {
@@ -20,6 +20,9 @@ class User extends AdminBase
         $this->users = Db::table('users');
     }
 
+    /**
+     * 列表
+     */
     public function index()
     {
         if(request()->isAjax()){
@@ -33,6 +36,9 @@ class User extends AdminBase
         return view();
     }
 
+    /**
+     * 添加
+     */
     public function add()
     {   
         if( request()->isPost() ){
@@ -45,6 +51,10 @@ class User extends AdminBase
         return $this->fetch('edit');
     }
 
+    /**
+     * 编辑
+     * @param  string $id 数据ID（主键）
+     */
     public function edit($id = 0)
     {
         $data = request()->param();
@@ -62,6 +72,10 @@ class User extends AdminBase
         return $this->fetch();
     }
 
+    /**
+     * 删除
+     * @param  string $id 数据ID（主键）
+     */
     public function delete($id = 0){
         if(empty($id)){
             return info('删除项不能为空！',0);
@@ -72,7 +86,10 @@ class User extends AdminBase
         }        
     }
 
-    
+    /**
+     * 用户授权
+     * @param  string $id 
+     */
     public function auth($id = 0)
     {
         $data['id'] = $id;
@@ -95,6 +112,10 @@ class User extends AdminBase
         return $this->fetch();
     }
 
+    /**
+     * 修改密码
+     * @param  string $id 
+     */
     public function password($id = 0)
     {
         if(request()->isPost()){
@@ -108,6 +129,9 @@ class User extends AdminBase
         return $this->fetch();
     }
 
+    /**
+     * 账户详情
+     */
     public function detail()
     {
         $user = Session::get(Config::get('USER_AUTH_KEY'),'admin');

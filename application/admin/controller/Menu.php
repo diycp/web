@@ -9,7 +9,7 @@ use think\View;
 
 
 /**
-* 
+* 菜单管理
 */
 class Menu extends AdminBase
 {
@@ -165,8 +165,6 @@ class Menu extends AdminBase
         return $this->fetch();
     }
  
-
-
     public function addButton($menu_id = 0)
     {
         if(request()->isPost()){

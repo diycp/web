@@ -17,18 +17,7 @@ class Index extends AdminBase
 
     public function index()
     {
-        // $key = $this->key();
-        // echo "string";
-        
         return view('index');
     }
 
-    public function test()
-    {
-        var_dump( $this->getTest('Aierui') );
-
-
-        // Session::clear();
-        var_dump(Session::get('user'));
-    }
 }

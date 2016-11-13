@@ -8,16 +8,22 @@ use think\Url;
 use think\Session;
 
 /**
-* 
+* 登录
 */
 class Login extends Controller
 {
 
+	/**
+	 * 后台登录首页
+	 */
 	public function index()
 	{
 		return view();
 	}
 
+	/**
+	 * 登录验证
+	 */
 	public function doLogin()
 	{
 		$request = Request::instance();
@@ -30,6 +36,7 @@ class Login extends Controller
 			if($result != true){
 				return ['status' => 0, 'data' => $result];
 			}
+
 			$userModel = Loader::model('User');
 			$userRow = $userModel->login($data);
 
@@ -42,10 +49,12 @@ class Login extends Controller
 		}
 	}
 
+	/**
+	 * 退出登录
+	 */
 	public function out()
 	{
 		Session::delete(config('USER_AUTH_KEY'),'admin');
-
 		return $this->success('退出成功~');
 	}
     

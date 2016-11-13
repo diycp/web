@@ -8,7 +8,7 @@ use think\Loader;
 use think\Db;
 
 /**
-* 
+* 角色管理
 */
 class Role extends AdminBase
 {
@@ -19,6 +19,9 @@ class Role extends AdminBase
         $this->role = Db::table('bs_role');
     }
 
+    /**
+     * 列表
+     */
     public function index()
     {
         if(request()->isAjax()){
@@ -28,7 +31,9 @@ class Role extends AdminBase
         return view();
     }
 
-
+    /**
+     * 添加
+     */
     public function add()
     {
         if (request()->isPost()) {
@@ -45,6 +50,9 @@ class Role extends AdminBase
         return $this->fetch('edit');
     }
 
+    /**
+     * 编辑
+     */
     public function edit($id = 0)
     {
         if (request()->isPost()) {
@@ -62,9 +70,9 @@ class Role extends AdminBase
         return $this->fetch();
     }
 
-
-
-
+    /**
+     * 删除
+     */
     public function delete($id = 0){
         if(empty($id)){
             return info('删除项不能为空！',0);
@@ -75,7 +83,9 @@ class Role extends AdminBase
         }        
     }
 
-
+    /**
+     * 菜单授权
+     */
     public function access_menu($id = 0)
     {
          $role_id = $id;
@@ -124,11 +134,11 @@ class Role extends AdminBase
         return $this->fetch();
     }
 
+
     private function detail($id){
         if(is_numeric($id) && $id > 0){
             return $this->role->find($id);
         }
-        
         return array();
     }
 
