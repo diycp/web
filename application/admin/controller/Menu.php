@@ -169,7 +169,6 @@ class Menu extends AdminBase
 
     public function addButton($menu_id = 0)
     {
-        
         if(request()->isPost()){
             $data = request()->param();
             var_dump($data);die;

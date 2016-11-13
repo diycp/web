@@ -33,11 +33,9 @@
 		$("#btn_gridview").on('addButton',function(e, gridview, params){
 
 			var menu_id = $(this).data('data-menu');
-			// console.log(menu_id)
 			if(menu_id == null ){
 				return alertMsg('请先勾选要编辑的菜单！');
 			}
-
 			params.data.menu_id = menu_id
 		}) 
 	})
