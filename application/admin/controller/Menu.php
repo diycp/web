@@ -5,7 +5,7 @@ use app\common\controller\AdminBase;
 use think\Db;
 use think\Config;
 use think\Cache;
-use think\Controller;
+use think\View;
 
 
 /**
@@ -18,9 +18,11 @@ class Menu extends AdminBase
     function __construct()
     {
         parent::__construct();
-        $this->menu = Db::name(Config::get('AUTH_TABLE_MENU'));
+        // $this->menu = Db::name(Config::get('AUTH_TABLE_MENU'));
+        $this->menu = Db::name('bs_menu');
 
-        $this->node = Config::get('AUTH_TABLE_NODE');
+        $this->node = 'bs_node';
+        // $this->node = Config::get('AUTH_TABLE_NODE');
     }
 
     private function menu_list($all = true){
@@ -151,18 +153,38 @@ class Menu extends AdminBase
      * @param number $menu_id
      */
     public function toolbar($menu = 0){
-        if(request()->isAjax()){
-            $rows = Db::table($this->node)->where("pid=".$menu)->order("`group`, sort desc, id")->select();
+
+        $menu = intval($menu);
+        if(request()->isPost()){
+            $rows = Db::table('bs_node')->where("pid=".$menu)->order("`group`, sort desc, id")->select();
+
             $data = array( 'total' => count($rows), 'rows' => $rows );
-            return $rows;
+            return $data;
         }
-        // $this->assign('menu_id', $menu);
-        return view();
+        $this->assign('menu_id', $menu);
+        return $this->fetch();
+    }
+ 
+
+
+    public function addButton($menu_id = 0)
+    {
+        
+        if(request()->isPost()){
+            $data = request()->param();
+            var_dump($data);die;
+        }
+
+        $data = array('pid' => $menu_id,'visible' => 1);
+
+        $this->assign('data',$data);
+        return $this->fetch('editButton');
     }
 
-    public function addButton()
+
+    public function editButton($id = 0)
     {
-        var_dump(333);die;
+        # code...
     }
 
 

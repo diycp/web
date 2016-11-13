@@ -1043,7 +1043,6 @@ class Query
         } else {
             $tables = $table;
             $table  = [];
-            // var_dump($tables);die;
             foreach ($tables as $key => $val) {
                 if (is_numeric($key)) {
                     $table[] = $val;

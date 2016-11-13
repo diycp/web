@@ -18,23 +18,42 @@
 
 <div class="gridview2"></div>
 
-
 <script type="text/javascript">
 
-	var toolbarUrl = '/admin/menu/toolbar?menu=', 
-		$menuTable, 
-		$gridview2;
-		$gridview2 = $(".gridview2")
+	var toolbarUrl = '/admin/menu/toolbar?menu=', $menuTable, $btn_gridview;
+	$(function() {
+		$menuTable = $('#table')
+				.on('clickRow',function(e, row, $element) {
+							if ($btn_gridview == null) {
+								var $gridview2 = $('.gridview2');
 
-$(function() {
-	$('#table').on('clickRow',function(e, row, $element) {
-				win.init($gridview2)
+								$.ajax({
+									url: toolbarUrl + row.id,
+									type: 'get',
+						            dataType: 'html',
+									success:function(html){
+										$html = $(html);
+										$html.appendTo($gridview2);
+										win.init($gridview2)
 
-			})
+										$btn_gridview = $('#btn_gridview').gridView();
 
-});
+										$menuTable.gridView('resetView');
+										$('#current_menu').val(row.id);
+										$btn_gridview.data('data-menu',row.id);
+									},
+								})
+								return;
+							} else if ($btn_gridview.data('data-menu') == row.id) {
+								return;
+							}
 
-
+							$btn_gridview.data('data-menu', row.id);
+							console.log($btn_gridview.data('bootstrap.table'))
+							$btn_gridview.data('bootstrap.table').options.url = toolbarUrl + row.id;
+							$btn_gridview.bootstrapTable('refresh');
+						})
+			});
 
 	
 

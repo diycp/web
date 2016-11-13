@@ -12,6 +12,8 @@ return [
 	'template'                          =>  [
 	    'layout_on'    =>  true,
 	    'layout_name'  =>  'layout',
+        // 模板后缀
+        // 'view_suffix'  => 'html',
         'taglib_pre_load'    =>    'think\template\taglib\Cx',
         'taglib_build_in'    =>    'think\template\taglib\Cx',
 	],

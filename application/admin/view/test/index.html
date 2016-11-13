@@ -1,0 +1,21 @@
+<button>click</button>
+
+<div class="gridview2"></div>
+
+<script type="text/javascript">
+	$('button').click(function () {
+		$.ajax({
+			url: '/admin/test/toolbar',
+			type: 'get',
+			dataType: 'html',
+			success:function(html){
+				var $html = $(html) 
+				$html.appendTo($('.gridview2'))
+
+			},
+			error:function(){
+
+			}
+		})
+	})
+</script>

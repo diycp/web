@@ -1,0 +1,110 @@
+{__NOLAYOUT__}
+<form data-method="post" data-action="/{$Request.module}/{$Request.controller}/{$Request.action}" data-submit="ajax" data-validate="true" class="form-horizontal">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">{$data['id']?'修改':'添加'}动作</h3>
+                </div>
+                <input type="hidden" name="id" value="{$data.id ?? ''}">
+                <input type="hidden" name="pid" value="{$data.pid ?? ''}">
+
+                <div class="modal-body">
+                    <div class="modal-body-content">
+
+ 						<div class="form-group must">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-7"> 
+                                <input type="text" class="form-control" name="title" maxlength="8" placeholder="至多8个字符" required value="{$data.title ?? ''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group must">
+                            <label class="col-sm-3 control-label">唯一标识符</label>
+                            <div class="col-sm-7"> 
+                                <input type="text" class="form-control" name="name" maxlength="20" placeholder="如：add、edit、search等" required value="{$data.name ?? ''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">事件类型</label>
+                            <div class="col-sm-7"> 
+                               <select name="event_type" id="event_type" class="form-control" style="width: 125px;display: inline-block;">
+                               		<option value="view" {$data['event_type']=='view' ? ' selected ' : ''}}>视图</option>
+                               		<option value="default" {$data['event_type']=='default' ? ' selected ' : ''}}>默认</option>
+                               		<option value="custom" {$data['event_type']=='custom' ? ' selected ' : ''}>自定义</option>
+                               </select>
+                               <input type="text" class="form-control" name="event_value" style="width: 130px;display: inline-block;margin-left: 10px;" maxlength="50" placeholder="系统默认"  value="{$data.event_value ?? ''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">视图方式</label>
+                            <div class="col-sm-7"> 
+                               <select name="target" id="target" class="form-control">
+                               		<option value="modal" {$data['target']=='modal' ? ' selected ' : ''}>模态框</option>
+                               		<option value="self" {$data['target']=='self' ? ' selected ' : ''}>在本页打开</option>
+                               		<option value="_blank" {$data['target']=='_blank' ? ' selected ' : ''}>在新窗口打开</option>
+                               </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-7"> 
+                               <select name="group" id="group" class="form-control" style="width: 125px;display: inline-block;">
+                               		<option value="1" {$data['group']== 1 ? ' selected ' : ''}>在第一组中</option>
+                               		<option value="2" {$data['group']== 2 ? ' selected ' : ''}>在第二组中</option>
+                               		<option value="3" {$data['group']== 3 ? ' selected ' : ''}>在第三组中</option>
+                               </select>
+
+                               <select name="visible" id="visible" class="form-control" style="width: 130px;display: inline-block;margin-left: 10px;">
+                               		<option value="1" {$data['visible']== 1 ? ' selected ' : ''}>显示</option>
+                               		<option value="0" {$data['visible']== 0 ? ' selected ' : ''}>隐藏</option>
+                               </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">权限</label>
+                            <div class="col-sm-7"> 
+                               <select name="access"   class="form-control">
+                               		<option value="0">系统默认</option>
+                               		<option value="-1" {$data['access']== -1 ? ' selected ' : ''}>禁止访问</option>
+                               		<option value="1"  {$data['access']==  1 ? ' selected ' : ''}>无限制</option>
+                               </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图标</label>
+                            <div class="col-sm-7 input-group" style="width: 270px;margin-left: 143px;"> 
+                            	<div class="input-group-addon">@</div>
+                             	<input type="text" class="form-control" name="icon" value="{$data.icon ?? ''}">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label">排序</label>
+                            <div class="col-sm-7"> 
+                             	<input type="text" class="form-control digits" name="sort" placeholder="数字越大越靠前" value="{$data.sort ?? '0'}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序</label>
+                            <div class="col-sm-7"> 
+                             	<input type="text" class="form-control" name="remark" placeholder="备注说明" value="{$data.remark ?? ''}">
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

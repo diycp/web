@@ -1,14 +1,18 @@
 {__NOLAYOUT__}
 
-<toolbar id="btn_toolbar" class="toolbar" data-module="/admin/menu">
+
+
+{//toolbar id="btn_toolbar"}
 <div class="btn-group">
         <button type="button" data-name="addButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true"> </i>添加</button>
         <button type="button" data-name="editButton" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true"> </i>编辑</button>
         <button type="button" data-name="deleteButton" class="btn btn-default" data-event-type="default" data-event-value="" data-target="default"><i class="fa fa-trash" aria-hidden="true"> </i>删除</button>
     </div>
-</toolbar>
+{///toolbar}
 
-<table id="btn_gridview" data-toggle="gridview" data-height="350" class="table table-hover" data-pagination="false" data-toolbar="#btn_toolbar" data-method="post" data-url="/admin/menu/toolbar?menu={$menu_id}"  data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id"  >
+
+
+<table id="btn_gridview" data-height="210" class="table table-hover" data-pagination="false" data-toolbar="#btn_toolbar" data-method="post" data-url="/admin/menu/toolbar?menu_id={$menu_id}" data-unique-id="id">
 	<thead>
 		<tr>
 			<th data-width="40" data-align="center" data-checkbox="true"></th>
@@ -26,18 +30,3 @@
 		</tr>
 	</thead>
 </table>
-
-<script type="text/javascript">
-
-	$(function(){
-		$("#btn_gridview").on('addButton',function(e, gridview, params){
-
-			var menu_id = $(this).data('data-menu');
-			if(menu_id == null ){
-				return alertMsg('请先勾选要编辑的菜单！');
-			}
-			 
-			params.data.id = gridview.menu_id
-		}) 
-	})
-</script>

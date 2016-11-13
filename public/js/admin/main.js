@@ -41,6 +41,7 @@ window.win = {
         this.init('body');
     },
     init: function(selector) {
+        // console.log(selector)
         selector = $(selector);
         this.validate(selector.find('form[data-validate="true"]'));
         var $form = selector.find('form[data-submit="ajax"]');
@@ -54,7 +55,6 @@ window.win = {
                 return false;
             });
         });
-
         selector.find('.btn-back').on('click', function() { 
         	win.back();
             return false; 

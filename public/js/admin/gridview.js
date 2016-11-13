@@ -221,6 +221,7 @@ $(function() {
         });
 
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
+            // alert(333)
             // 要执行的事件名称
             var $btn = $(this);
             var eventName = $btn.data('name');
@@ -477,6 +478,7 @@ $(function() {
                 $html.appendTo('body');
                 //调用数据效验
                 win.init($html);
+
                 $modal.modal().show()
                 //隐藏模态框 刷新表单 移除模态框等元素
                 $modal.on('hide.bs.modal',function () {
