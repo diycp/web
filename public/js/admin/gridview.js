@@ -278,6 +278,7 @@ $(function() {
 
                 //toolbar中默认四个按钮 添加、修改、删除、搜索 
                 if (eventName.substr(0, 6) == 'delete') {
+                    alert(333)
                     var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
                     if (rows.length == 0) {
                         alertMsg('请勾选要删除的数据', 'warning');

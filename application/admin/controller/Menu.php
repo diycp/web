@@ -169,11 +169,16 @@ class Menu extends AdminBase
 
     public function addButton($menu_id = 0)
     {
-
-
         if(request()->isPost()){
             $data = request()->param();
 
+            $result = Db::table('bs_node')->insert($data);
+            if ($result == 1) {
+                $this->cache();
+                return info("添加成功！",1);
+            }else{
+                return info("添加失败！",0);
+            }
         }
 
         $data = array('pid' => $menu_id,'visible' => 1);
@@ -187,14 +192,32 @@ class Menu extends AdminBase
         $data = request()->param();
         $id = intval($data['id']);
         
-        $data = Db::table('bs_node')->where('id',$id)->find();
+        if(request()->isPost()){
+            $data = request()->param();
 
+            $result = Db::table('bs_node')->update($data);
+            if ($result == 1) {
+                $this->cache();
+                return info("修改成功！",1);
+            }else{
+                return info("修改失败！",0);
+            }
+        }
+        $data = Db::table('bs_node')->where('id',$id)->find();
         $this->assign('data',$data);
         return $this->fetch();
     }
 
-
-
+    public function deleteButton($id = 0)
+    {
+        if(empty($id)){
+            return info('删除项不能为空！',0);
+        }
+        $result = Db::table('bs_node')->delete($id);
+        if ($result > 0) {
+            return info('删除成功！',1);            
+        }                
+    }
 
 
 
@@ -212,7 +235,8 @@ class Menu extends AdminBase
         $nodeList = $this->nodeList();
         //生成缓存文件
         Cache::set('node',$nodeList,'admin');
-        return $this->success('缓存已更新！', '/admin/menu/');
+        return info("缓存已更新！",1);
+        // return $this->success('缓存已更新！', '/admin/menu/');
     }
 
     /****************************缓存菜单****************************/
