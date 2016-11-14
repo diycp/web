@@ -17,20 +17,15 @@
 	{css href="/css/admin/login.css" /}
 	{js href="/plugins/jquery-3.1.0.min.js" /}
 </head>
-
-
-
 <body>
-	
 <div id="login-wrapper">
     <div class="login-main">
         <div class="login-logo"></div>
         <div class="login-form">
-			<div class="login-form-header">
-				<p class="">登 录</p>
-			</div>
+            <div class="login-form-header">
+                <p class="">登 录</p>
+            </div>
             <div class="form-horizontal" role="form">
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">账 号</label>
                     <div class="col-sm-8">
@@ -38,7 +33,6 @@
                         <span class="glyphicon glyphicon-user form-control-feedback" style="right: 14px;"></span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">密 码</label>
                     <div class="col-sm-8">
@@ -46,40 +40,20 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback" style="right: 14px;"></span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-8">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Remember me
-                            </label>
-                        </div>
+                        <div class="msgerr"></div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-8">
-                         <div class="msgerr"></div>
-                    </div>
-                </div>
-
-				
-
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-9">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">登 录</button>
                     </div>
                 </div>
-                
             </div>
-
         </div>
     </div>
 </div>
-
-
- 
-
 <script type="text/javascript">
 	$(document).ready(function () {
 		if($("#mobile") == ''){
@@ -87,7 +61,6 @@
 		}else{
 			$("#password").focus();
 		}
-
 		var data = {};
 		var msgerr = $(".msgerr")
 		$('button').click(function () {
@@ -120,18 +93,8 @@
 				})
 			}
 		})
-
 	})
-
-
-	function interval() {
-
-		// body...
-	}
-
-
 </script>
-
 </body>
 </html>
 
