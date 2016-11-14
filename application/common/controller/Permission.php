@@ -181,8 +181,9 @@ class Permission
     	$controller = strtolower($controller);
     	$map['menu.status'] = ['<>',0];
     	$map['menu.controller'] = ['=',$controller];
-        	$map['node.visible'] = ['=',1];
-    	$nodes = Db::table(self::$table_menu)
+    	$map['node.visible'] = ['=',1];
+        
+        $nodes = Db::table(self::$table_menu)
     			->alias('menu')
     			->join(self::$table_node .' node', 'menu.id = node.pid')
     			->field('menu.title,menu.module,menu.controller,menu.action,node.*')
@@ -206,21 +207,38 @@ class Permission
     	$controller = $request->controller();
     	$action = $request->action();
 
-    	$controller = strtolower($controller);
+        $controller = strtolower($controller);
+    	$action = strtolower($action);
     	$data = [];
-    	if($controller != 'index'){
-	    	$map['menu.controller'] = ['=',$controller];
-	    	$data = Db::table(self::$table_menu)
-	    				->alias('menu')
-	    				->where($map)
-	    				->find();
-	    	$ptitle = Db::table(self::$table_menu)
-	    				->alias('menu')
-	    				->where('id',$data['pid'])
-	    				->field('title,icon')
-	    				->find();
+        if($controller != 'index'){
+            $map['menu.controller'] = ['=',$controller];
+
+            
+            $data = Db::table(self::$table_menu)
+                        ->alias('menu')
+                        ->where($map)
+                        ->find();
+            $ptitle = Db::table(self::$table_menu)
+                        ->alias('menu')
+                        ->where('id',$data['pid'])
+                        ->field('title,icon')
+                        ->find();
+
 	    	$data['ptitle'] = $ptitle['title'];			
 	    	$data['picon'] = $ptitle['icon'];			
+
+
+            if (!empty($action) && $action != 'index') {
+                $map_node['pid'] = ['=',$data['id']];
+                $map_node['node.name'] = ['=',$action];
+                $node = Db::table(self::$table_node)
+                            ->alias('node')
+                            ->where($map_node)
+                            ->field('title,icon')
+                            ->find();
+                $data['act_title'] = $node['title'];
+                $data['act_icon'] = $node['icon'];
+            }  
     	}
     	return $data;    	
     }

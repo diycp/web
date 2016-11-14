@@ -1,21 +1,14 @@
-<button>click</button>
+{cx:toolbar id="toolbar"}
+{/cx:toolbar}
 
-<div class="gridview2"></div>
-
-<script type="text/javascript">
-	$('button').click(function () {
-		$.ajax({
-			url: '/admin/test/toolbar',
-			type: 'get',
-			dataType: 'html',
-			success:function(html){
-				var $html = $(html) 
-				$html.appendTo($('.gridview2'))
-
-			},
-			error:function(){
-
-			}
-		})
-	})
-</script>
+ <!-- 表格 -->
+<table id="table" data-toggle="gridview" class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
+    <thead>
+		<tr>
+			<th data-width="40" data-checkbox="true"></th>
+			<th data-width="100" data-field="name">角色名称</th>
+			<th data-width="100" data-field="status" data-formatter="format_status">状态</th>
+			<th data-width="100" data-field="remark">备注</th>
+		</tr>
+	</thead>
+</table>

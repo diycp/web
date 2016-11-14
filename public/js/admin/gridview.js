@@ -1,12 +1,11 @@
 /**
  * GridView
- * @author aierui
+ * @author aierui github  https://github.com/Aierui
  * @version 1.0
  */
 $(function() {
     var GridView = function(el, option) {
         this.$table = $(el);
-
         if (this.$table.length == 0) {
             return;
         }
@@ -26,7 +25,6 @@ $(function() {
         this.$table.data('gridview', this);
         this.enabledEdit = this.$table.data('edit') || false;
         this.init();
-        // console.log(this)
     };
 
     GridView.prototype.init = function() {
@@ -38,7 +36,6 @@ $(function() {
     GridView.prototype.initTable = function() {
         zh_table();
         var $this = this;
-            // console.log(this)
         $this.$table.bootstrapTable({
             striped: false, // 隔行换色
             uniqueId: 'id',
@@ -62,8 +59,6 @@ $(function() {
                 return params;
             },
             onAll: function(name, args) {
-                // console.log($this.$table-hover)
-                // 
                 // $table.trigger('all', [name, args]);
                 return false;
             },
@@ -195,14 +190,24 @@ $(function() {
             onclick: false,
             focusInvalid: false,
             focusCleanup: true,
-            highlight: function(element, errorClass, validClass) {//未通过验证的元素
-                $(element).parents('.control-group:eq(0)').addClass('error');
+            highlight: function(element, errorClass, validClass) { //未通过验证的元素
+                var $element = $(element);
+                $element.parents('.form-group:eq(0)').addClass('has-error');
+                $element.parents('.form-group:eq(0)').removeClass('has-success');
             },
             unhighlight: function(element, errorClass, validClass) {
-                $(element).parents('.control-group:eq(0)').removeClass('error');
+                var $element = $(element);
+                if ($element.attr('aria-invalid') != true) {
+                    $element.parents('.form-group:eq(0)').removeClass('has-error');
+                    $element.parents('.form-group:eq(0)').addClass('has-success');
+                }
             },
-            errorPlacement: function(error, element) {
-                error.appendTo(element.parents('.controls:eq(0)'));
+            errorPlacement: function($error, element) {
+               if (this.errorClass == 'help-block') {
+                        $error.insertAfter($element.parent());
+                    } else {
+                        $error.appendTo($element.parent());
+                    }
             },
             submitHandler: function() {
                 return false;
@@ -232,12 +237,11 @@ $(function() {
                 text: this.innerText
             };
 
-            //事件类型 1. 自定义 2.视图 3.默认
+            //事件类型 1. 自定义 2.视图(modal、self、_blank)3.默认(modal、self)4.脚本
             if (params.event_type == 'custom') { // 自定义事件
                 return $this.$table.triggerHandler(eventName, [$this, params]);
-            } else if (params.event_type == 'view') { // 打开网址
+            } else if (params.event_type == 'view') { //视图
                 params.data = {};
-
                 if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') {
                     if ($this.currentRow == null) {
                         return alertMsg('请先选择要编辑的数据！', 'warning');
@@ -261,10 +265,11 @@ $(function() {
                     // console.log(params.data)
                     $this.loadModal(params.url, params.data);
                 } else if (params.target == 'self' || params.target == '') {
+                    // console.log(params)
                     window.location.href = params.url;
                 } else if (params.target == '_blank') {
                     window.open(params.url);
-                }  else {
+                } else {
                     var $container = $(params.target);
                     $container.load(params.url, function() {
                         win.init($container);
@@ -272,19 +277,17 @@ $(function() {
                     });
                 }
                 return;
-            } else if (params.event_type == 'javascript') { // 打开网址
+            } else if (params.event_type == 'javascript') { //脚本
                 return $('html').append('<script type="text/javascript">' + params.event_value + '</script>');
-            }else if (params.event_type == 'default') {
+            } else if (params.event_type == 'default') {//默认
 
-                //toolbar中默认四个按钮 添加、修改、删除、搜索 
+                //toolbar中默认事件类型的按钮 如删除、搜索等
                 if (eventName.substr(0, 6) == 'delete') {
-                    alert(333)
                     var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
                     if (rows.length == 0) {
                         alertMsg('请勾选要删除的数据', 'warning');
                         return;
                     }
-
                     var params = {
                         rows: rows,
                         length: rows.length,
@@ -362,9 +365,9 @@ $(function() {
                         ok: params.ok,
                         cancel: params.cancel,
                         backdrop: params.backdrop
-                    });//删除 ok
+                    }); //删除 ok
                 } else {
-                    $table.triggerHandler(eventName, [$this, params]);
+                    $this.$table.triggerHandler(eventName, [$this, params]);
                 }
             }
 
@@ -380,7 +383,7 @@ $(function() {
         }
 
         this.$form[0].reset();
-         
+
     };
 
     /**
@@ -429,7 +432,7 @@ $(function() {
      * 重置
      */
     GridView.prototype.resetView = function(height) {
- 
+
         if (this.$table.data('height') != undefined) {
             this.$table.bootstrapTable('resetView');
         }
@@ -444,7 +447,7 @@ $(function() {
      * 刷新
      */
     GridView.prototype.refresh = function() {
-       
+
         this.$table.bootstrapTable('refresh');
     };
 
@@ -466,9 +469,9 @@ $(function() {
             success: function(html) {
                 var $html = $('<div class="dialogModal">' + html + '</div>');
                 var $form = $html.find('form');
-                if($form.length == 0){
+                if ($form.length == 0) {
                     var $modal = $html.find('.modal:eq(0)');
-                }else{
+                } else {
                     var $modal = $form.find('.modal:eq(0)');
                 }
                 if ($modal.length == 0) {
@@ -479,16 +482,15 @@ $(function() {
                 $html.appendTo('body');
                 //调用数据效验
                 win.init($html);
-
                 $modal.modal().show()
-                //隐藏模态框 刷新表单 移除模态框等元素
-                $modal.on('hide.bs.modal',function () {
-                    if($form.length > 0 && $form.data('submited') == true){
+                    //隐藏模态框 刷新表单 移除模态框等元素
+                $modal.on('hide.bs.modal', function() {
+                    if ($form.length > 0 && $form.data('submited') == true) {
                         $this.$table.bootstrapTable('refresh')
                     }
                     $html.remove();
                 })
- 
+
             }
         });
     };

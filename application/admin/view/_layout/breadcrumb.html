@@ -5,9 +5,7 @@
 
 $parents = \app\common\controller\Permission::getParents();
 
-// var_dump($parents);
-
-
+if (!empty($parents)) {
 $html  = "";
 $html .= '<div class="breadcrumbs"><ol class="breadcrumb" split="&gt;">';
 
@@ -15,12 +13,17 @@ $html .= '<li><a href="javascript:void(0)"><i class="fa fa-home" aria-hidden="tr
 
 $html .= '<li><a href="javascript:void(0)"><i class="fa '. $parents['picon'] .' " aria-hidden="true"></i> '. $parents['ptitle'] .' </a></li>';
 
+
+
 $html .= '<li><a href="javascript:void(0)"><i class="fa '. $parents['icon'] .' " aria-hidden="true"></i> '. $parents['title'] .' </a></li>';
 
+if(!empty($parents['act_title'])){
+	$html .= '<li><a href="javascript:void(0)"><i class="fa '. $parents['act_icon'] .' " aria-hidden="true"></i> '. $parents['act_title'] .' </a></li>';
+}
 $html .= '</ol></div>'; 
-
-
 echo $html;
+}
+
 ?>
 
 

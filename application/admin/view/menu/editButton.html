@@ -110,9 +110,11 @@
 </form>
 
 <script type="text/javascript">
+
 $('#event_type').on('change', function(){
 	var $this = $(this);
 	var $event_value = $this.next();
+    console.log($event_value)
 	var $view_target = $('#view_target');
 	if(this.value == 'default'){
 		$this.css('width', '');
@@ -147,11 +149,12 @@ $('#icon_list li').on('click', function(){
 
 
 <style type="text/css">
-#icon_list ul li {
-    display: inline-block;
-    width: 32.3%;
-}
+    #icon_list ul li {
+        display: inline-block;
+        width: 32.3%;
+    }
 </style>
+
 
 <div class="modal fade" id="icon_list" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

@@ -84,10 +84,9 @@ class Menu extends AdminBase
                     }
                     $nodes = [
                                 ['pid' => $LastId, 'title' => '查看', 'name' => $data['action'], 'icon' => '', 'group' => 1, 'visible' => 0, 'event_type' => 'view', 'target' => 'self', 'sort' => '100'],
-                                ['pid' => $LastId, 'title' => '添加', 'name' => 'add', 'icon' => 'icon-plus', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
-                                ['pid' => $LastId, 'title' => '编辑', 'name' => 'edit', 'icon' => 'icon-file', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
-                                ['pid' => $LastId, 'title' => '删除', 'name' => 'delete', 'icon' => 'icon-trash', 'group' => 1, 'visible' => 1, 'event_type' => 'default', 'target' => '', 'sort' => '99'],
-                                ['pid' => $LastId, 'title' => '搜索', 'name' => 'search', 'icon' => 'icon-search', 'group' => 2, 'visible' => 0, 'event_type' => 'default', 'target' => '', 'sort' => '99']
+                                ['pid' => $LastId, 'title' => '添加', 'name' => 'add', 'icon' => 'fa-plus', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
+                                ['pid' => $LastId, 'title' => '编辑', 'name' => 'edit', 'icon' => 'fa-edit', 'group' => 1, 'visible' => 1, 'event_type' => 'view', 'target' => 'modal', 'sort' => '99'],
+                                ['pid' => $LastId, 'title' => '删除', 'name' => 'delete', 'icon' => 'fa-trash', 'group' => 1, 'visible' => 1, 'event_type' => 'default', 'target' => 'modal', 'sort' => '99']                                
                             ];
                     Db::name($this->node)->insertAll($nodes);
                     $this->cache();

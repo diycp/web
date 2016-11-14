@@ -35,7 +35,6 @@ class Login extends Controller
 			if($result != true){
 				return ['status' => 0, 'data' => $result];
 			}
-
 			$userModel = Loader::model('User');
 			$userRow = $userModel->login($data);
 
