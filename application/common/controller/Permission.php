@@ -206,14 +206,11 @@ class Permission
     	$module = $request->module();
     	$controller = $request->controller();
     	$action = $request->action();
-
         $controller = strtolower($controller);
     	$action = strtolower($action);
     	$data = [];
         if($controller != 'index'){
             $map['menu.controller'] = ['=',$controller];
-
-            
             $data = Db::table(self::$table_menu)
                         ->alias('menu')
                         ->where($map)
@@ -226,8 +223,6 @@ class Permission
 
 	    	$data['ptitle'] = $ptitle['title'];			
 	    	$data['picon'] = $ptitle['icon'];			
-
-
             if (!empty($action) && $action != 'index') {
                 $map_node['pid'] = ['=',$data['id']];
                 $map_node['node.name'] = ['=',$action];
