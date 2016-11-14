@@ -1,0 +1,14 @@
+{cx:toolbar id="toolbar"}
+{/cx:toolbar}
+
+<!-- 表格 -->
+<table id="table" data-toggle="gridview" class="table" data-url="/{$Request.module}/{$Request.controller}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client"  data-search="true">
+    <thead>
+        <tr>
+            <th data-width="10"  data-align="center"  data-checkbox="true"></th>
+            <th data-field="name" >称呼</th>
+            <th data-field="content">留言内容</th>
+            <th data-field="create_time">时间</th>
+        </tr>
+    </thead>
+</table>
