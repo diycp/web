@@ -7,7 +7,9 @@ use think\Db;
 
 
 /**
-* 
+* 用户留言
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class Subject extends AdminBase
 {	

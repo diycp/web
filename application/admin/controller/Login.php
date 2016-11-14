@@ -9,6 +9,8 @@ use think\Session;
 
 /**
 * 登录
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class Login extends Controller
 {

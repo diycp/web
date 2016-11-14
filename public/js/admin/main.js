@@ -1,3 +1,10 @@
+/**
+ * main
+ * @author aierui github  https://github.com/Aierui
+ * @version 1.0
+ */
+
+
 /*左侧菜单*/
 
 $(function() {

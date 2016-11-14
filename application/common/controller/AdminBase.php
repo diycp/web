@@ -10,7 +10,9 @@ use think\Config;
 // use 引入的类文件需要首字母大写
 
 /**
-* 
+* 基础类
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class AdminBase extends Controller
 {

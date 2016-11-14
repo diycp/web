@@ -9,6 +9,8 @@ use think\Request;
 
 /**
 * 基础权限
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class Permission
 {

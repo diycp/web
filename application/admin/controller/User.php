@@ -10,6 +10,8 @@ use think\Config;
 
 /**
 * 用户管理
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class User extends AdminBase
 {

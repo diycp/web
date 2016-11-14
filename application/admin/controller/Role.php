@@ -9,6 +9,8 @@ use think\Db;
 
 /**
 * 角色管理
+* @author aierui github  https://github.com/Aierui
+* @version 1.0 
 */
 class Role extends AdminBase
 {
