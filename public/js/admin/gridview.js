@@ -262,10 +262,8 @@ $(function() {
                 }
                 //打开方式 1.模态框 2.本页打开 3.在新窗口打开
                 if (params.target == 'modal') {
-                    // console.log(params.data)
                     $this.loadModal(params.url, params.data);
                 } else if (params.target == 'self' || params.target == '') {
-                    // console.log(params)
                     window.location.href = params.url;
                 } else if (params.target == '_blank') {
                     window.open(params.url);

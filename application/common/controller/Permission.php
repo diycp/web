@@ -8,10 +8,8 @@ use think\Db;
 use think\Request;
 
 /**
-* 
+* 基础权限
 */
-
-
 class Permission
 {
     private static $menuData;
@@ -22,7 +20,6 @@ class Permission
 	private static $table_role_user;
     private static $auth_key;
 	private static $auth_type;
-
 
     public static function _initConfig()
     {
@@ -42,7 +39,6 @@ class Permission
         return self::$accessData;
     }
 
- 
 	public static function getAllMenu()
 	{
 	   
@@ -57,7 +53,6 @@ class Permission
         $test = self::getAllAccess();
         return $test;   
     }
- 	
  
 	public static function authUser()
 	{      
@@ -73,9 +68,6 @@ class Permission
     {
         
     }
-
-
-
 
 	public static function getNodes()
 	{
@@ -118,7 +110,6 @@ class Permission
 		$data = array('parentId' => $parentId,'pid' => $pid);
 		return $data;
 	}
-
 
     public static function menuList()
     {
@@ -163,7 +154,6 @@ class Permission
         }
         return $menuList;
     }
-
 
     /**
      * 获取当前菜单的节点
@@ -237,13 +227,6 @@ class Permission
     	}
     	return $data;    	
     }
-
- 
- 
-
-
-
-
 }
 ?>
 

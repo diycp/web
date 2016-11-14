@@ -14,7 +14,7 @@ $(function() {
                 }
             })
 
-            $this.find('#toggle-angle').toggleClass('active')
+            $this.find('.toggle-angle').toggleClass('active')
             $this.addClass('admin-menu-botton')
             $this.siblings('ul').slideToggle('slow')
         });
@@ -24,7 +24,7 @@ $(function() {
             var href = $(this).find('a').attr('href')
             var loc = String(window.location.pathname)
             if (href == loc) {
-                $(this).parent().siblings('botton').addClass('admin-menu-botton')
+                // $(this).parent().siblings('botton').addClass('admin-menu-botton')
                 $(this).addClass('menu-active')
             }
         })

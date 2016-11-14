@@ -27,6 +27,9 @@ a:hover {
     text-decoration: none;
 }
 
+
+/*左侧*/
+
 .sidebar {
     position: absolute;
     top: 0;
@@ -39,21 +42,6 @@ a:hover {
     font-weight: 200;
     background-size: cover;
     background-position: center center;
-    background: #BA9CE4;
-}
-
-.sidebar,
-.main-panel {
-    overflow: auto;
-    max-height: 100%;
-    height: 100%;
-    -webkit-transition-property: top, bottom;
-    transition-property: top, bottom;
-    -webkit-transition-duration: .2s, .2s;
-    transition-duration: .2s, .2s;
-    -webkit-transition-timing-function: linear, linear;
-    transition-timing-function: linear, linear;
-    -webkit-overflow-scrolling: touch;
 }
 
 .sidebar .sidebar-wrapper {
@@ -65,12 +53,50 @@ a:hover {
     z-index: 4;
 }
 
+.sidebar .sidebar-background {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center center;
+}
+
 .sidebar .logo {
     padding: 10px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.simple-text {
+.sidebar .logo .simple-text {
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: block;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.sidebar .logo-tim {
+    border-radius: 50%;
+    border: 1px solid #333;
+    display: block;
+    height: 61px;
+    width: 61px;
+    float: left;
+    overflow: hidden;
+}
+
+.sidebar .logo {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .logo .simple-text {
     text-transform: uppercase;
     padding: 5px 0px;
     display: block;
@@ -85,6 +111,148 @@ a:hover {
     text-decoration: none;
 }
 
+.sidebar:after,
+.sidebar:before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.sidebar:before {
+    opacity: .33;
+    background: #000000;
+}
+
+.sidebar:after {
+    background: #787878;
+    background: -moz-linear-gradient(top, #787878 0%, #343434 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #787878), color-stop(100%, #343434));
+    background: -webkit-linear-gradient(top, #787878 0%, #343434 100%);
+    background: -o-linear-gradient(top, #787878 0%, #343434 100%);
+    background: -ms-linear-gradient(top, #787878 0%, #343434 100%);
+    background: linear-gradient(to bottom, #787878 0%, #343434 100%);
+    background-size: 150% 150%;
+    z-index: 3;
+    opacity: 1;
+}
+
+.sidebar[data-image]:after {
+    opacity: .85;
+}
+
+.sidebar[data-color="purple"]:after {
+    background: #9368E9;
+    background: -moz-linear-gradient(top, #9368E9 0%, #943bea 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9368E9), color-stop(100%, #943bea));
+    background: -webkit-linear-gradient(top, #9368E9 0%, #943bea 100%);
+    background: -o-linear-gradient(top, #9368E9 0%, #943bea 100%);
+    background: -ms-linear-gradient(top, #9368E9 0%, #943bea 100%);
+    background: linear-gradient(to bottom, #9368E9 0%, #943bea 100%);
+    background-size: 150% 150%;
+}
+
+
+/*左侧菜单*/
+
+.menu-list > li {
+    line-height: 40px
+}
+
+.admin-menu-parent {
+    border-bottom: 1px dotted #cdb0f5;
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle {
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    height: 100%;
+    display: inline-block;
+    border-left: 4px solid transparent;
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle:hover {
+    border-left: 4px solid #1DC7EA;
+    cursor: pointer;
+    background-color: rgba(103, 58, 183, .6);
+}
+
+.admin-menu-parent .admin-menu-botton {
+    cursor: pointer;
+    background-color: rgba(103, 58, 183, .6);
+    /*js不支持*/
+    border-left: 4px solid #1DC7EA;
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle .icon {
+    display: inline-block;
+    line-height: 40px;
+    margin-right: 20px;
+    margin-left: 30px;
+}
+
+.admin-menu-parent .admin-menu-dropdown-toggle .title {
+    letter-spacing: 3px;
+    line-height: 40px;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: inherit;
+    margin-right: 60px;
+}
+
+.admin-menu-parent a {
+    color: #F7F7F8;
+}
+
+.admin-menu-parent .admin-menu-botton .active {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.admin-menu-child li {
+    line-height: 40px;
+    width: 164px;
+    height: 38px;
+    margin: 4px auto;
+    text-align: center;
+}
+
+.admin-menu-child li a {
+    display: block;
+    line-height: 40px;
+    width: 164px;
+    height: 38px;
+    margin: 0 auto;
+}
+
+.admin-menu-child li:hover a,
+.menu-active {
+    box-shadow: 0 0 2px #ac89dd;
+    background-color: #ac89dd;
+    border-radius: 4px;
+}
+
+.hello-user {
+    width: 100%;
+    height: 39px;
+    border-bottom: 1px dotted #cdb0f5;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 5px;
+    font-size: 1.8rem;
+}
+
+
+/*右侧*/
+
 .main-panel {
     background: rgba(203, 203, 210, 0.15);
     position: relative;
@@ -98,6 +266,9 @@ a:hover {
     background-color: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+
+/*右侧顶部*/
 
 .navbar {
     padding: 0 15px;
@@ -205,6 +376,17 @@ li > .dropdown-menu:before {
     right: 12px;
 }
 
+.navbar ul li a {
+    color: #9A9A9A;
+}
+
+.navbar ul li a:hover {
+    color: #1DC7EA
+}
+
+
+/*面包削导航*/
+
 .main-panel-breadcrumb {}
 
 .breadcrumbs {
@@ -228,121 +410,28 @@ li > .dropdown-menu:before {
 }
 
 
-/*左侧菜单*/
-
-.menu-list > li {
-    line-height: 40px
-}
-
-.admin-menu-parent {
-    border-bottom: 1px dotted #cdb0f5;
-}
-
-.admin-menu-parent .admin-menu-dropdown-toggle {
-    width: 100%;
-    min-height: 40px;
-    height: auto;
-    height: 100%;
-    display: inline-block;
-    border-left: 4px solid transparent;
-}
-
-.admin-menu-parent .admin-menu-dropdown-toggle:hover {
-    border-left: 4px solid #1DC7EA;
-    cursor: pointer;
-    background-color: rgba(103, 58, 183, .6);
-}
-
-.admin-menu-parent .admin-menu-botton {
-    cursor: pointer;
-    background-color: rgba(103, 58, 183, .6);
-    /*js不支持*/
-    border-left: 4px solid #1DC7EA;
-}
-
-.admin-menu-parent .admin-menu-dropdown-toggle .icon {
-    display: inline-block;
-    line-height: 40px;
-    margin-right: 20px;
-    margin-left: 30px;
-}
-
-.admin-menu-parent .admin-menu-dropdown-toggle .title {
-    letter-spacing: 3px;
-    line-height: 40px;
-    display: inline-block;
-    font-size: 1.6rem;
-    font-weight: 700;
-    font-family: inherit;
-    margin-right: 60px;
-}
-
-.admin-menu-parent a {
-    color: #F7F7F8;
-}
-
-.admin-menu-parent .admin-menu-botton .active {
-    -webkit-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-
-.admin-menu-child li {
-    line-height: 40px;
-    width: 164px;
-    height: 38px;
-    margin: 4px auto;
-    text-align: center;
-}
-
-.admin-menu-child li a {
-    display: block;
-    line-height: 40px;
-    width: 164px;
-    height: 38px;
-    margin: 0 auto;
-}
-
-.admin-menu-child li:hover a,
-.menu-active {
-    box-shadow: 0 0 2px #ac89dd;
-    background-color: #ac89dd;
-    border-radius: 4px;
-}
-
-.hello-user {
-    width: 100%;
-    height: 39px;
-    border-bottom: 1px dotted #cdb0f5;
-    line-height: 40px;
-    text-align: center;
-    letter-spacing: 5px;
-    font-size: 1.8rem;
-}
-
-
-
 /* 表单部分（modal-body） */
 
-.modal-body-content{
+.modal-body-content {
     width: 85%;
     margin: 0 auto;
 }
+
 .form-group.must .control-label:before,
 .form-group.must .control-label before {
     content: '*';
     color: red;
 }
 
-.help-block{
+.help-block {
     font-size: 10px;
     vertical-align: middle;
 }
-.sort{
-    width:32px; 
+
+.sort {
+    width: 32px;
     height: 25px;
-    margin:0;
-    text-align:center;
+    margin: 0;
+    text-align: center;
     padding: 0 3px;
 }
