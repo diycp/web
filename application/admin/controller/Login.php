@@ -30,7 +30,6 @@ class Login extends Controller
 
 		if($request->isAjax()){
 			$data = $request->param();
-
 			$result = $this->validate($data,'User.login');
 			
 			if($result != true){

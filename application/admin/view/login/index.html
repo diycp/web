@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
 	<title>{$Think.config.WEBSITE_NAME} | 登录</title>
 
 	{css href="/bootstrap3/css/bootstrap.css" /}
@@ -19,17 +20,65 @@
 
 
 
-    
+<body>
+	
+<div id="login-wrapper">
+    <div class="login-main">
+        <div class="login-logo"></div>
+        <div class="login-form">
+			<div class="login-form-header">
+				<p class="">登 录</p>
+			</div>
+            <div class="form-horizontal" role="form">
 
-账号：
-<input type="text" name="mobile" id="mobile" >
-<br>
-密码：
-<input type="password" name="password" id="password">
-<div class="msgerr"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">账 号</label>
+                    <div class="col-sm-8">
+                        <input type="mobile" class="form-control" id="mobile" placeholder="Mobile">
+                        <span class="glyphicon glyphicon-user form-control-feedback" style="right: 14px;"></span>
+                    </div>
+                </div>
 
-<button>登录</button>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">密 码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback" style="right: 14px;"></span>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-8">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-8">
+                         <div class="msgerr"></div>
+                    </div>
+                </div>
+
+				
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">登 录</button>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+ 
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -45,9 +94,9 @@
 			data.mobile = $("#mobile").val()
 			data.password = $("#password").val()
 			if(data.mobile == ''){
-				msgerr.html("请输入账号！")
+				msgerr.addClass('msg-info').html("请输入账号！")
 			}else if(data.password == ''){
-				msgerr.html("请输入密码！")
+				msgerr.addClass('msg-info').html("请输入密码！")
 			}else{
 				$.ajax({
 					url: '/admin/login/doLogin/',
@@ -56,20 +105,17 @@
 					dataType: 'json',
 					success:function (data) {
 						if(data.code == 1){
-							msgerr.html('登录中···');
-
+							msgerr.addClass('msg-success').html('登录中···');
 							setTimeout(function() {
-								msgerr.html(data.msg);
+								msgerr.addClass('msg-success').html(data.msg);
 				                window.location.href = data.url;
 				            }, parseInt(data.wait) * 500)
-
-			  
 						}else if(data.code == 0){
 							msgerr.html(data.msg);
 						}
 					},
 					error:function () {
-						msgerr.html("网络错误，请稍后再试！");
+						msgerr.addClass('msg-error').html("网络错误，请稍后再试！");
 					}
 				})
 			}
@@ -86,5 +132,7 @@
 
 </script>
 
+</body>
+</html>
 
 	
