@@ -96,7 +96,7 @@ class Menu extends AdminBase
             return info('添加失败！',0);
         }       
         $list = $this->menu_list(false);
-        $this->assign(array('list' => $list,'data' => array('sort' => 99, 'status' => 1)));
+        $this->assign(array('list' => $list,'data' => array('sort' => 99, 'status' => 1 , 'pid' => 0)));
         return $this->fetch('edit');
     }
     
@@ -124,7 +124,7 @@ class Menu extends AdminBase
         }
         
         $data = $this->menu->where('id',$id)->find();
-        $list = $this->menu_list(false);
+        $list = $this->menu_list(true);
         $this->assign(array('data' => $data,'list' => $list ));
         return $this->fetch();
     }

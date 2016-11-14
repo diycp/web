@@ -1,5 +1,5 @@
 {__NOLAYOUT__}
-<form data-method="post" data-action="/{$Request.module}/{$Request.controller}/{$Request.action}" data-submit="ajax" data-validate="true" class="form-horizontal">
+<form data-method="post" data-action="/{$Request.module}/{$Request.controller}/{$Request.action}" data-submit="ajax" data-validate="true" class="form-horizontal" id="editForm">
     <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -17,7 +17,7 @@
                                 <select name="pid" class="form-control" required>
                                     <option value="0">一级菜单</option>
                                     {foreach name="list" item="r"}
-                                        <option value="{$r.id}">{$r.split}{$r.title}</option>
+                                        <option value="{$r.id}" {$r.id == $data['pid'] ? ' selected ' : ''}>{$r.split}{$r.title}</option>
                                     {/foreach}
                                 </select>
                             </div>
@@ -49,8 +49,9 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">图标</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" name="icon" placeholder="css的class样式名称" value="{$data.icon ?? ''}">
+                            <div class="col-sm-7 input-group" style="width: 270px;margin-left: 143px;">
+                                <div class="input-group-addon" id="select_icon">@</div>
+                                <input type="text" class="form-control" name="icon" id="icon" placeholder="css的class样式名称" value="{$data.icon ?? ''}">
                             </div>
                         </div>
 
@@ -81,3 +82,133 @@
         </div>
     </div>
 </form>
+
+
+
+<script type="text/javascript">
+
+$('#icon_list').on('hide.bs.modal', function(){
+    $('#editForm').show();
+});
+
+$('#select_icon').on('click', function(){
+    $('#editForm').hide();
+    $('#icon_list').modal({backdrop: false}).show();
+});
+
+$('#icon_list li').on('click', function(){
+    var class_name = this.firstElementChild.getAttribute('class').slice(3);
+    $('#icon').val(class_name);
+    $('#icon_list').modal('hide');
+});
+</script>
+
+<style type="text/css">
+    #icon_list ul li {
+        display: inline-block;
+        width: 32.3%;
+    }
+</style>
+
+
+<div class="modal fade" id="icon_list" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">从图标库中选择</h4>
+            </div>
+            <div class="modal-body" style="max-height: 450px;overflow-y: scroll;">
+                <ul>
+                    <li><i class="fa fa-circle"></i> fa-circle</li>
+                    <li><i class="fa fa-bookmark"></i> fa-bookmark</li>
+                    <li><i class="fa fa-bar-chart"></i> fa-bar-chart</li>
+                    <li><i class="fa fa-bars"></i> fa-bars</li>
+                    <li><i class="fa fa-battery-full"></i> fa-battery-full</li>
+                    <li><i class="fa fa-bell"></i> fa-bell</li>
+                    <li><i class="fa fa-bug"></i> fa-bug</li>
+                    <li><i class="fa fa-calculator"></i> fa-calculator</li>
+                    <li><i class="fa fa-building"></i> fa-building</li>
+                    <li><i class="fa fa-calendar"></i> fa-calendar</li>
+                    <li><i class="fa fa-camera"></i> fa-camera</li>
+                    <li><i class="fa fa-certificate"></i> fa-certificate</li>
+                    <li><i class="fa fa-check-square"></i> fa-check-square</li>
+                    <li><i class="fa fa-clock-o"></i> fa-clock-o</li>
+                    <li><i class="fa fa-clone"></i> fa-clone</li>
+                    <li><i class="fa fa-close"></i> fa-close</li>
+                    <li><i class="fa fa-cloud"></i> fa-cloud</li>
+                    <li><i class="fa fa-cloud-download"></i> fa-cloud-download</li>
+                    <li><i class="fa fa-cloud-upload"></i> fa-cloud-upload</li>
+                    <li><i class="fa fa-cog"></i> fa-cog</li>
+                    <li><i class="fa fa-comment"></i> fa-comment</li>
+                    <li><i class="fa fa-comments"></i> fa-comments</li>
+                    <li><i class="fa fa-credit-card"></i> fa-credit-card</li>
+                    <li><i class="fa fa-desktop"></i> fa-desktop</li>
+                    <li><i class="fa fa-download"></i> fa-download</li>
+                    <li><i class="fa fa-envelope"></i> fa-envelope</li>
+                    <li><i class="fa fa-database"></i> fa-database</li>
+                    <li><i class="fa fa-edit"></i> fa-edit</li>
+                    <li><i class="fa fa-plus"></i> fa-plus</li>
+                    <li><i class="fa fa-trash"></i> fa-trash</li>
+                    <li><i class="fa fa-times"></i> fa-times</li>
+                    <li><i class="fa fa-search"></i> fa-search</li>
+                    <li><i class="fa fa-eye"></i> fa-eye</li>
+                    <li><i class="fa fa-exclamation-triangle"></i> fa-exclamation-triangle</li>
+                    <li><i class="fa fa-folder"></i> fa-folder</li>
+                    <li><i class="fa fa-folder-open"></i> fa-folder-open</li>
+                    <li><i class="fa fa-globe"></i> fa-globe</li>
+                    <li><i class="fa fa-hand-pointer-o"></i> fa-hand-pointer-o</li>
+                    <li><i class="fa fa-heart"></i> fa-heart</li>
+                    <li><i class="fa fa-info-circle"></i> fa-info-circle</li>
+                    <li><i class="fa fa-picture-o"></i> fa-picture-o</li>
+                    <li><i class="fa fa-map"></i> fa-map</li>
+                    <li><i class="fa fa-map-marker"></i> fa-map-marker</li>
+                    <li><i class="fa fa-mouse-pointer"></i> fa-mouse-pointer</li>
+                    <li><i class="fa fa-mobile"></i> fa-mobile</li>
+                    <li><i class="fa fa-pencil"></i> fa-pencil</li>
+                    <li><i class="fa fa-music"></i> fa-music</li>
+                    <li><i class="fa fa-print"></i> fa-print</li>
+                    <li><i class="fa fa-question"></i> fa-question</li>
+                    <li><i class="fa fa-tag"></i> fa-tag</li>
+                    <li><i class="fa fa-tags"></i> fa-tags</li>
+                    <li><i class="fa fa-thumbs-up"></i> fa-thumbs-up</li>
+                    <li><i class="fa fa-wifi"></i> fa-wifi</li>
+                    <li><i class="fa fa-video-camera"></i> fa-video-camera</li>
+                    <li><i class="fa fa-align-center"></i> fa-align-center</li>
+                    <li><i class="fa fa-align-left"></i> fa-align-left</li>
+                    <li><i class="fa fa-align-right"></i> fa-align-right</li>
+                    <li><i class="fa fa-align-justify"></i> fa-align-justify</li>
+                    <li><i class="fa fa-columns"></i> fa-columns</li>
+                    <li><i class="fa fa-list"></i> fa-list</li>
+                    <li><i class="fa fa-list-alt"></i> fa-list-alt</li>
+                    <li><i class="fa fa-repeat"></i> fa-repeat</li>
+                    <li><i class="fa fa-undo"></i> fa-undo</li>
+                    <li><i class="fa fa-table"></i> fa-table</li>
+                    <li><i class="fa fa-th"></i> fa-th</li>
+                    <li><i class="fa fa-th-list"></i> th-list-share</li>
+                    <li><i class="fa fa-floppy-o"></i> fa-floppy-o</li>
+                    <h3>Directional Icons</h3>
+                    <li><i class="fa fa-angle-double-down"></i> fa-angle-double-down</li>
+                    <li><i class="fa fa-angle-double-left"></i> fa-angle-double-left</li>
+                    <li><i class="fa fa-angle-double-right"></i> fa-angle-double-right</li>
+                    <li><i class="fa fa-angle-double-up"></i> fa-angle-double-up</li>
+                    <li><i class="fa fa-angle-down"></i> fa-angle-down</li>
+                    <li><i class="fa fa-angle-up"></i> fa-angle-up</li>
+                    <li><i class="fa fa-angle-left"></i> fa-angle-left</li>
+                    <li><i class="fa fa-angle-right"></i> fa-angle-right</li>
+                    <li><i class="fa fa-arrow-down"></i> fa-arrow-down</li>
+                    <li><i class="fa fa-arrow-up"></i> fa-arrow-up</li>
+                    <li><i class="fa fa-arrow-left"></i> fa-arrow-left</li>
+                    <li><i class="fa fa-arrow-right"></i> fa-arrow-right</li>
+                    <li><i class="fa fa-caret-down"></i> fa-caret-down</li>
+                    <li><i class="fa fa-caret-up"></i> fa-caret-up</li>
+                    <li><i class="fa fa-caret-left"></i> fa-caret-left</li>
+                    <li><i class="fa fa-caret-right"></i> fa-caret-right</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

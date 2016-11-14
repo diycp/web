@@ -216,7 +216,9 @@ a:hover {
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
-
+.admin-menu-child{
+    margin-bottom: 14px;
+}
 .admin-menu-child li {
     line-height: 40px;
     width: 164px;
