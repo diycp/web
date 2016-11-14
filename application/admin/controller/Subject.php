@@ -39,7 +39,6 @@ class Subject extends AdminBase
 		if (request()->isPost()) {
 			$data = request()->param();
 			$data['create_time'] = time();
-
 			$res = $this->comment->insert($data);
 			if ($res == 1) {
 				return info("添加成功!",1);
