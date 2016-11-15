@@ -53,15 +53,15 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状态</label>
                             <div class="col-sm-7"> 
-                               <select name="group" id="group" class="form-control" style="width: 125px;display: inline-block;">
-                               		<option value="1" {$data['group']== 1 ? ' selected ' : ''}>在第一组中</option>
-                               		<option value="2" {$data['group']== 2 ? ' selected ' : ''}>在第二组中</option>
-                               		<option value="3" {$data['group']== 3 ? ' selected ' : ''}>在第三组中</option>
+                               <select name="group"   class="form-control" style="width: 125px;display: inline-block;">
+                               		<option value="1" {$data.group == 1 ? ' selected ' : ''}>在第一组中</option>
+                               		<option value="2" {$data.group == 2 ? ' selected ' : ''}>在第二组中</option>
+                               		<option value="3" {$data.group == 3 ? ' selected ' : ''}>在第三组中</option>
                                </select>
 
-                               <select name="visible" id="visible" class="form-control" style="width: 130px;display: inline-block;margin-left: 10px;">
-                               		<option value="1" {$data['visible']== 1 ? ' selected ' : ''}>显示</option>
-                               		<option value="0" {$data['visible']== 0 ? ' selected ' : ''}>隐藏</option>
+                               <select name="visible"   class="form-control" style="width: 130px;display: inline-block;margin-left: 10px;">
+                                    <option value="1" {$data.visible == 1 ? ' selected ' : ''}>显示</option>
+                                    <option value="0" {$data.visible == 0 ? ' selected ' : ''}>隐藏</option>
                                </select>
                             </div>
                         </div>

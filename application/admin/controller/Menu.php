@@ -127,6 +127,7 @@ class Menu extends AdminBase
         
         $data = $this->menu->where('id',$id)->find();
         $list = $this->menu_list(true);
+
         $this->assign(array('data' => $data,'list' => $list ));
         return $this->fetch();
     }
@@ -180,7 +181,7 @@ class Menu extends AdminBase
             }
         }
 
-        $data = array('pid' => $menu_id,'visible' => 1);
+        $data = array('pid' => $menu_id);
         $this->assign('data',$data);
         return $this->fetch('editButton');
     }
@@ -198,13 +199,15 @@ class Menu extends AdminBase
             if ($result == 1) {
                 $this->cache();
                 return info("修改成功！",1);
+            }else if ($result == 0) {
+                return info("修改成功！",1);
             }else{
                 return info("修改失败！",0);
             }
         }
         $data = Db::table('bs_node')->where('id',$id)->find();
         $this->assign('data',$data);
-        return $this->fetch();
+        return $this->fetch('editButton');
     }
 
     public function deleteButton($id = 0)
