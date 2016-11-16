@@ -7,8 +7,9 @@
 # 万能后台——自定义扩展功能
 **[基于TP5](http://thinkphp.cn/),在此感谢**
 
-- 要封装常用功能、如初始化selector、空对象判断、重定向、modal、全局的ajax请求、js中加载js/css文件、数据验证、重写了alert弹出层、增加 弹出确认提示框。
-- Gridview.js————另一个独特地方--再次简化了bootstrap-table.js 让表格显示、数据提交变得更加简洁、组件化去功能开发。
+
+- 要封装常用功能 [main.js源代码](https://github.com/Aierui/web/blob/master/public/js/admin/main.js)、如初始化selector、空对象判断、重定向、modal、全局的ajax请求、js中加载js/css文件、数据验证、重写了alert弹出层、增加 弹出确认提示框。
+- Gridview.js [源代码](https://github.com/Aierui/web/blob/master/public/js/admin/gridview.js)————另一个独特地方--再次简化了bootstrap-table.js 让表格显示、数据提交变得更加简洁、组件化去功能开发。
 -  在common模块写了 AdminBase、Permission两个重要的基础类
 
 
