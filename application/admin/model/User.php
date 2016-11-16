@@ -57,30 +57,25 @@ class User extends Model
 
 	public function index($data = null)
 	{
-		$offset = $data['offset'];
-		$limit = $data['limit']; 
-		$where = "(1 = 1)";
-		if(!empty($data['search'])){
-			$search = $data['search'];
-			$where .= " and ( mobile = '{$search}' or username like '%{$search}%') "; 
-		}
-		unset($data);
+		$join = [['bs_role_user access','u.id = access.user_id','LEFT '],
+				 ['bs_role role','access.role_id = role.id','LEFT']
+				];
+
 		$data = Db::table('users')
-					->where($where)
-					->limit($offset,$limit)
-					->field('id,username,mobile,status,create_time')
+					->alias('u')
+					->field('u.id,u.mobile,u.status,u.create_time,role.name AS role_name
+						GROUP_CONCAT(u.`username`)')
+					->join($join)
+					->fetchSql()
 					->order('id desc')
-					// ->fetchSql()
 					->select();
+
+var_dump($data);die;
+
+
 		foreach ($data as $key => $value) {
 			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
 		}
-		$total = Db::table('users')
-					->where($where)
-					->limit($offset,$limit)
-					->count();
-
-		$data = array('rows' => $data,'total' => $total);
 		return $data;
 	}
 

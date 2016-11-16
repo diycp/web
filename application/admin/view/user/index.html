@@ -2,12 +2,13 @@
 {/cx:toolbar}
 
 <!-- 表格 -->
-<table id="table" data-toggle="gridview" class="table table-striped" data-url="/{$Request.module}/{$Request.controller}"  data-toolbar="#toolbar"   data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]"  data-search="true"  data-show-export="true">
+<table id="table" data-toggle="gridview" class="table table-striped" data-url="/{$Request.module}/{$Request.controller}"  data-toolbar="#toolbar"   data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]"  data-search="true"  data-show-export="true" data-side-pagination="client" >
     <thead>
 		<tr>
 			<th data-width="10" data-checkbox="true"></th>
 			<th data-width="100" data-field="username">姓名</th>
 			<th data-width="100" data-field="mobile">手机号码</th>
+			<th data-width="100" data-field="role_name">角色名称</th>
 			<th data-width="100" data-field="status" data-formatter="format_status">状态</th>
 			<th data-width="100" data-field="create_time">创建时间</th>
 		</tr>
