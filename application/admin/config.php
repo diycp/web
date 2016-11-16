@@ -29,6 +29,21 @@ return [
         'expire' => 0,
     ],
 
+
+    'session'                => [
+        'id'             => '',
+        // SESSION_ID的提交变量,解决flash上传跨域
+        'var_session_id' => '',
+        // SESSION 前缀
+        'prefix'         => 'red-team',
+        // 驱动方式 支持redis memcache memcached
+        'type'           => '',
+        //过期时间 一周
+        'expire'         => '604800',
+        // 是否自动开启 SESSION
+        'auto_start'     => true,
+    ],
+
     //伪静态
     'url_html_suffix' => false,
 
