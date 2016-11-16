@@ -81,7 +81,7 @@
 				                window.location.href = data.url;
 				            }, parseInt(data.wait) * 500)
 						}else if(data.code == 0){
-							msgerr.html(data.msg);
+							msgerr.addClass('msg-info').html(data.msg);
 						}
 					},
 					error:function () {

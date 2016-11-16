@@ -4,7 +4,7 @@ return [
     //网站名称
 	'WEBSITE_NAME'          		    =>  'Aierui后台',
     // 默认输出类型
-    'default_return_type'               => 'html',
+    'default_return_type'               => 'json',
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'             => APP_PATH  . 'admin/view/' .DS. 'dispatch_jump.tpl',
     'dispatch_error_tmpl'               => APP_PATH  . 'admin/view/' .DS. 'dispatch_jump.tpl',

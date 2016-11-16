@@ -21,13 +21,22 @@ class Test extends AdminBase
 
 	public function index()
 	{
-		return $this->fetch();
+		return view();
 	}
 
 	public function toolbar()
 	{
 		// echo "string";die;
 		return $this->fetch();
+	}
+
+	public function tmp()
+	{	
+		if (request()->isPost()) {
+			$data = request()->param();
+			// var_dump($data);
+			return $this->error('error') ;
+		}
 	}
 }
 

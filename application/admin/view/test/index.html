@@ -24,3 +24,24 @@
 	<li>我的个人微信：imland （备注 PHP后台+ “你的姓名”）</li>
 </ol>
 </div>
+
+
+<button class="btn">加载</button>
+
+
+<script type="text/javascript">
+	$('.btn').click(function(){
+		$.ajax({
+			url: '/admin/test/tmp',
+			type: 'post',
+			data: {id: 1},
+			dataType: 'json',
+			success:function(data){
+				console.log(data)
+			},
+			error:function(data){
+				console.log(data)
+			}
+		})
+	})
+</script>

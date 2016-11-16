@@ -25,6 +25,14 @@ class User extends Model
 		$userRow = Db::table('users')
 					->where($map)
 					->find();
+		if ($userRow['administrator'] == 1) {
+		}elseif ($userRow['administrator'] == 0) {
+			$exist = Db::table('bs_role_user')->where('user_id',$userRow['id'])->find();
+			if (empty($exist)) {
+				$this->error = '该账号未授权，请联系超级管理。';
+				return false;
+			}
+		} 
 					// var_dump($userRow);die;
 		if( empty($userRow) || $userRow['status'] == 0 || $userRow['password'] != $password ){
 			if(empty($userRow)){
@@ -84,6 +92,7 @@ class User extends Model
         }
 		$data['password'] = md6($data['password']);
 		$data['create_time'] = time();
+		// $data['administrator'] = 1;
 		$user = new User($data); 
 		$res = $user->allowField(true)->save();
 		if($res == 1){
