@@ -60,18 +60,14 @@ class User extends Model
 		$join = [['bs_role_user access','u.id = access.user_id','LEFT '],
 				 ['bs_role role','access.role_id = role.id','LEFT']
 				];
-
 		$data = Db::table('users')
 					->alias('u')
-					->field('u.id,u.mobile,u.status,u.create_time,role.name AS role_name
-						GROUP_CONCAT(u.`username`)')
+					->field('u.id,u.username,u.mobile,u.status,u.create_time,
+						GROUP_CONCAT(role.`name`) AS role_name')
 					->join($join)
-					->fetchSql()
+					->group('u.id')
 					->order('id desc')
 					->select();
-
-var_dump($data);die;
-
 
 		foreach ($data as $key => $value) {
 			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
